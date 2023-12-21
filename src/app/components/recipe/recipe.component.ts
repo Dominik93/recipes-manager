@@ -5,15 +5,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import {
   MatDialog,
-  MatDialogRef,
   MatDialogActions,
   MatDialogClose,
   MatDialogTitle,
   MatDialogContent,
 } from '@angular/material/dialog';
+
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Product, Recipe } from '../../recipe';
-import { MatList, MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { QuantityComponent } from '../quantity/quantity.component';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'rm-recipe',
@@ -24,6 +27,8 @@ import { MatList, MatListModule } from '@angular/material/list';
 
     MatFormFieldModule,
     MatListModule,
+    MatOptionModule,
+    MatSelectModule,
     MatInputModule,
     MatButtonModule,
     MatDialogActions,
@@ -36,6 +41,11 @@ import { MatList, MatListModule } from '@angular/material/list';
 })
 export class RecipeComponent {
 
+  readonly units = [
+    'g',
+    'sz'
+  ];
+
   recipe: Recipe = {
     name: "",
     portions: 1,
@@ -43,14 +53,21 @@ export class RecipeComponent {
     selected: false
   };
 
-  units = [
-    'g',
-    'sz'
-  ]
+  constructor(public dialog: MatDialog) { }
 
   onAddProduct() {
-    const product: Product = { name: "", quantity: 1, quantityPerPortion: {}, selected: false, unit: "" }
+    const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0] }
     this.recipe.products = this.recipe.products.concat(product);
+  }
+
+  onAddQuantityPerProduct(index: number) {
+    const dialogRef = this.dialog.open(QuantityComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.portion !== undefined && result.portion > 0) {
+        this.recipe.products[index].quantity.portions[result.portion] = result.quantity;
+      }
+    });
   }
 
 }

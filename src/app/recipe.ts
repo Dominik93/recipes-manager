@@ -8,8 +8,12 @@ export type Recipe = {
 export type Product = {
   name: string,
   selected: boolean,
-  quantity: number,
-  quantityPerPortion: { [key: number]: number },
+  quantity: Quantity,
   unit: string
+}
+
+export type Quantity = {
+  base: number;
+  portions: { [key: number]: number };
 }
 

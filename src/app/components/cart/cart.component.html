@@ -1,10 +1,11 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>Cart</mat-panel-title>
+    <mat-panel-description>Select products</mat-panel-description>
   </mat-expansion-panel-header>
   <div *ngFor="let recipe of recipes | selected:true; trackBy: trackBy ">
     {{recipe.name}}
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="portions">
       <mat-label>Portions</mat-label>
       <input matInput type="number" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
     </mat-form-field>

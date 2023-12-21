@@ -1,15 +1,16 @@
-
 <rm-authorization *ngIf="!authorized" (login)="onLogin($event)"></rm-authorization>
 <mat-card *ngIf="authorized">
     <mat-card-header>
-      <mat-card-title>
-        <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh" (click)="onRefresh()">Refresh</mat-icon>
-      </mat-card-title>
+        <mat-card-title>
+            <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh"
+                (click)="onRefresh()">Refresh</mat-icon>
+        </mat-card-title>
     </mat-card-header>
-  </mat-card>
-<rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)" (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
+</mat-card>
+<rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"
+    (recipeDeleted)="onRecipeDeleted($event)" (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
 <rm-cart *ngIf="authorized" [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
 
 <div id="footer" class="footer">
-    Recipes Manager 1.2.0 powered by Angular 17 and Atlas MongoDb
+    Recipes Manager 1.3.0 powered by Angular 17 and Atlas MongoDB
 </div>

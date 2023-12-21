@@ -1,6 +1,7 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>Recipes</mat-panel-title>
+    <mat-panel-description>Add, select your recipes</mat-panel-description>
   </mat-expansion-panel-header>
 
   <mat-form-field appearance="fill">
@@ -10,8 +11,9 @@
   <button mat-raised-button color="primary" class="add-recipe" (click)="openDialog()">Add recipe</button>
 
   <mat-selection-list #recipeList (selectionChange)="onSelectionChange($event)">
-    <mat-list-option *ngFor="let recipe of recipes | search:searchValue" [(selected)]="recipe.selected">
+    <mat-list-option *ngFor="let recipe of recipes | search:searchValue; index as i" [(selected)]="recipe.selected">
       {{recipe.name}}
+      <button mat-raised-button color="primary" class="delete-recipe" (click)="onDelete(i)">Delete</button>
     </mat-list-option>
   </mat-selection-list>
 </mat-expansion-panel>

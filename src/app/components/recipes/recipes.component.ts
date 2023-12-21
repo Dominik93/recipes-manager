@@ -40,23 +40,34 @@ export class RecipesComponent {
 
   @Output() recipeAdded = new EventEmitter<Recipe[]>();
 
+  @Output() recipeDeleted = new EventEmitter<Recipe[]>();
+
   searchValue: string = '';
 
   constructor(public dialog: MatDialog) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RecipeComponent, {
-      height: "calc(80% - 30px)"
+      height: "calc(80% - 30px)",
+      width: "calc(100% - 30px)"
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.recipes.push(result);
-      this.recipeAdded.emit(this.recipes);
+      if (result.name !== "" && result.name !== '') {
+        this.recipes.push(result);
+        this.recipeAdded.emit(this.recipes);
+      }
     });
   }
 
   onSelectionChange(event: any) {
     this.recipeSelected.emit(this.recipes);
+  }
+
+  onDelete(index: number) {
+    console.log('onDelete', index + 1)
+    this.recipes = this.recipes.splice(index + 1, 1);
+    this.recipeDeleted.emit(this.recipes);
   }
 
 } 
