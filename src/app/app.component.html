@@ -1,3 +1,7 @@
 <rm-authorization *ngIf="!authorized" (login)="onLogin($event)"></rm-authorization>
 <rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"></rm-recipes>
 <rm-cart *ngIf="authorized" [recipes]="recipes"></rm-cart>
+
+<div id="footer" class="footer">
+    Recipes Manager 1.0.1 powered by Angular 17 and Atlas MongoDb
+</div>
