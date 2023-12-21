@@ -1,23 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { SelectedPipe } from './pipes/selected.pipe';
-import { SearchPipe } from './pipes/search.pipe';
-import { QuantityPipe } from './pipes/quantity.pipe';
 import { RecipesService } from './services/recipes.service'
 import { Recipe } from './recipe'
 import { AuthorizationComponent } from './components/authorization/authorization.component'
 import { CartComponent } from './components/cart/cart.component'
 import { RecipesComponent } from './components/recipes/recipes.component'
+import { MatCardModule } from '@angular/material/card';
 
 
 @Component({
@@ -26,6 +16,9 @@ import { RecipesComponent } from './components/recipes/recipes.component'
   imports: [
     CommonModule,
     FormsModule,
+
+    MatIconModule,
+    MatCardModule,
 
     AuthorizationComponent,
     RecipesComponent,
@@ -36,19 +29,30 @@ import { RecipesComponent } from './components/recipes/recipes.component'
 })
 export class AppComponent {
   authorized: boolean = false;
+  token: string = "";
   recipes: Recipe[] = [];
 
   constructor(private recipesService: RecipesService) { }
 
   onLogin(event: any): void {
-    console.log('onLogin', event)
     this.authorized = event.isAuth;
-    this.recipesService.getRecipes().subscribe((result: Recipe[]) => this.recipes = result);
+    this.token = event.token
+    this.recipesService.getRecipes(this.token).subscribe((result: any) => this.recipes = result.recipes);
   }
 
   onRecipeSelected(event: any) {
-    console.log('onRecipeSelected', event);
     this.recipes = [...event];
+    this.recipesService.save(this.token, this.recipes)
+      .subscribe(() => { });
+  }
+ 
+  onProductChanged(event: any) {
+    this.recipesService.save(this.token, this.recipes)
+      .subscribe(() => { });
+  }
+  
+  onRefresh() {
+    this.recipesService.getRecipes(this.token).subscribe((result: any) => this.recipes = result.recipes);
   }
 
 }

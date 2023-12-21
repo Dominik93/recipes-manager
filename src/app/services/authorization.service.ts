@@ -17,10 +17,6 @@ export class AuthorizationService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<Authorization> {
-    return of({
-      isAuth: true,
-      token: "token"
-    })
     return this.http.post(this.URL + this.AUTH_PATH, { username: username, password: password })
     .pipe(map((response: any) => ({
       isAuth: true,

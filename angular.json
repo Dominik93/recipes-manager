@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular.io-example": {
+    "recipes-manager": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
@@ -55,10 +55,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular.io-example:build:production"
+              "buildTarget": "recipes-manager:build:production"
             },
             "development": {
-              "buildTarget": "angular.io-example:build:development"
+              "buildTarget": "recipes-manager:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -66,7 +66,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular.io-example:build"
+            "buildTarget": "recipes-manager:build"
           }
         },
         "test": {
@@ -89,11 +89,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular.io-example:serve"
+            "devServerTarget": "recipes-manager:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular.io-example:serve:production"
+              "devServerTarget": "recipes-manager:serve:production"
             }
           }
         }

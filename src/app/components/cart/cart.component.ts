@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
@@ -44,18 +44,17 @@ import { Recipe } from './../../recipe'
 export class CartComponent {
 
   @Input() recipes: Recipe[] = [];
+  
+  @Output() productChanged = new EventEmitter<Recipe[]>();
 
-  constructor(private recipesService: RecipesService) { }
+  constructor() { }
 
   onSelectionChange(event: any) {
-    console.log('onSelectionChange', event);
-    this.save()
+    this.productChanged.next(this.recipes);
   }
 
-  save(): void {
-  }
-
-  onRefresh(): void {
+  onChangePortions() {
+    this.productChanged.next(this.recipes);
   }
 
   trackBy(index: any, recipe: Recipe) {
