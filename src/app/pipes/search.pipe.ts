@@ -8,7 +8,7 @@ export class SearchPipe implements PipeTransform {
 
   transform(items: any[], value: string): any {
     if (!items || !value || value === "") {
-        return items;
+      return items;
     }
     return items.filter(item => this.contains(item, value));
   }

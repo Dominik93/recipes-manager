@@ -10,56 +10,45 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
-import { SelectedPipe } from './selected.pipe';
-import { SearchPipe } from './search.pipe';
-import { QuantityPipe } from './quantity.pipe';
-import { RecipesService } from './recipes.service'
+import { SelectedPipe } from './pipes/selected.pipe';
+import { SearchPipe } from './pipes/search.pipe';
+import { QuantityPipe } from './pipes/quantity.pipe';
+import { RecipesService } from './services/recipes.service'
 import { Recipe } from './recipe'
+import { AuthorizationComponent } from './components/authorization/authorization.component'
+import { CartComponent } from './components/cart/cart.component'
+import { RecipesComponent } from './components/recipes/recipes.component'
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-            CommonModule,
-            FormsModule,
+    CommonModule,
+    FormsModule,
 
-
-            MatIconModule,
-            MatCardModule,
-            MatExpansionModule,
-            MatDividerModule,
-            MatButtonModule,
-            MatListModule,
-            MatGridListModule,
-            MatFormFieldModule,
-            MatInputModule,
-
-            QuantityPipe,
-            SearchPipe,
-            SelectedPipe],
+    AuthorizationComponent,
+    RecipesComponent,
+    CartComponent],
   providers: [],
   templateUrl: `app.component.html`,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
-  searchValue: string = 'Ryż';
   authorized: boolean = false;
   recipes: Recipe[] = [];
 
-  constructor(private recipesService: RecipesService) {}
+  constructor(private recipesService: RecipesService) { }
 
-  onLogin(): void {
-    this.authorized = true;
-    this.recipesService.getRecipes().subscribe((result:Recipe[]) => this.recipes = result);
+  onLogin(event: any): void {
+    console.log('onLogin', event)
+    this.authorized = event.isAuth;
+    this.recipesService.getRecipes().subscribe((result: Recipe[]) => this.recipes = result);
   }
 
-  onSave(): void {
-  }
-
-  onRefresh(): void {
+  onRecipeSelected(event: any) {
+    console.log('onRecipeSelected', event);
+    this.recipes = [...event];
   }
 
 }

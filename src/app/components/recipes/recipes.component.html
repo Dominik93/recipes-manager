@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh" (click)="onRefresh()">Refresh</mat-icon>
+    </mat-card-title>
+  </mat-card-header>
+</mat-card>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>Recipes</mat-panel-title>
+  </mat-expansion-panel-header>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput type="text" [(ngModel)]="searchValue">
+  </mat-form-field>
+
+  <mat-selection-list #recipeList (selectionChange)="onSelectionChange($event)">
+    <mat-list-option *ngFor="let recipe of recipes | search:searchValue" [(selected)]="recipe.selected">
+      {{recipe.name}}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-expansion-panel>

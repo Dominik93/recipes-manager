@@ -7,8 +7,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SelectedPipe implements PipeTransform {
 
   transform(items: any[], filter: boolean): any {
+    console.log('transform')
     if (!items || !filter) {
-        return items;
+      return items;
     }
     return items.filter(item => this.isSelected(item, filter));
   }
