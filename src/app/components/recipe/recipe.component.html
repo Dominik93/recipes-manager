@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Add recipe?</h2>
+<mat-dialog-content>
+
+    <div class="container">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" [(ngModel)]="recipe.name">
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="add-product" (click)="onAddProduct()">Add product</button>
+    </div>
+    <mat-list role="list">
+        <div class="product-container">
+            <mat-list-item role="listitem" *ngFor="let product of recipe.products">
+                <mat-form-field appearance="fill">
+                    <mat-label>Product name</mat-label>
+                    <input matInput type="text" [(ngModel)]="product.name">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Product quantity</mat-label>
+                    <input matInput type="number" [(ngModel)]="product.quantity">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Product unit</mat-label>
+                    <input matInput type="text" [(ngModel)]="product.unit">
+                </mat-form-field>
+            </mat-list-item>
+        </div>
+    </mat-list>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button [mat-dialog-close]="recipe">Add</button>
+</mat-dialog-actions>

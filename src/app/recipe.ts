@@ -9,6 +9,7 @@ export type Product = {
   name: string,
   selected: boolean,
   quantity: number,
+  quantityPerPortion: { [key: number]: number },
   unit: string
 }
 

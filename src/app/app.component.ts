@@ -45,10 +45,14 @@ export class AppComponent {
     this.recipesService.save(this.token, this.recipes)
       .subscribe(() => { });
   }
+  
+  onRecipeAdded(event: any) {
+    this.recipes = [...event];
+    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
+  }
  
   onProductChanged(event: any) {
-    this.recipesService.save(this.token, this.recipes)
-      .subscribe(() => { });
+    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
   }
   
   onRefresh() {

@@ -7,9 +7,9 @@
       </mat-card-title>
     </mat-card-header>
   </mat-card>
-<rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"></rm-recipes>
+<rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)" (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
 <rm-cart *ngIf="authorized" [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
 
 <div id="footer" class="footer">
-    Recipes Manager 1.1.0 powered by Angular 17 and Atlas MongoDb
+    Recipes Manager 1.2.0 powered by Angular 17 and Atlas MongoDb
 </div>

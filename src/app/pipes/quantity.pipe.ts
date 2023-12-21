@@ -8,7 +8,10 @@ import { Product } from './../recipe';
 export class QuantityPipe implements PipeTransform {
 
   transform(product: Product, portions: number): number {
-    return product.quantity * portions;
+    if(product.quantityPerPortion[portions] === undefined) {
+      return product.quantity * portions;
+    } 
+    return product.quantityPerPortion[portions];
   }
 
 }
