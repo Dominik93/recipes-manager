@@ -1,3 +1,70 @@
+<mat-expansion-panel *ngIf="!authorized">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Login
+    </mat-panel-title>
+    <mat-panel-description>
+      Log to application
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="container">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password">
+    </mat-form-field>
+  </div>
+  <br>
+  <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
+</mat-expansion-panel>
 
-<div>inside:</div>
-<mat-card>Simple card</mat-card>
+<mat-card *ngIf="authorized">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh" (click)="onRefresh()">Refresh</mat-icon>
+    </mat-card-title>
+  </mat-card-header>
+</mat-card>
+
+<mat-expansion-panel *ngIf="authorized">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Recipes
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+    <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [(ngModel)]="searchValue">
+    </mat-form-field>
+    <mat-selection-list #productsList>
+      <mat-list-option *ngFor="let recipe of recipes | search:searchValue">
+        {{recipe.name}}
+      </mat-list-option>
+    </mat-selection-list>
+
+</mat-expansion-panel>
+
+<mat-expansion-panel *ngIf="authorized">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Cart
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div *ngFor="let recipe of recipes | selected:true">
+    {{recipe.name}}
+    <mat-form-field appearance="fill">
+      <mat-label>Portions</mat-label>
+      <input matInput type="number" [(ngModel)]="recipe.portions">
+    </mat-form-field>
+
+    <mat-selection-list #productsList>
+      <mat-list-option *ngFor="let product of recipe.products">
+        {{product.name}}: {{product | quantity:recipe.portions }}{{product.unit}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</mat-expansion-panel>
