@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
 import { MatOptionModule } from '@angular/material/core';
 import { LoggingService } from '../../services/logging/logging';
+import { ObjectUtil } from '../../utils/object-util';
 
 @Component({
   selector: 'rm-recipe',
@@ -78,7 +79,7 @@ export class RecipeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
-      if (result !== '' && result !== undefined) {
+      if (!ObjectUtil.isEmpty(result)) {
         const portions = this.mapToPortions(result);
         this.log.debug('Mapped quantity by portion', portions);
         this.recipe.products[index].quantity.portions = portions;

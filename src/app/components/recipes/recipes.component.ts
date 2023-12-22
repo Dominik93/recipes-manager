@@ -14,7 +14,8 @@ import { RecipeComponent } from '../recipe/recipe.component';
 import { MatButtonModule } from '@angular/material/button';
 import { LoggingService } from '../../services/logging/logging';
 import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
-import { CloneUtil } from '../../utils/clone';
+import { CloneUtil } from '../../utils/clone-util';
+import { ObjectUtil } from '../../utils/object-util';
 
 @Component({
   selector: 'rm-recipes',
@@ -64,7 +65,7 @@ export class RecipesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
-      if (result !== '' && result.name !== '') {
+      if (!ObjectUtil.isAnyEmpty([result, result?.name])) {
         this.recipes.push(result);
         this.recipeAdded.emit(this.recipes);
       }
@@ -81,7 +82,7 @@ export class RecipesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
-      if (result !== '') {
+      if (!ObjectUtil.isAnyEmpty([result])) {
         this.recipes[index] = result;
         this.recipeModified.emit(this.recipes);
       }
