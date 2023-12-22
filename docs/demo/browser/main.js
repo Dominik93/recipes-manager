@@ -34251,7 +34251,7 @@ var CartComponent = /* @__PURE__ */ (() => {
       }
     },
     dependencies: [CommonModule, NgForOf, FormsModule, DefaultValueAccessor, NumberValueAccessor, NgControlStatus, NgModel, MatIconModule, MatCardModule, MatExpansionModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatDividerModule, MatButtonModule, MatListModule, MatSelectionList, MatListOption, MatGridListModule, MatFormFieldModule, MatFormField, MatLabel, MatInputModule, MatInput, QuantityPipe, SortSelectedPipe, SelectedPipe],
-    styles: ["\n\n.portions[_ngcontent-%COMP%] {\n  float: right;\n}\n.recipe-name[_ngcontent-%COMP%] {\n  display: inline;\n}"]
+    styles: ["\n\n.portions[_ngcontent-%COMP%] {\n  float: right;\n  width: 80px;\n}\n.recipe-name[_ngcontent-%COMP%] {\n  display: inline;\n}"]
   });
   let CartComponent2 = _CartComponent;
   return CartComponent2;
@@ -39239,7 +39239,8 @@ function RecipeComponent_div_11_Template(rf, ctx) {
 }
 var RecipeComponent = /* @__PURE__ */ (() => {
   const _RecipeComponent = class _RecipeComponent {
-    constructor(dialog, data) {
+    constructor(log, dialog, data) {
+      this.log = log;
       this.dialog = dialog;
       this.data = data;
       this.units = ["g", "sz"];
@@ -39266,14 +39267,15 @@ var RecipeComponent = /* @__PURE__ */ (() => {
     onAddQuantityPerProduct(index) {
       const dialogRef = this.dialog.open(QuantityComponent);
       dialogRef.afterClosed().subscribe((result) => {
-        if (result.portion !== void 0 && result.portion > 0) {
+        this.log.info("Close dialog", result);
+        if (result !== "" && result.portion !== void 0 && result.portion > 0) {
           this.recipe.products[index].quantity.portions[result.portion] = result.quantity;
         }
       });
     }
   };
   _RecipeComponent.\u0275fac = function RecipeComponent_Factory(t) {
-    return new (t || _RecipeComponent)(\u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(MAT_DIALOG_DATA));
+    return new (t || _RecipeComponent)(\u0275\u0275directiveInject("LoggingService"), \u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(MAT_DIALOG_DATA));
   };
   _RecipeComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
     type: _RecipeComponent,
@@ -39384,7 +39386,8 @@ var RecipesComponent = /* @__PURE__ */ (() => {
         width: "calc(100% - 30px)"
       });
       dialogRef.afterClosed().subscribe((result) => {
-        if (result.name !== "" && result.name !== "") {
+        this.log.info("Close dialog", result);
+        if (result !== "" && result.name !== "") {
           this.recipes.push(result);
           this.recipeAdded.emit(this.recipes);
         }
@@ -39440,7 +39443,7 @@ var RecipesComponent = /* @__PURE__ */ (() => {
         \u0275\u0275text(3, "Recipes");
         \u0275\u0275elementEnd();
         \u0275\u0275elementStart(4, "mat-panel-description");
-        \u0275\u0275text(5, "Add, select your recipes");
+        \u0275\u0275text(5, "Select, add, delete and more");
         \u0275\u0275elementEnd()();
         \u0275\u0275elementStart(6, "mat-form-field", 0)(7, "mat-label");
         \u0275\u0275text(8, "Search");
@@ -39473,7 +39476,7 @@ var RecipesComponent = /* @__PURE__ */ (() => {
       }
     },
     dependencies: [CommonModule, NgForOf, FormsModule, DefaultValueAccessor, NgControlStatus, NgModel, MatCardModule, MatExpansionModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatListModule, MatSelectionList, MatListOption, MatFormFieldModule, MatFormField, MatLabel, MatInputModule, MatInput, MatButtonModule, MatButton, SearchPipe, SortSelectedPipe],
-    styles: ["\n\n.add-recipe[_ngcontent-%COMP%] {\n  float: right;\n}\n.delete-recipe[_ngcontent-%COMP%] {\n  float: right;\n}\n.modify-recipe[_ngcontent-%COMP%] {\n  float: right;\n}"]
+    styles: ["\n\n.add-recipe[_ngcontent-%COMP%] {\n  float: right;\n}\n.delete-recipe[_ngcontent-%COMP%] {\n  float: right;\n}\n.modify-recipe[_ngcontent-%COMP%] {\n  float: right;\n}\n@media (max-width: 680px) {\n  .add-recipe[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .delete-recipe[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .modify-recipe[_ngcontent-%COMP%] {\n    display: none;\n  }\n}"]
   });
   let RecipesComponent2 = _RecipesComponent;
   return RecipesComponent2;
@@ -39613,7 +39616,7 @@ var AppComponent = /* @__PURE__ */ (() => {
         \u0275\u0275template(2, AppComponent_rm_authorization_2_Template, 1, 0, "rm-authorization", 2)(3, AppComponent_mat_card_3_Template, 5, 0, "mat-card", 3)(4, AppComponent_rm_recipes_4_Template, 1, 1, "rm-recipes", 4)(5, AppComponent_rm_cart_5_Template, 1, 1, "rm-cart", 5);
         \u0275\u0275elementEnd();
         \u0275\u0275elementStart(6, "div", 6);
-        \u0275\u0275text(7, " Recipes Manager 1.4.0 powered by Angular 17 and Atlas MongoDB ");
+        \u0275\u0275text(7, " Recipes Manager 1.5.0 powered by Angular 17 and Atlas MongoDB ");
         \u0275\u0275elementEnd()();
       }
       if (rf & 2) {
