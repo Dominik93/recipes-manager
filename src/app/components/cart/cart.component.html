@@ -8,7 +8,7 @@
       <div class="recipe-name">{{recipe.name}}</div>
       <mat-form-field appearance="fill" class="portions">
         <mat-label>Portions</mat-label>
-        <input matInput type="number" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
+        <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
       </mat-form-field>
     </div>
     <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
