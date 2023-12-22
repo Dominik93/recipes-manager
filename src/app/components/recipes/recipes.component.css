@@ -1,9 +1,25 @@
 .add-recipe {
     float: right;
 }
+
 .delete-recipe {
     float: right;
 }
+
 .modify-recipe {
     float: right;
+}
+
+@media (max-width: 680px) {
+    .add-recipe {
+        display: none;
+    }
+
+    .delete-recipe {
+        display: none;
+    }
+
+    .modify-recipe {
+        display: none;
+    }
 }

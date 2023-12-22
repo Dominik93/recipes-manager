@@ -18,6 +18,7 @@ import { Product, Recipe } from '../../recipe';
 import { MatListModule } from '@angular/material/list';
 import { QuantityComponent } from '../quantity/quantity.component';
 import { MatOptionModule } from '@angular/material/core';
+import { LoggingService } from '../../services/logging/logging';
 
 @Component({
   selector: 'rm-recipe',
@@ -54,7 +55,7 @@ export class RecipeComponent {
     selected: false
   };
 
-  constructor(public dialog: MatDialog,
+  constructor(@Inject('LoggingService') private log: LoggingService, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: Recipe) {
     this.recipe = data?? this.recipe;
   }
@@ -68,7 +69,8 @@ export class RecipeComponent {
     const dialogRef = this.dialog.open(QuantityComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.portion !== undefined && result.portion > 0) {
+      this.log.info('Close dialog', result);
+      if (result !== '' && result.portion !== undefined && result.portion > 0) {
         this.recipe.products[index].quantity.portions[result.portion] = result.quantity;
       }
     });

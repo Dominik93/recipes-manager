@@ -58,7 +58,8 @@ export class RecipesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.name !== "" && result.name !== '') {
+      this.log.info('Close dialog', result);
+      if (result !== '' && result.name !== '') {
         this.recipes.push(result);
         this.recipeAdded.emit(this.recipes);
       }
