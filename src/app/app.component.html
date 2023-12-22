@@ -10,7 +10,8 @@
             </mat-card-header>
         </mat-card>
         <rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"
-            (recipeDeleted)="onRecipeDeleted($event)" (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
+            (recipeModified)="onRecipeModified($event)" (recipeDeleted)="onRecipeDeleted($event)"
+            (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
         <rm-cart *ngIf="authorized" [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
     </div>
     <div class="footer">

@@ -1,3 +1,6 @@
 .portions {
     float: right;
 }
+.recipe-name {
+    display: inline;
+}

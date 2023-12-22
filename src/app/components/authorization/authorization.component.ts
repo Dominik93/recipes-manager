@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
@@ -8,7 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { Authorization } from './../../authorization'
-import { AuthorizationService } from './../../services/authorization.service'
+import { AuthorizationService } from '../../services/authorization/authorization.service'
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'rm-authorization',
@@ -22,7 +23,12 @@ import { AuthorizationService } from './../../services/authorization.service'
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule],
-  providers: [AuthorizationService],
+  providers: [
+    {
+      provide: 'AuthorizationService',
+      useClass: environment.authorizationService
+    }
+  ],
   templateUrl: `authorization.component.html`,
   styleUrls: ['./authorization.component.css'],
 })
@@ -36,7 +42,7 @@ export class AuthorizationComponent {
 
   password: string = "";
 
-  constructor(private authorizationService: AuthorizationService) { }
+  constructor(@Inject('AuthorizationService') private authorizationService: AuthorizationService) { }
 
   onLogin(): void {
     this.authorizationService.login(this.username, this.password).subscribe((result) => {

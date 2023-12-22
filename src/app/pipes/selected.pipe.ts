@@ -1,20 +1,25 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+export interface Selectable {
+  selected: boolean;
+}
+
+
 @Pipe({
   name: 'selected',
   standalone: true
 })
 export class SelectedPipe implements PipeTransform {
 
-  transform(items: any[], filter: boolean): any {
-    if (!items || !filter) {
+  transform(items: Selectable[], selected: boolean): any {
+    if (!items || !selected) {
       return items;
     }
-    return items.filter(item => this.isSelected(item, filter));
+    return items.filter(item => this.isSelected(item, selected));
   }
 
-  private isSelected(item: any, filter: boolean) {
-    return item.selected === filter;
+  private isSelected(item: Selectable, selected: boolean) {
+    return item.selected === selected;
   }
 
 }

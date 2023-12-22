@@ -13,8 +13,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { SelectedPipe } from './../../pipes/selected.pipe';
 import { QuantityPipe } from './../../pipes/quantity.pipe';
-import { RecipesService } from './../../services/recipes.service'
+import { RecipesService } from '../../services/recipes/recipes.service'
 import { Recipe } from './../../recipe'
+import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
 
 
 @Component({
@@ -36,6 +37,7 @@ import { Recipe } from './../../recipe'
     MatInputModule,
 
     QuantityPipe,
+    SortSelectedPipe,
     SelectedPipe],
   providers: [],
   templateUrl: `cart.component.html`,
@@ -44,7 +46,7 @@ import { Recipe } from './../../recipe'
 export class CartComponent {
 
   @Input() recipes: Recipe[] = [];
-  
+
   @Output() productChanged = new EventEmitter<Recipe[]>();
 
   constructor() { }

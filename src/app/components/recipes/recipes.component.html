@@ -8,12 +8,13 @@
     <mat-label>Search</mat-label>
     <input matInput type="text" [(ngModel)]="searchValue">
   </mat-form-field>
-  <button mat-raised-button color="primary" class="add-recipe" (click)="openDialog()">Add recipe</button>
+  <button mat-raised-button color="primary" class="add-recipe" (click)="onAddRecipe()">Add recipe</button>
 
   <mat-selection-list #recipeList (selectionChange)="onSelectionChange($event)">
-    <mat-list-option *ngFor="let recipe of recipes | search:searchValue; index as i" [(selected)]="recipe.selected">
+    <mat-list-option *ngFor="let recipe of recipes | search:searchValue | sortSelected:'DESC'; index as i" [(selected)]="recipe.selected">
       {{recipe.name}}
-      <button mat-raised-button color="primary" class="delete-recipe" (click)="onDelete(i)">Delete</button>
+      <button mat-raised-button color="primary" class="modify-recipe" (click)="onModify($event, i, recipe)">Modify</button>
+      <button mat-raised-button color="primary" class="delete-recipe" (click)="onDelete($event, recipe?.name)">Delete</button>
     </mat-list-option>
   </mat-selection-list>
 </mat-expansion-panel>

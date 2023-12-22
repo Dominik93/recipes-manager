@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
@@ -12,6 +12,8 @@ import { SearchPipe } from './../../pipes/search.pipe';
 import { Recipe } from './../../recipe'
 import { RecipeComponent } from '../recipe/recipe.component';
 import { MatButtonModule } from '@angular/material/button';
+import { LoggingService } from '../../services/logging/logging';
+import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
 
 @Component({
   selector: 'rm-recipes',
@@ -27,7 +29,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,
 
-    SearchPipe],
+    SearchPipe,
+    SortSelectedPipe],
   providers: [],
   templateUrl: `recipes.component.html`,
   styleUrls: ['./recipes.component.css'],
@@ -42,11 +45,13 @@ export class RecipesComponent {
 
   @Output() recipeDeleted = new EventEmitter<Recipe[]>();
 
+  @Output() recipeModified = new EventEmitter<Recipe[]>();
+
   searchValue: string = '';
 
-  constructor(public dialog: MatDialog) { }
+  constructor(@Inject('LoggingService') private log: LoggingService, public dialog: MatDialog) { }
 
-  openDialog(): void {
+  onAddRecipe(): void {
     const dialogRef = this.dialog.open(RecipeComponent, {
       height: "calc(80% - 30px)",
       width: "calc(100% - 30px)"
@@ -64,9 +69,26 @@ export class RecipesComponent {
     this.recipeSelected.emit(this.recipes);
   }
 
-  onDelete(index: number) {
-    console.log('onDelete', index + 1)
-    this.recipes = this.recipes.splice(index + 1, 1);
+  onModify(event: any, index: number, recipe: Recipe): void {
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(RecipeComponent, {
+      data: recipe,
+      height: "calc(80% - 30px)",
+      width: "calc(100% - 30px)"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.log.info('Close dialog', result);
+      if (result !== '') {
+        this.recipes[index] = result;
+        this.recipeModified.emit(this.recipes);
+      }
+    });
+  }
+
+  onDelete(event: any, name: string) {
+    event.stopPropagation();
+    this.recipes = this.recipes.filter(recipe => recipe.name !== name)
     this.recipeDeleted.emit(this.recipes);
   }
 

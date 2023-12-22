@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import {
   MatDialogClose,
   MatDialogTitle,
   MatDialogContent,
+  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -53,7 +54,10 @@ export class RecipeComponent {
     selected: false
   };
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: Recipe) {
+    this.recipe = data?? this.recipe;
+  }
 
   onAddProduct() {
     const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0] }
