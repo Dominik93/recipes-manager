@@ -18,7 +18,7 @@ export class InMemoryRecipesService implements RecipesService {
           "name": "Kurczak",
           "quantity": {
             "base": 100,
-            "portions": {}
+            "portions": { 3: 2, 6: 3, 9: 4 }
           },
           "selected": false,
           "unit": "g"
@@ -43,7 +43,7 @@ export class InMemoryRecipesService implements RecipesService {
         }
       ],
       "selected": false
-    },{
+    }, {
       "name": "Awokado",
       "portions": 1,
       "products": [

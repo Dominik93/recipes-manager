@@ -14,6 +14,7 @@ import { RecipeComponent } from '../recipe/recipe.component';
 import { MatButtonModule } from '@angular/material/button';
 import { LoggingService } from '../../services/logging/logging';
 import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
+import { CloneUtil } from '../../utils/clone';
 
 @Component({
   selector: 'rm-recipes',
@@ -51,6 +52,10 @@ export class RecipesComponent {
 
   constructor(@Inject('LoggingService') private log: LoggingService, public dialog: MatDialog) { }
 
+  onSelectionChange(event: any) {
+    this.recipeSelected.emit(this.recipes);
+  }
+
   onAddRecipe(): void {
     const dialogRef = this.dialog.open(RecipeComponent, {
       height: "calc(80% - 30px)",
@@ -66,14 +71,10 @@ export class RecipesComponent {
     });
   }
 
-  onSelectionChange(event: any) {
-    this.recipeSelected.emit(this.recipes);
-  }
-
   onModify(event: any, index: number, recipe: Recipe): void {
     event.stopPropagation();
     const dialogRef = this.dialog.open(RecipeComponent, {
-      data: recipe,
+      data: CloneUtil.clone(recipe),
       height: "calc(80% - 30px)",
       width: "calc(100% - 30px)"
     });

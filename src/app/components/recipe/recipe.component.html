@@ -9,32 +9,33 @@
         <button mat-raised-button color="primary" class="add-product" (click)="onAddProduct()">Add product</button>
     </div>
     <div class="products-container">
+        <span>Products</span>
         <div *ngFor="let product of recipe.products; index as i">
             <mat-form-field appearance="fill">
-                <mat-label>Product name</mat-label>
+                <mat-label>Name</mat-label>
                 <input matInput type="text" [(ngModel)]="product.name">
             </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Product quantity</mat-label>
+            <mat-form-field appearance="fill" class="base-quantity">
+                <mat-label>Base quantity</mat-label>
                 <input matInput type="number" [(ngModel)]="product.quantity.base">
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="unit">
                 <mat-label>Unit</mat-label>
                 <mat-select [(value)]="product.unit">
-                  @for (unit of units; track unit) {
+                    @for (unit of units; track unit) {
                     <mat-option [value]="unit">{{unit}}</mat-option>
-                  }
+                    }
                 </mat-select>
-              </mat-form-field>
-            <button mat-raised-button color="primary" class="add-quantity" (click)="onAddQuantityPerProduct(i)">Add quantity</button>
-            <br>
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="change-quantity"
+                (click)="onChangeQuantityPerProduct(i)">Change quantity</button>
             <span *ngFor="let item of product.quantity.portions | keyvalue">
-                Key: {{item.key}}, Value: {{item.value}} <br>
+                Portions: {{item.key}}, Quantity: {{item.value}} | 
             </span>
         </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="recipe">Save</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="recipe">Save</button>
 </mat-dialog-actions>

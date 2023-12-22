@@ -10,6 +10,7 @@ export class DisabledLoggingService implements LoggingService {
 
   info(message: string, ...optionalParams: any[]) { }
   debug(message: string, ...optionalParams: any[]) { }
+  trace(message: string, ...optionalParams: any[]) { }
   error(message: string, ...optionalParams: any[]) { }
 
 }

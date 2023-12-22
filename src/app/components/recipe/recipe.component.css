@@ -1,9 +1,19 @@
 .product-container {
     height: 45px;
 }
+
 .add-product {
     float: right;
 }
-.add-quantity {
+
+.change-quantity {
     float: right;
+}
+
+.base-quantity {
+    width: 100px;
+}
+
+.unit {
+    width: 100px;
 }

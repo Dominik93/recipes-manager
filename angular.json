@@ -44,9 +44,7 @@
               "outputHashing": "all"
             },
             "demo": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": false,
+              "outputHashing": "all",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

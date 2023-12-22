@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Product, Recipe } from '../../recipe';
 import { MatListModule } from '@angular/material/list';
-import { QuantityComponent } from '../quantity/quantity.component';
+import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
 import { MatOptionModule } from '@angular/material/core';
 import { LoggingService } from '../../services/logging/logging';
 
@@ -57,7 +57,7 @@ export class RecipeComponent {
 
   constructor(@Inject('LoggingService') private log: LoggingService, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: Recipe) {
-    this.recipe = data?? this.recipe;
+    this.recipe = data ?? this.recipe;
   }
 
   onAddProduct() {
@@ -65,15 +65,41 @@ export class RecipeComponent {
     this.recipe.products = this.recipe.products.concat(product);
   }
 
-  onAddQuantityPerProduct(index: number) {
-    const dialogRef = this.dialog.open(QuantityComponent);
+  onChangeQuantityPerProduct(index: number) {
+    const quantities = this.mapToQuantityParts(this.recipe.products[index].quantity.portions);
+    this.log.debug('Mapped quantities', quantities);
+    const dialogRef = this.dialog.open(QuantityComponent,
+      {
+        data: quantities,
+        height: "calc(80% - 30px)",
+        width: "calc(70% - 30px)"
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
-      if (result !== '' && result.portion !== undefined && result.portion > 0) {
-        this.recipe.products[index].quantity.portions[result.portion] = result.quantity;
+      if (result !== '' && result !== undefined) {
+        const portions = this.mapToPortions(result);
+        this.log.debug('Mapped quantity by portion', portions);
+        this.recipe.products[index].quantity.portions = portions;
       }
     });
+  }
+
+  private mapToPortions(quantities: QuantityPart[]) {
+    let portions: { [key: number]: number } = {}
+    for (var quantity of quantities) {
+      portions[quantity.portion] = quantity.quantity;
+    }
+    return portions;
+  }
+
+  private mapToQuantityParts(portions: { [key: number]: number }) {
+    const quantities: QuantityPart[] = []
+    for (let key in portions) {
+      quantities.push({ portion: Number(key), quantity: portions[key] });
+    }
+    return quantities;
   }
 
 }

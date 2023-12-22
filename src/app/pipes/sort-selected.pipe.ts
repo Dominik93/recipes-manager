@@ -16,7 +16,7 @@ export class SortSelectedPipe implements PipeTransform {
   constructor(@Inject('LoggingService') private log: LoggingService,) {}
 
   transform(items: Selectable[], order: ORDER = 'ASC'): any {
-    this.log.debug('Sort by', order);
+    this.log.trace('Sort by', order);
 
     if (!items) {
       return items;
@@ -28,7 +28,7 @@ export class SortSelectedPipe implements PipeTransform {
       return this.asc(i1.selected, i2.selected);
     });
     
-    this.log.debug('Sorted items', items);
+    this.log.trace('Sorted items', items);
     return sortedItems;
   }
 

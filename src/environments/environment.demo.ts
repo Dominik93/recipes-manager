@@ -3,7 +3,7 @@ import { DisabledLoggingService } from "../app/services/logging/disabled-logging
 import { InMemoryRecipesService } from "../app/services/recipes/in-memory-recipes.service";
 
 export const environment = {
-    debug: false,
+    logging: {debug: false, trace: false},
     loggingService: DisabledLoggingService,
     authorizationService: MockAuthorizationService,
     recipesService: InMemoryRecipesService

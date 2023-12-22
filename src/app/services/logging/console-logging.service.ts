@@ -14,8 +14,14 @@ export class ConsoleLoggingService implements LoggingService {
   }
 
   debug(message: string, ...optionalParams: any[]) {
-    if(environment.debug) {
+    if(environment.logging.debug) {
       console.info(message, ...optionalParams);
+    }
+  }
+
+  trace(message: string, ...optionalParams: any[]) {
+    if(environment.logging.trace) {
+      console.log(message, ...optionalParams);
     }
   }
 

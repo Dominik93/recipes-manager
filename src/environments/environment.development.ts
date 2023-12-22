@@ -3,7 +3,7 @@ import { ConsoleLoggingService } from "../app/services/logging/console-logging.s
 import { InMemoryRecipesService } from "../app/services/recipes/in-memory-recipes.service";
 
 export const environment = {
-    debug: false,
+    logging: {debug: true, trace: false},
     loggingService: ConsoleLoggingService,
     authorizationService: MockAuthorizationService,
     recipesService: InMemoryRecipesService

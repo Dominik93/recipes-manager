@@ -3,7 +3,7 @@ import { DisabledLoggingService } from "../app/services/logging/disabled-logging
 import { DefaultRecipesService } from "../app/services/recipes/default-recipes.service";
 
 export const environment = {
-    debug: false,
+    logging: {debug: false, trace: false},
     loggingService: DisabledLoggingService,
     authorizationService: DefaultAuthorizationService,
     recipesService: DefaultRecipesService
