@@ -20,6 +20,8 @@ import { QuantityComponent, QuantityPart } from '../quantity/quantity.component'
 import { MatOptionModule } from '@angular/material/core';
 import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'rm-recipe',
@@ -29,6 +31,8 @@ import { ObjectUtil } from '../../utils/object-util';
     FormsModule,
 
     MatFormFieldModule,
+    MatIconModule,
+    MatTooltipModule,
     MatListModule,
     MatOptionModule,
     MatSelectModule,
@@ -87,12 +91,24 @@ export class RecipeComponent {
     });
   }
 
+  displayAdditionalInfo(product: Product): boolean {
+    return Object.keys(product.quantity.portions).length > 0;
+  }
+
+  convertToTooltip(product: Product): string {
+    let result = '';
+    for (let key in product.quantity.portions) {
+      result += "{ " + key + ": " + product.quantity.portions[key] + product.unit + " } ";
+    }
+    return result;
+  }
+
   private mapToPortions(quantities: QuantityPart[]) {
     let portions: { [key: number]: number } = {}
     for (var quantity of quantities) {
       portions[quantity.portion] = quantity.quantity;
     }
-    return portions;
+    return portions; 
   }
 
   private mapToQuantityParts(portions: { [key: number]: number }) {
