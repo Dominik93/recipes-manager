@@ -55,7 +55,10 @@ export class RecipesComponent {
 
   searchValue: string = '';
 
-  constructor(@Inject('LoggingService') private log: LoggingService, private _snackBar: MatSnackBar, public dialog: MatDialog,
+  constructor(
+    @Inject('LoggingService') private log: LoggingService,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) { }
 
   onSelectionChange(event: any) {
@@ -107,7 +110,7 @@ export class RecipesComponent {
   }
 
   private showNotification(message: string): void {
-    this._snackBar.openFromComponent(NotificationComponent, {
+    this.snackBar.openFromComponent(NotificationComponent, {
       duration: 5000,
       data: message
     });

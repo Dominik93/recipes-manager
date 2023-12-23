@@ -10,6 +10,8 @@ import { RecipesComponent } from './components/recipes/recipes.component'
 import { MatCardModule } from '@angular/material/card';
 import { tap } from 'rxjs';
 import { LoggingService } from './services/logging/logging';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @Component({
@@ -34,8 +36,10 @@ export class AppComponent {
   token: string = "";
   recipes: Recipe[] = [];
 
-  constructor(@Inject('LoggingService') private log: LoggingService,
-    @Inject('RecipesService') private recipesService: RecipesService) { }
+  constructor(
+    @Inject('LoggingService') private log: LoggingService,
+    @Inject('RecipesService') private recipesService: RecipesService,
+    private snackBar: MatSnackBar) { }
 
   onLogin(event: any): void {
     this.authorized = event.isAuth;
@@ -77,7 +81,16 @@ export class AppComponent {
   onRefresh() {
     this.recipesService.getRecipes(this.token)
       .pipe(tap(result => this.log.info('Recipes on refresh', result)))
-      .subscribe((result: any) => this.recipes = result.recipes);
+      .subscribe((result: any) => { 
+        this.recipes = result.recipes;
+         this.showNotification("Page refreshed.") });
+  }
+
+  private showNotification(message: string): void {
+    this.snackBar.openFromComponent(NotificationComponent, {
+      duration: 5000,
+      data: message
+    });
   }
 
 }

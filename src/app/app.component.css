@@ -9,7 +9,7 @@
   
   .footer {
     position: absolute;
-    font-size: small;
+    font-size: smaller;
     text-align: center;
     color: gray;
     bottom: 0; 
