@@ -16,6 +16,8 @@ import { LoggingService } from '../../services/logging/logging';
 import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
 import { CloneUtil } from '../../utils/clone-util';
 import { ObjectUtil } from '../../utils/object-util';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationComponent } from '../../notification/notification.component';
 
 @Component({
   selector: 'rm-recipes',
@@ -30,6 +32,8 @@ import { ObjectUtil } from '../../utils/object-util';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+
+    NotificationComponent,
 
     SearchPipe,
     SortSelectedPipe],
@@ -51,7 +55,8 @@ export class RecipesComponent {
 
   searchValue: string = '';
 
-  constructor(@Inject('LoggingService') private log: LoggingService, public dialog: MatDialog) { }
+  constructor(@Inject('LoggingService') private log: LoggingService, private _snackBar: MatSnackBar, public dialog: MatDialog,
+  ) { }
 
   onSelectionChange(event: any) {
     this.recipeSelected.emit(this.recipes);
@@ -68,6 +73,9 @@ export class RecipesComponent {
       if (!ObjectUtil.isAnyEmpty([result, result?.name])) {
         this.recipes.push(result);
         this.recipeAdded.emit(this.recipes);
+        this.showNotification("Recipe '" + result.name + "' added.");
+      } else {
+        this.showNotification("Recipe not added!");
       }
     });
   }
@@ -85,6 +93,9 @@ export class RecipesComponent {
       if (!ObjectUtil.isAnyEmpty([result])) {
         this.recipes[index] = result;
         this.recipeModified.emit(this.recipes);
+        this.showNotification("Recipe '" + result.name + "' modified.");
+      } else {
+        this.showNotification("Recipe not modified!");
       }
     });
   }
@@ -93,6 +104,13 @@ export class RecipesComponent {
     event.stopPropagation();
     this.recipes = this.recipes.filter(recipe => recipe.name !== name)
     this.recipeDeleted.emit(this.recipes);
+  }
+
+  private showNotification(message: string): void {
+    this._snackBar.openFromComponent(NotificationComponent, {
+      duration: 5000,
+      data: message
+    });
   }
 
 } 
