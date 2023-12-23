@@ -4,17 +4,22 @@
     <mat-panel-description>Select products</mat-panel-description>
   </mat-expansion-panel-header>
   <div *ngFor="let recipe of recipes | selected:true; trackBy: trackBy">
-    <div>
-      <div class="recipe-name">{{recipe.name}}</div>
-      <mat-form-field appearance="fill" class="portions">
-        <mat-label>Portions</mat-label>
-        <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
-      </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="recipe-container">
+      <div class="recipe-header">
+        <div class="recipe-name">{{recipe.name}}</div>
+        <mat-form-field appearance="fill" class="recipe-portions">
+          <mat-label>Portions</mat-label>
+          <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
+        </mat-form-field>
+      </div>
+      <div class="recipe-products">
+        <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
+          <mat-list-option *ngFor="let product of recipe.products | sortSelected:'ASC'" [(selected)]="product.selected">
+            {{product.name}}: {{product | quantity:recipe.portions }}{{product.unit}}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
     </div>
-    <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
-      <mat-list-option *ngFor="let product of recipe.products | sortSelected:'ASC'" [(selected)]="product.selected">
-        {{product.name}}: {{product | quantity:recipe.portions }}{{product.unit}}
-      </mat-list-option>
-    </mat-selection-list>
   </div>
 </mat-expansion-panel>

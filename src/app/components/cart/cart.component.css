@@ -1,7 +1,17 @@
-.portions {
-    float: right;
-    width: 80px;
-}
-.recipe-name {
-    display: inline;
+.recipe-container {
+
+    .recipe-header {
+        .recipe-name {
+            display: inline;
+            font-size: 20px;
+        }
+
+        .recipe-portions {
+            float: right;
+            width: 80px;
+        }
+    }
+
+    .recipe-products {}
+
 }

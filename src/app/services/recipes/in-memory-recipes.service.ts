@@ -42,7 +42,7 @@ export class InMemoryRecipesService implements RecipesService {
           "unit": "sz"
         }
       ],
-      "selected": false
+      "selected": true
     }, {
       "name": "Awokado",
       "portions": 1,

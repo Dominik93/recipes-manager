@@ -35,6 +35,7 @@ import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
     MatGridListModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDividerModule,
 
     QuantityPipe,
     SortSelectedPipe,
