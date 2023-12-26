@@ -67,13 +67,10 @@ export class CartComponent {
     this.productChanged.next(this.recipes);
   }
 
-  onToogleOwned(product: Product){ 
+  onToogleOwned(event: any, product: Product){ 
+    event?.stopPropagation();
     product.owned.show = !product.owned.show;
     this.productChanged.next(this.recipes);
-  }
-
-  trackBy(index: any, recipe: Recipe) {
-    return recipe;
   }
 
 }

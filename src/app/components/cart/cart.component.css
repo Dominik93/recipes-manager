@@ -14,26 +14,47 @@
 
     .recipe-products {
         .product-data-base {
-            width: 80px;
             display: inline-block;
-            overflow: auto;
         }
 
         .product-data-owned {
+            margin-left: 2px;
             width: 80px;
         }
 
         .product-data-summary {
-            width: 100px;
-            margin-left: 5px;
+            margin-left: 2px;
+        }
+
+        .toogle-owned {
+            float: right;
         }
 
         .menu {
-            float: right;
+            display: none;
         }
 
         .mat-mdc-list-item {
             height: 70px;
+        }
+
+    }
+
+}
+
+@media (max-width: 680px) {
+    .recipe-container {
+
+        .recipe-products {
+            .menu {
+                display: inherit;
+                float: right;
+            }
+
+            .toogle-owned {
+                display: none;
+            }
+
         }
 
     }

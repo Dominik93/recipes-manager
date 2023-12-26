@@ -15,7 +15,7 @@
 
   <mat-selection-list #recipeList (selectionChange)="onSelectionChange($event)">
     <mat-list-option *ngFor="let recipe of recipes | search:searchValue | sortSelected:'DESC'; index as i"
-      [(selected)]="recipe.selected">
+      [(selected)]="recipe.selected" togglePosition="before">
       {{recipe.name}}
       
       <button mat-icon-button [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{recipe: recipe, i : i}"
