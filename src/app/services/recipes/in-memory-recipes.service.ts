@@ -21,7 +21,8 @@ export class InMemoryRecipesService implements RecipesService {
             "portions": { 3: 2, 6: 3, 9: 4 }
           },
           "selected": false,
-          "unit": "g"
+          "unit": "g",
+          "owned": { show: false, value: 0 }
         },
         {
           "name": "Ryż",
@@ -30,7 +31,8 @@ export class InMemoryRecipesService implements RecipesService {
             "portions": {}
           },
           "selected": false,
-          "unit": "g"
+          "unit": "g",
+          "owned": { show: false, value: 0 }
         },
         {
           "name": "Jogurt",
@@ -39,7 +41,8 @@ export class InMemoryRecipesService implements RecipesService {
             "portions": {}
           },
           "selected": false,
-          "unit": "sz"
+          "unit": "sz",
+          "owned": { show: false, value: 0 }
         }
       ],
       "selected": true
@@ -54,7 +57,8 @@ export class InMemoryRecipesService implements RecipesService {
             "portions": {}
           },
           "selected": false,
-          "unit": "sz"
+          "unit": "sz",
+          "owned": { show: false, value: 0 }
         }
       ],
       "selected": false
@@ -70,7 +74,8 @@ export class InMemoryRecipesService implements RecipesService {
             "portions": {}
           },
           "selected": false,
-          "unit": "g"
+          "unit": "g",
+          "owned": { show: false, value: 0 }
         },
         {
           "name": "Makaron",
@@ -79,7 +84,8 @@ export class InMemoryRecipesService implements RecipesService {
             "portions": {}
           },
           "selected": false,
-          "unit": "g"
+          "unit": "g",
+          "owned": { show: false, value: 0 }
         }
       ],
       "selected": false

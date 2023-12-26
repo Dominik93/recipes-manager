@@ -18,6 +18,8 @@ import { CloneUtil } from '../../utils/clone-util';
 import { ObjectUtil } from '../../utils/object-util';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../../notification/notification.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'rm-recipes',
@@ -29,8 +31,11 @@ import { NotificationComponent } from '../../notification/notification.component
     MatCardModule,
     MatExpansionModule,
     MatListModule,
+    MatInputModule,
+    MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatMenuModule,
     MatButtonModule,
 
     NotificationComponent,
@@ -84,7 +89,7 @@ export class RecipesComponent {
   }
 
   onModify(event: any, index: number, recipe: Recipe): void {
-    event.stopPropagation();
+    event?.stopPropagation();
     const dialogRef = this.dialog.open(RecipeComponent, {
       data: CloneUtil.clone(recipe),
       height: "calc(80% - 30px)",
@@ -93,18 +98,19 @@ export class RecipesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
+      const name = this.recipes[index].name;
       if (!ObjectUtil.isAnyEmpty([result])) {
         this.recipes[index] = result;
         this.recipeModified.emit(this.recipes);
-        this.showNotification("Recipe '" + result.name + "' modified.");
+        this.showNotification("Recipe '" + name + "' modified.");
       } else {
-        this.showNotification("Recipe not modified!");
+        this.showNotification("Recipe '" + name + "' not modified!");
       }
     });
   }
 
   onDelete(event: any, name: string) {
-    event.stopPropagation();
+    event?.stopPropagation();
     this.recipes = this.recipes.filter(recipe => recipe.name !== name)
     this.recipeDeleted.emit(this.recipes);
   }

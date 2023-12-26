@@ -15,5 +15,21 @@
 }
 
 .unit {
-    width: 100px;
+    width: 80px;
+}
+.menu {
+    display: none;
+}
+
+@media (max-width: 680px) {
+    .menu {
+        display: inherit;
+        float: right;
+    }
+    .add-product {
+        display: none;
+    }
+    .change-quantity {
+        display: none;
+    }
 }

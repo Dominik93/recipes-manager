@@ -7,10 +7,14 @@
             <input matInput type="text" [(ngModel)]="recipe.name">
         </mat-form-field>
         <button mat-raised-button color="primary" class="add-product" (click)="onAddProduct()">Add product</button>
+        <button mat-icon-button [matMenuTriggerFor]="productMenu"class="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
     </div>
     <div class="products-container">
         <span>Products</span>
         <div *ngFor="let product of recipe.products; index as i">
+            <mat-divider></mat-divider>
             <mat-form-field appearance="fill">
                 <mat-label>Name</mat-label>
                 <input matInput type="text" [(ngModel)]="product.name">
@@ -38,3 +42,8 @@
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="recipe">Save</button>
 </mat-dialog-actions>
+
+
+<mat-menu #productMenu="matMenu">
+    <button mat-menu-item (click)="onAddProduct()">Add product</button>
+</mat-menu>

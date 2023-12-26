@@ -22,6 +22,8 @@ import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'rm-recipe',
@@ -35,6 +37,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatListModule,
     MatOptionModule,
+    
+    MatMenuModule,
+    MatDividerModule,
+    MatIconModule,
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
@@ -66,7 +72,7 @@ export class RecipeComponent {
   }
 
   onAddProduct() {
-    const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0] }
+    const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0], owned: {show:false, value: 0} }
     this.recipe.products = this.recipe.products.concat(product);
   }
 
@@ -108,7 +114,7 @@ export class RecipeComponent {
     for (var quantity of quantities) {
       portions[quantity.portion] = quantity.quantity;
     }
-    return portions; 
+    return portions;
   }
 
   private mapToQuantityParts(portions: { [key: number]: number }) {

@@ -16,10 +16,33 @@
       <div class="recipe-products">
         <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
           <mat-list-option *ngFor="let product of recipe.products | sortSelected:'ASC'" [(selected)]="product.selected">
-            {{product.name}}: {{product | quantity:recipe.portions }}{{product.unit}}
+            <span class="product-data-base">{{product.name}}:</span>
+
+            <mat-form-field *ngIf="ownedProduct && product.owned.show" appearance="fill" class="product-data-owned">
+              <mat-label>Owned</mat-label>
+              <input matInput type="number" min="0" [(ngModel)]="product.owned.value"
+                (click)="$event.stopPropagation()">
+            </mat-form-field>
+
+            <span class="product-data-summary">
+              {{(product | quantity:recipe.portions) - (product.owned.show ? product.owned.value : 0 )}}{{product.unit}}
+            </span>
+
+            <button *ngIf="ownedProduct" mat-icon-button [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{product: product}"
+              (click)="$event.stopPropagation()" class="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
           </mat-list-option>
         </mat-selection-list>
       </div>
     </div>
   </div>
 </mat-expansion-panel>
+
+
+<mat-menu #productMenu="matMenu">
+  <ng-template matMenuContent let-product="product">
+    <button mat-menu-item color="primary" (click)="onToogleOwned(product)">Toogle owned</button>
+  </ng-template>
+</mat-menu>

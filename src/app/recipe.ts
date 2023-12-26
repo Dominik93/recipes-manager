@@ -9,7 +9,13 @@ export type Product = {
   name: string,
   selected: boolean,
   quantity: Quantity,
-  unit: string
+  unit: string,
+  owned: Owned
+}
+
+export type Owned = {
+  value: number;
+  show: boolean;
 }
 
 export type Quantity = {

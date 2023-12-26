@@ -9,8 +9,15 @@
 .modify-recipe {
     float: right;
 }
+.menu {
+    display: none;
+}
 
 @media (max-width: 680px) {
+    .menu {
+        display: inherit;
+        float: right;
+    }
     .add-recipe {
         display: none;
     }

@@ -13,9 +13,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { SelectedPipe } from './../../pipes/selected.pipe';
 import { QuantityPipe } from './../../pipes/quantity.pipe';
-import { RecipesService } from '../../services/recipes/recipes.service'
-import { Recipe } from './../../recipe'
+import { Product, Recipe } from './../../recipe'
 import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
+import { environment } from '../../../environments/environment';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @Component({
@@ -32,6 +33,8 @@ import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
     MatDividerModule,
     MatButtonModule,
     MatListModule,
+    MatIconModule,
+    MatMenuModule,
     MatGridListModule,
     MatFormFieldModule,
     MatInputModule,
@@ -50,13 +53,22 @@ export class CartComponent {
 
   @Output() productChanged = new EventEmitter<Recipe[]>();
 
-  constructor() { }
+  ownedProduct: boolean = false;
+
+  constructor() { 
+    this.ownedProduct = environment.features.ownedProduct;
+  }
 
   onSelectionChange(event: any) {
     this.productChanged.next(this.recipes);
   }
 
   onChangePortions() {
+    this.productChanged.next(this.recipes);
+  }
+
+  onToogleOwned(product: Product){ 
+    product.owned.show = !product.owned.show;
     this.productChanged.next(this.recipes);
   }
 

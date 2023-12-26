@@ -12,6 +12,30 @@
         }
     }
 
-    .recipe-products {}
+    .recipe-products {
+        .product-data-base {
+            width: 80px;
+            display: inline-block;
+            overflow: auto;
+        }
+
+        .product-data-owned {
+            width: 80px;
+        }
+
+        .product-data-summary {
+            width: 100px;
+            margin-left: 5px;
+        }
+
+        .menu {
+            float: right;
+        }
+
+        .mat-mdc-list-item {
+            height: 70px;
+        }
+
+    }
 
 }
