@@ -2,6 +2,10 @@
     height: 45px;
 }
 
+.recipe-name {
+    max-width: 80%;
+}
+
 .add-product {
     float: right;
 }
@@ -17,6 +21,7 @@
 .unit {
     width: 80px;
 }
+
 .menu {
     display: none;
 }
@@ -26,9 +31,11 @@
         display: inherit;
         float: right;
     }
+
     .add-product {
         display: none;
     }
+
     .change-quantity {
         display: none;
     }

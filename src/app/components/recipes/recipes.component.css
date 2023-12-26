@@ -1,3 +1,7 @@
+.recipe-name {
+    max-width: 45%;
+}
+
 .add-recipe {
     float: right;
 }
@@ -9,6 +13,7 @@
 .modify-recipe {
     float: right;
 }
+
 .menu {
     display: none;
 }
@@ -18,6 +23,7 @@
         display: inherit;
         float: right;
     }
+
     .add-recipe {
         display: none;
     }

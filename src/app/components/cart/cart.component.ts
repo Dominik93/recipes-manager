@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -35,7 +34,6 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule,
     MatIconModule,
     MatMenuModule,
-    MatGridListModule,
     MatFormFieldModule,
     MatInputModule,
     MatDividerModule,
@@ -52,7 +50,7 @@ export class CartComponent {
   @Input() recipes: Recipe[] = [];
 
   @Output() productChanged = new EventEmitter<Recipe[]>();
-
+ 
   ownedProduct: boolean = false;
 
   constructor() { 
@@ -67,7 +65,7 @@ export class CartComponent {
     this.productChanged.next(this.recipes);
   }
 
-  onToggleOwned(event: any, product: Product){ 
+  onToggleOwned(event: any, product: Product) {
     event?.stopPropagation();
     product.owned.show = !product.owned.show;
     this.productChanged.next(this.recipes);

@@ -17,7 +17,8 @@
         <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
           <mat-list-option *ngFor="let product of recipe.products | sortSelected:'ASC'" [(selected)]="product.selected"
             togglePosition="before">
-            <span class="product-data-base">{{product.name}}: </span>
+            <span class="product-data-name">{{product.name}}:
+            </span>
 
             <mat-form-field *ngIf="ownedProduct && product.owned.show" appearance="fill" class="product-data-owned">
               <mat-label>Owned</mat-label>
@@ -29,7 +30,8 @@
               {{(product | quantity:recipe.portions) - (product.owned.show ? product.owned.value : 0 )}}{{product.unit}}
             </span>
 
-            <button mat-raised-button color="primary" class="toggle-owned" (click)="onToggleOwned($event, product)">Toggle
+            <button mat-raised-button color="primary" class="toggle-owned"
+              (click)="onToggleOwned($event, product)">Toggle
               owned</button>
 
             <button *ngIf="ownedProduct" mat-icon-button [matMenuTriggerFor]="productMenu"
