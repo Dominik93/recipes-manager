@@ -67,7 +67,7 @@ export class CartComponent {
     this.productChanged.next(this.recipes);
   }
 
-  onToogleOwned(event: any, product: Product){ 
+  onToggleOwned(event: any, product: Product){ 
     event?.stopPropagation();
     product.owned.show = !product.owned.show;
     this.productChanged.next(this.recipes);

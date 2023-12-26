@@ -26,7 +26,7 @@
             margin-left: 2px;
         }
 
-        .toogle-owned {
+        .toggle-owned {
             float: right;
         }
 
@@ -51,7 +51,7 @@
                 float: right;
             }
 
-            .toogle-owned {
+            .toggle-owned {
                 display: none;
             }
 

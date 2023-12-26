@@ -76,6 +76,16 @@ export class InMemoryRecipesService implements RecipesService {
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 }
+        }, 
+        {
+          "name": "Mieszanka warzyw po chińsku",
+          "quantity": {
+            "base": 200,
+            "portions": {}
+          },
+          "selected": false,
+          "unit": "g",
+          "owned": { show: false, value: 0 }
         },
         {
           "name": "Makaron",

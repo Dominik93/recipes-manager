@@ -29,7 +29,7 @@
               {{(product | quantity:recipe.portions) - (product.owned.show ? product.owned.value : 0 )}}{{product.unit}}
             </span>
 
-            <button mat-raised-button color="primary" class="toogle-owned" (click)="onToogleOwned($event, product)">Toogle
+            <button mat-raised-button color="primary" class="toggle-owned" (click)="onToggleOwned($event, product)">toggle
               owned</button>
 
             <button *ngIf="ownedProduct" mat-icon-button [matMenuTriggerFor]="productMenu"
@@ -47,6 +47,6 @@
 
 <mat-menu #productMenu="matMenu">
   <ng-template matMenuContent let-product="product" let-event="event">
-    <button mat-menu-item color="primary" (click)="onToogleOwned(event, product)">Toogle owned</button>
+    <button mat-menu-item color="primary" (click)="onToggleOwned(event, product)">toggle owned</button>
   </ng-template>
 </mat-menu>
