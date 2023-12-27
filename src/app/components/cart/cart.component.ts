@@ -74,6 +74,10 @@ export class CartComponent {
     this.productChanged.next(this.recipes);
   }
 
+  onChangeOnwed() {
+    this.productChanged.next(this.recipes);
+  }
+
   recipeTrackBy(index: number, recipe: Recipe) {
     return recipe;
   }

@@ -16,7 +16,8 @@
 
           <mat-form-field *ngIf="ownedProduct && product.owned.show" appearance="fill" class="product-data-owned">
             <mat-label>Owned</mat-label>
-            <input matInput type="number" min="0" [(ngModel)]="product.owned.value" (click)="$event.stopPropagation()">
+            <input matInput type="number" min="0" [(ngModel)]="product.owned.value"
+            (change)="onChangeOnwed()" (click)="$event.stopPropagation()">
           </mat-form-field>
 
           <span class="product-data-summary" [class.product-selected]="product.selected">
