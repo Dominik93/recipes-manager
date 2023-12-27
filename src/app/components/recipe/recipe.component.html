@@ -2,48 +2,64 @@
 <mat-dialog-content>
 
     <div class="container">
-        <mat-form-field appearance="fill" class="recipe-name">
-            <mat-label>Name</mat-label>
-            <input matInput type="text" [(ngModel)]="recipe.name">
-        </mat-form-field>
-        <button mat-raised-button color="primary" class="add-product" (click)="onAddProduct()">Add product</button>
-        <button mat-icon-button [matMenuTriggerFor]="productMenu"class="menu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-    </div>
-    <div class="products-container">
-        <span>Products</span>
-        <div *ngFor="let product of recipe.products; index as i">
-            <mat-divider></mat-divider>
-            <mat-form-field appearance="fill">
+        <div class="header">
+            <mat-form-field appearance="fill" class="recipe-name">
                 <mat-label>Name</mat-label>
-                <input matInput type="text" [(ngModel)]="product.name">
+                <input matInput type="text" [(ngModel)]="recipe.name">
             </mat-form-field>
-            <mat-form-field appearance="fill" class="base-quantity">
-                <mat-label>Base quantity</mat-label>
-                <input matInput type="number" [(ngModel)]="product.quantity.base">
-            </mat-form-field>
-            <mat-form-field class="unit">
-                <mat-label>Unit</mat-label>
-                <mat-select [(value)]="product.unit">
-                    @for (unit of units; track unit) {
-                    <mat-option [value]="unit">{{unit}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <mat-icon aria-hidden="false" aria-label="Portions" fontIcon="info" *ngIf="displayAdditionalInfo(product)"
-                matTooltip="{{convertToTooltip(product)}}"></mat-icon>
-            <button mat-raised-button color="primary" class="change-quantity"
-                (click)="onChangeQuantityPerProduct(i)">Change quantity</button>
+            <button mat-raised-button color="primary" class="add-product" (click)="onAddProduct()">Add product</button>
+            <button mat-icon-button [matMenuTriggerFor]="productMenu" class="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
+
+        <div class="content">
+            <span>Products</span>
+            <div *ngFor="let product of recipe.products; index as i">
+                <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
+                <mat-form-field appearance="fill" class="product-name">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="product.name">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="product-base-quantity">
+                    <mat-label>Base quantity</mat-label>
+                    <input matInput type="number" [(ngModel)]="product.quantity.base">
+                </mat-form-field>
+                <mat-form-field class="product-unit">
+                    <mat-label>Unit</mat-label>
+                    <mat-select [(value)]="product.unit">
+                        @for (unit of units; track unit) {
+                        <mat-option [value]="unit">{{unit}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <mat-icon aria-hidden="false" aria-label="Portions" fontIcon="info"
+                    *ngIf="displayAdditionalInfo(product)" matTooltip="{{convertToTooltip(product)}}"></mat-icon>
+
+                <button mat-icon-button [matMenuTriggerFor]="quantityMenu" [matMenuTriggerData]="{i : i}"
+                    (click)="$event.stopPropagation()" class="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <button mat-raised-button color="primary" class="change-quantity"
+                    (click)="onChangeQuantityPerProduct($event, i)">Change quantity</button>
+
+            </div>
         </div>
     </div>
 </mat-dialog-content>
+
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="recipe">Save</button>
 </mat-dialog-actions>
 
-
 <mat-menu #productMenu="matMenu">
     <button mat-menu-item (click)="onAddProduct()">Add product</button>
+</mat-menu>
+
+<mat-menu #quantityMenu="matMenu">
+    <ng-template matMenuContent let-i="i" let-event="event">
+        <button mat-menu-item color="primary" (click)="onChangeQuantityPerProduct(event, i)">Change quantity</button>
+    </ng-template>
 </mat-menu>

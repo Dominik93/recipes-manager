@@ -1,9 +1,6 @@
 <div class="content-container">
   <div *ngFor="let recipe of recipes | selected:true; index as i; trackBy: recipeTrackBy">
-    <div *ngIf="i > 0">
-      <mat-divider></mat-divider>
-      <br>
-    </div>
+    <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
     <div class="recipe-container">
       <div class="recipe-header">
         <div class="recipe-name">{{recipe.name}}</div>

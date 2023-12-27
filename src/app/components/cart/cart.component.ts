@@ -4,11 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { SelectedPipe } from './../../pipes/selected.pipe';
 import { QuantityPipe } from './../../pipes/quantity.pipe';
@@ -17,6 +13,7 @@ import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
 import { environment } from '../../../environments/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Config, DividerComponent } from '../../divider/divider.component';
 
 
 @Component({
@@ -28,17 +25,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
     MatIconModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatDividerModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatListModule,
     MatIconModule,
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDividerModule,
+
+    DividerComponent,
 
     QuantityPipe,
     SortSelectedPipe,
@@ -49,6 +43,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class CartComponent {
 
+  readonly dividerConfig: Config = {
+    excludeIndex: 0,
+    newLine: { after: true, before: false }
+  }
+  
   @Input() recipes: Recipe[] = [];
 
   @Output() productChanged = new EventEmitter<Recipe[]>();

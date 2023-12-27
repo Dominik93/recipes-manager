@@ -11,19 +11,16 @@ import {
   MatDialogContent,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { Product, Recipe } from '../../recipe';
-import { MatListModule } from '@angular/material/list';
-import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
-import { MatOptionModule } from '@angular/material/core';
-import { LoggingService } from '../../services/logging/logging';
-import { ObjectUtil } from '../../utils/object-util';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDividerModule } from '@angular/material/divider';
+import { Product, Recipe } from '../../recipe';
+import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
+import { LoggingService } from '../../services/logging/logging';
+import { ObjectUtil } from '../../utils/object-util';
+import { Config, DividerComponent } from '../../divider/divider.component';
 
 @Component({
   selector: 'rm-recipe',
@@ -35,11 +32,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatFormFieldModule,
     MatIconModule,
     MatTooltipModule,
-    MatListModule,
-    MatOptionModule,
-    
     MatMenuModule,
-    MatDividerModule,
     MatIconModule,
     MatSelectModule,
     MatInputModule,
@@ -47,12 +40,19 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDialogActions,
     MatDialogClose,
     MatDialogTitle,
-    MatDialogContent
+    MatDialogContent,
+
+    DividerComponent
   ],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.css'
 })
 export class RecipeComponent {
+
+  readonly dividerConfig: Config = {
+    excludeIndex: 0,
+    newLine: { after: true, before: false }
+  }
 
   readonly units = [
     'g',
@@ -72,18 +72,18 @@ export class RecipeComponent {
   }
 
   onAddProduct() {
-    const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0], owned: {show:false, value: 0} }
+    const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0], owned: { show: false, value: 0 } }
     this.recipe.products = this.recipe.products.concat(product);
   }
 
-  onChangeQuantityPerProduct(index: number) {
+  onChangeQuantityPerProduct(event: any, index: number) {
+    event?.stopPropagation();
     const quantities = this.mapToQuantityParts(this.recipe.products[index].quantity.portions);
     this.log.debug('Mapped quantities', quantities);
     const dialogRef = this.dialog.open(QuantityComponent,
       {
         data: quantities,
-        height: "calc(80% - 30px)",
-        width: "calc(70% - 30px)"
+        ...this.dialogDimenstions()
       }
     );
 
@@ -123,6 +123,14 @@ export class RecipeComponent {
       quantities.push({ portion: Number(key), quantity: portions[key] });
     }
     return quantities;
+  }
+
+  private dialogDimenstions() {
+    return {
+      height: "calc(80% - 30px)",
+      width: "100%",
+      maxWidth: '360px'
+    }
   }
 
 }

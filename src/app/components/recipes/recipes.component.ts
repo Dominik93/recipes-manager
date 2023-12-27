@@ -135,7 +135,8 @@ export class RecipesComponent {
   private dialogDimenstions() {
     return {
       height: "calc(80% - 30px)",
-      width: "calc(100% - 5px)"
+      width: "100%",
+      maxWidth: '750px'
     }
   }
 

@@ -1,0 +1,24 @@
+.container {
+    .add-quantity {
+        margin-bottom: 10px;
+
+    }
+
+    .quantity {
+        margin-top: 2px;
+
+        .quantity-portion {
+            max-width: 100px;
+        }
+
+        .quantity-value {
+            max-width: 80px;
+
+        }
+        .delete-quantity {
+            margin-left: 10px;
+    
+        }
+    }
+
+}

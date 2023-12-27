@@ -1,42 +1,67 @@
-.product-container {
-    height: 45px;
-}
+.container {
+    .header {
+        .recipe-name {
+            max-width: 80%;
+        }
 
-.recipe-name {
-    max-width: 80%;
-}
+        .add-product {
+            float: right;
+        }
 
-.add-product {
-    float: right;
-}
+        .menu {
+            display: none;
+        }
 
-.change-quantity {
-    float: right;
-}
+    }
 
-.base-quantity {
-    width: 100px;
-}
+    .content {
+        height: 45px;
 
-.unit {
-    width: 80px;
-}
+        .product-name {
+            width: 300px;
+        }
 
-.menu {
-    display: none;
+        .product-base-quantity {
+            width: 100px;
+        }
+
+        .product-unit {
+            width: 80px;
+        }
+
+        .change-quantity {
+            float: right;
+        }
+
+        .menu {
+            display: none;
+        }
+    }
 }
 
 @media (max-width: 680px) {
-    .menu {
-        display: inherit;
-        float: right;
+    .container {
+        .header {
+            .add-product {
+                display: none;
+            }
+
+            .menu {
+                display: inherit;
+                float: right;
+            }
+        }
+
+        .content {
+            .change-quantity {
+                display: none;
+            }
+
+            .menu {
+                display: inherit;
+                float: right;
+            }
+        }
     }
 
-    .add-product {
-        display: none;
-    }
-
-    .change-quantity {
-        display: none;
-    }
 }
