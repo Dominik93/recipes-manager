@@ -50,10 +50,10 @@ export class CartComponent {
   @Input() recipes: Recipe[] = [];
 
   @Output() productChanged = new EventEmitter<Recipe[]>();
- 
+
   ownedProduct: boolean = false;
 
-  constructor() { 
+  constructor() {
     this.ownedProduct = environment.features.ownedProduct;
   }
 
@@ -71,4 +71,7 @@ export class CartComponent {
     this.productChanged.next(this.recipes);
   }
 
+  recipeTrackBy(index: number, recipe: Recipe) {
+    return recipe;
+  }
 }

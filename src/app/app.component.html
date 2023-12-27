@@ -9,10 +9,16 @@
                 </mat-card-title>
             </mat-card-header>
         </mat-card>
-        <rm-recipes *ngIf="authorized" [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"
-            (recipeModified)="onRecipeModified($event)" (recipeDeleted)="onRecipeDeleted($event)"
-            (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
-        <rm-cart *ngIf="authorized" [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
+        <mat-tab-group *ngIf="authorized">
+            <mat-tab label="Recipes">
+                <rm-recipes [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"
+                    (recipeModified)="onRecipeModified($event)" (recipeDeleted)="onRecipeDeleted($event)"
+                    (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
+            </mat-tab>
+            <mat-tab label="Cart">
+                <rm-cart [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
+            </mat-tab>
+        </mat-tab-group>
     </div>
     <div class="footer">
         Recipes Manager 1.9.2<br>powered by Angular 17, Angular Material 17 and Atlas MongoDB

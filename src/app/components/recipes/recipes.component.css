@@ -1,38 +1,50 @@
-.recipe-name {
-    max-width: 45%;
-}
+.content-container {
+    margin-top: 5%;
 
-.add-recipe {
-    float: right;
-}
-
-.delete-recipe {
-    float: right;
-}
-
-.modify-recipe {
-    float: right;
-}
-
-.menu {
-    display: none;
-}
-
-@media (max-width: 680px) {
-    .menu {
-        display: inherit;
-        float: right;
+    .recipe-name {
+        max-width: 45%;
+        white-space: normal;
     }
 
     .add-recipe {
-        display: none;
+        float: right;
     }
 
     .delete-recipe {
-        display: none;
+        float: right;
     }
 
     .modify-recipe {
+        float: right;
+    }
+
+    .menu {
         display: none;
     }
+    
+    .mat-mdc-list-item {
+        height: 5rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .content-container {
+        .menu {
+            display: inherit;
+            float: right;
+        }
+
+        .add-recipe {
+            display: none;
+        }
+
+        .delete-recipe {
+            display: none;
+        }
+
+        .modify-recipe {
+            display: none;
+        }
+    }
+
 }

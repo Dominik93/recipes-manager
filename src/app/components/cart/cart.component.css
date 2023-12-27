@@ -1,51 +1,19 @@
-.recipe-container {
+.content-container {
+    margin-top: 5%;
 
-    .recipe-header {
-        .recipe-name {
-            display: inline;
-            font-size: 20px;
-        }
-
-        .recipe-portions {
-            float: right;
-            width: 80px;
-        }
-    }
-
-    .recipe-products {
-        .product-data-name {
-            display: inline-block;
-            white-space: normal;
-            max-width: 45%;
-        }
-
-        .product-data-owned {
-            margin-left: 2px;
-            width: 70px;
-        }
-
-        .product-data-summary {
-            margin-left: 2px;
-        }
-
-        .toggle-owned {
-            float: right;
-        }
-
-        .menu {
-            display: none;
-        }
-
-        .mat-mdc-list-item {
-            height: 6rem;
-        }
-
-    }
-
-}
-
-@media (max-width: 680px) {
     .recipe-container {
+        .recipe-header {
+            .recipe-name {
+                display: inline;
+                font-size: 20px;
+                white-space: normal;
+            }
+
+            .recipe-portions {
+                float: right;
+                width: 80px;
+            }
+        }
 
         .recipe-products {
             .product-data-name {
@@ -54,17 +22,56 @@
                 max-width: 45%;
             }
 
-            .menu {
-                display: inherit;
-                float: right;
+            .product-data-owned {
+                margin-left: 2px;
+                width: 70px;
+            }
+
+            .product-selected {
+                color: gray;
+            }
+
+            .product-data-summary {
+                margin-left: 2px;
             }
 
             .toggle-owned {
+                float: right;
+            }
+
+            .menu {
                 display: none;
             }
 
+            .mat-mdc-list-item {
+                height: 5rem;
+            }
+
         }
-
     }
+}
 
+@media (max-width: 680px) {
+    .content-container {
+        .recipe-container {
+            .recipe-products {
+                .product-data-name {
+                    display: inline-block;
+                    white-space: normal;
+                    max-width: 45%;
+                }
+
+                .menu {
+                    display: inherit;
+                    float: right;
+                }
+
+                .toggle-owned {
+                    display: none;
+                }
+
+            }
+
+        }
+    }
 }

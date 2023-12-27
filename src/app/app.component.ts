@@ -8,6 +8,7 @@ import { AuthorizationComponent } from './components/authorization/authorization
 import { CartComponent } from './components/cart/cart.component'
 import { RecipesComponent } from './components/recipes/recipes.component'
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { tap } from 'rxjs';
 import { LoggingService } from './services/logging/logging';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,6 +23,7 @@ import { NotificationComponent } from './notification/notification.component';
     FormsModule,
 
     MatIconModule,
+    MatTabsModule,
     MatCardModule,
 
     AuthorizationComponent,
@@ -81,9 +83,10 @@ export class AppComponent {
   onRefresh() {
     this.recipesService.getRecipes(this.token)
       .pipe(tap(result => this.log.info('Recipes on refresh', result)))
-      .subscribe((result: any) => { 
+      .subscribe((result: any) => {
         this.recipes = result.recipes;
-         this.showNotification("Page refreshed.") });
+        this.showNotification("Page refreshed.")
+      });
   }
 
   private showNotification(message: string): void {

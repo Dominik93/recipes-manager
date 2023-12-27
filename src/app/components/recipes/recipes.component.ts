@@ -63,8 +63,7 @@ export class RecipesComponent {
   constructor(
     @Inject('LoggingService') private log: LoggingService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog) { }
 
   onSelectionChange(event: any) {
     this.recipeSelected.emit(this.recipes);
@@ -72,19 +71,12 @@ export class RecipesComponent {
 
   onAddRecipe(): void {
     const dialogRef = this.dialog.open(RecipeComponent, {
-      height: "calc(80% - 30px)",
-      width: "calc(100% - 30px)"
+      ...this.dialogDimenstions()
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
-      if (!ObjectUtil.isAnyEmpty([result, result?.name])) {
-        this.recipes.push(result);
-        this.recipeAdded.emit(this.recipes);
-        this.showNotification("Recipe '" + result.name + "' added.");
-      } else {
-        this.showNotification("Recipe not added!");
-      }
+      this.addRecipe(result);
     });
   }
 
@@ -92,20 +84,12 @@ export class RecipesComponent {
     event?.stopPropagation();
     const dialogRef = this.dialog.open(RecipeComponent, {
       data: CloneUtil.clone(recipe),
-      height: "calc(80% - 30px)",
-      width: "calc(100% - 30px)"
+      ...this.dialogDimenstions()
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('Close dialog', result);
-      const name = this.recipes[index].name;
-      if (!ObjectUtil.isAnyEmpty([result])) {
-        this.recipes[index] = result;
-        this.recipeModified.emit(this.recipes);
-        this.showNotification("Recipe '" + name + "' modified.");
-      } else {
-        this.showNotification("Recipe '" + name + "' not modified!");
-      }
+      this.modifyRecipe(index, result);
     });
   }
 
@@ -115,11 +99,39 @@ export class RecipesComponent {
     this.recipeDeleted.emit(this.recipes);
   }
 
+  private addRecipe(result: Recipe) {
+    if (!ObjectUtil.isAnyEmpty([result, result?.name])) {
+      this.recipes.push(result);
+      this.recipeAdded.emit(this.recipes);
+      this.showNotification("Recipe '" + result.name + "' added.");
+    } else {
+      this.showNotification("Recipe not added!");
+    }
+  }
+
+  private modifyRecipe(index: number, result: Recipe) {
+    const name = this.recipes[index].name;
+    if (!ObjectUtil.isAnyEmpty([result])) {
+      this.recipes[index] = result;
+      this.recipeModified.emit(this.recipes);
+      this.showNotification("Recipe '" + name + "' modified.");
+    } else {
+      this.showNotification("Recipe '" + name + "' not modified!");
+    }
+  }
+
   private showNotification(message: string): void {
     this.snackBar.openFromComponent(NotificationComponent, {
       duration: 5000,
       data: message
     });
+  }
+
+  private dialogDimenstions() {
+    return {
+      height: "calc(80% - 30px)",
+      width: "calc(100% - 5px)"
+    }
   }
 
 } 

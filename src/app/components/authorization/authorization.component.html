@@ -1,18 +1,17 @@
-<mat-expansion-panel *ngIf="!authorized">
-  <mat-expansion-panel-header>
-    <mat-panel-title>Login</mat-panel-title>
-    <mat-panel-description>Log to application</mat-panel-description>
-  </mat-expansion-panel-header>
-  <div class="container">
-    <mat-form-field appearance="fill">
-      <mat-label>Username</mat-label>
-      <input matInput type="text" [(ngModel)]="username">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" [(ngModel)]="password">
-    </mat-form-field>
-  </div>
-  <br>
-  <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
-</mat-expansion-panel>
+<div class="auth">
+  <mat-card *ngIf="!authorized" class="auth-card">
+    <mat-card-content>
+      <mat-form-field id="useramne-form-field" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput id="useramne-input" type="text" [(ngModel)]="username">
+      </mat-form-field>
+      <br>
+      <mat-form-field id="password-form-field" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput id="password-input" type="password" [(ngModel)]="password">
+      </mat-form-field>
+      <br>
+      <button mat-raised-button id="login-button" color="primary" class="login-button" (click)="onLogin()">Login</button>
+    </mat-card-content>
+  </mat-card>
+</div>

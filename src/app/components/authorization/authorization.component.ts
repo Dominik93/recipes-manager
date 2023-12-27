@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { Authorization } from './../../authorization'
 import { AuthorizationService } from '../../services/authorization/authorization.service'
 import { environment } from '../../../environments/environment';
@@ -19,10 +18,10 @@ import { environment } from '../../../environments/environment';
     FormsModule,
 
     MatCardModule,
-    MatExpansionModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule
+  ],
   providers: [
     {
       provide: 'AuthorizationService',
