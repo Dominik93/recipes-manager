@@ -23,24 +23,24 @@ export class MongodbService {
       {
         ...this.connection(),
         "filter": { "name": name },
-        "projection": { "recipes": 1 }
+        "projection": { "recipes": 1, "version": 1 }
       },
       { headers: headers });
   }
 
-  insertOneDocument(url: string, token: string, name: string, documents: Recipe[]) {
+  insertOneDocument(url: string, token: string, name: string, version: number, documents: Recipe[]) {
     const headers = this.authHeader(token)
       .set('Content-Type', 'application/ejson')
       .set('Accept', 'application/json');
     return this.http.post(url,
       {
         ...this.connection(),
-        "document": { "name": name, "recipe": documents }
+        "document": { "name": name, "version": version, "recipes": documents }
       },
       { headers: headers });
   }
 
-  updateOneDocument(url: string, token: string, name: string, documents: Recipe[]) {
+  updateOneDocument(url: string, token: string, name: string, version: number, documents: Recipe[]) {
     const headers = this.authHeader(token)
       .set('Content-Type', 'application/ejson')
       .set('Accept', 'application/json');
@@ -51,6 +51,7 @@ export class MongodbService {
 
         "update": {
           "$set": {
+            "version": version,
             "recipes": documents
           }
         }

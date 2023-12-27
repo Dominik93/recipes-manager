@@ -76,7 +76,7 @@ export class InMemoryRecipesService implements RecipesService {
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 }
-        }, 
+        },
         {
           "name": "Mieszanka warzyw po chińsku",
           "quantity": {
@@ -100,15 +100,23 @@ export class InMemoryRecipesService implements RecipesService {
       ],
       "selected": false
     }
-  ]
+  ];
+
+  constructor(@Inject('LoggingService') private log: LoggingService) { }
 
   getRecipes(token: string): Observable<any> {
-    return of({ recipes: this.recipes });
+    this.log.info("InMemoryRecipesService::getRecipes", token);
+    const result = { version: 12498745, recipes: this.recipes };
+    this.log.info("InMemoryRecipesService::getRecipes completed", result);
+    return of(result);
   }
 
-  save(token: string, recipes: Recipe[]): Observable<any> {
+  save(token: string, version: number, recipes: Recipe[]): Observable<any> {
     this.recipes = recipes;
-    return of({ recipes: this.recipes });
+    this.log.info("InMemoryRecipesService::save", token, version, recipes);
+    const result = { version: version, recipes: this.recipes };
+    this.log.info("InMemoryRecipesService::save completed", result);
+    return of(result);
   }
 
 }

@@ -13,22 +13,22 @@ export type ORDER = 'ASC' | 'DESC';
 })
 export class SortSelectedPipe implements PipeTransform {
 
-  constructor(@Inject('LoggingService') private log: LoggingService,) {}
+  constructor(@Inject('LoggingService') private log: LoggingService,) { }
 
   transform(items: Selectable[], order: ORDER = 'ASC'): any {
-    this.log.trace('Sort by', order);
+    this.log.trace('SortSelectedPipe::transform Sort by', order);
 
     if (!items) {
       return items;
     }
-    
-    const sortedItems=  items.sort((i1, i2) => {
-      if(order === 'ASC') return this.asc(i1.selected, i2.selected);
-      if(order === 'DESC') return this.desc(i1.selected, i2.selected);
+
+    const sortedItems = items.sort((i1, i2) => {
+      if (order === 'ASC') return this.asc(i1.selected, i2.selected);
+      if (order === 'DESC') return this.desc(i1.selected, i2.selected);
       return this.asc(i1.selected, i2.selected);
     });
-    
-    this.log.trace('Sorted items', items);
+
+    this.log.trace('SortSelectedPipe::transform Sorted items', items);
     return sortedItems;
   }
 

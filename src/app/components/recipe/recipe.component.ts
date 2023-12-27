@@ -79,7 +79,7 @@ export class RecipeComponent {
   onChangeQuantityPerProduct(event: any, index: number) {
     event?.stopPropagation();
     const quantities = this.mapToQuantityParts(this.recipe.products[index].quantity.portions);
-    this.log.debug('Mapped quantities', quantities);
+    this.log.debug('RecipeComponent::onChangeQuantityPerProduct Mapped quantities', quantities);
     const dialogRef = this.dialog.open(QuantityComponent,
       {
         data: quantities,
@@ -88,10 +88,10 @@ export class RecipeComponent {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('Close dialog', result);
+      this.log.info('RecipeComponent::onChangeQuantityPerProduct Close dialog', result);
       if (!ObjectUtil.isEmpty(result)) {
         const portions = this.mapToPortions(result);
-        this.log.debug('Mapped quantity by portion', portions);
+        this.log.debug('RecipeComponent::onChangeQuantityPerProduct Mapped quantity by portion', portions);
         this.recipe.products[index].quantity.portions = portions;
       }
     });

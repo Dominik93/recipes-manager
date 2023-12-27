@@ -73,13 +73,13 @@ export class RecipesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('Close dialog', result);
+      this.log.info('RecipesComponent::onAddRecipe Close dialog', result);
       this.addRecipe(result);
     });
   }
 
   onModify(event: any, index: number, recipe: Recipe): void {
-    this.log.debug("onModify", index);
+    this.log.debug("RecipesComponent::onModify", index);
     event?.stopPropagation();
     const dialogRef = this.dialog.open(RecipeComponent, {
       data: CloneUtil.clone(recipe),
@@ -87,7 +87,7 @@ export class RecipesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('Close dialog', result);
+      this.log.info('RecipesComponent::onModify Close dialog', result);
       this.modifyRecipe(index, result);
     });
   }

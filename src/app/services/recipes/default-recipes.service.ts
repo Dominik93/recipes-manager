@@ -23,12 +23,13 @@ export class DefaultRecipesService implements RecipesService {
   getRecipes(token: string): Observable<any> {
     return this.mongodb.findOneDocument(this.URL + this.GET_PATH, token, this.NAME)
       .pipe(map((response: any) => ({
+        version: response.document.version,
         recipes: response.document.recipes
       })));
   }
 
-  save(token: string, recipes: Recipe[]): Observable<any> {
-    return this.mongodb.updateOneDocument(this.URL + this.UPDATE_PATH, token, this.NAME, recipes)
+  save(token: string, version: number, recipes: Recipe[]): Observable<any> {
+    return this.mongodb.updateOneDocument(this.URL + this.UPDATE_PATH, token, this.NAME, version, recipes)
   }
 
 

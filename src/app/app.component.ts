@@ -36,6 +36,7 @@ import { NotificationComponent } from './notification/notification.component';
 export class AppComponent {
   authorized: boolean = false;
   token: string = "";
+  version: any;
   recipes: Recipe[] = [];
 
   constructor(
@@ -48,44 +49,68 @@ export class AppComponent {
     this.token = event.token
     this.recipesService.getRecipes(this.token)
       .pipe(tap(result => this.log.info('Recipes', result)))
-      .subscribe((result: any) => this.recipes = result.recipes);
+      .subscribe((result: any) => {
+        this.version = result.version;
+        this.recipes = result.recipes;
+      });
   }
 
   onRecipeSelected(event: any) {
     this.recipes = [...event];
-    this.log.info('Save recipes on recipe selected', this.recipes)
-    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
+    this.log.info('AppComponent::onRecipeSelected Save recipes on recipe selected', this.recipes);
+    this.save();
   }
 
   onRecipeAdded(event: any) {
     this.recipes = [...event];
-    this.log.info('Save recipes on recipe added', this.recipes)
-    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
+    this.log.info('AppComponent::onRecipeAdded Save recipes on recipe added', this.recipes);
+    this.save();
   }
 
   onRecipeDeleted(event: any) {
     this.recipes = [...event];
-    this.log.info('Save recipes on recipe deleted', this.recipes)
-    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
+    this.log.info('AppComponent::onRecipeDeleted Save recipes on recipe deleted', this.recipes);
+    this.save();
   }
 
   onRecipeModified(event: any) {
     this.recipes = [...event];
-    this.log.info('Save recipes on recipe modified', this.recipes)
-    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
+    this.log.info('AppComponent::onRecipeModified Save recipes on recipe modified', this.recipes);
+    this.save();
   }
 
   onProductChanged(event: any) {
-    this.log.info('Save recipes on product changed', this.recipes)
-    this.recipesService.save(this.token, this.recipes).subscribe(() => { });
+    this.log.info('AppComponent::onProductChanged Save recipes on product changed', this.recipes);
+    this.save();
   }
 
   onRefresh() {
+    this.refresh(() => this.showNotification("Page refreshed."));
+  }
+
+  private save() {
+    this.recipesService.getRecipes(this.token).subscribe((result) => {
+      if (result.version != this.version) {
+        this.handleVersionMismatch(result);
+      } else {
+        this.version = Date.now().valueOf();
+        this.recipesService.save(this.token, this.version, this.recipes).subscribe(() => { });
+      }
+    })
+  }
+
+  private handleVersionMismatch(result: any) {
+    this.log.info('AppComponent::handleVersionMismatch Version mismatch');
+    this.refresh(() => this.showNotification("Version mismatch. Try again."));
+  }
+
+  private refresh(notification: Function) {
     this.recipesService.getRecipes(this.token)
-      .pipe(tap(result => this.log.info('Recipes on refresh', result)))
+      .pipe(tap(result => this.log.info('AppComponent::refresh', result)))
       .subscribe((result: any) => {
+        this.version = result.version;
         this.recipes = result.recipes;
-        this.showNotification("Page refreshed.")
+        notification();
       });
   }
 
