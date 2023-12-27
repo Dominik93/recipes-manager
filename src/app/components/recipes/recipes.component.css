@@ -12,18 +12,26 @@
 
     .delete-recipe {
         float: right;
+        margin-top: 5px;
+        margin-right: 5px;
     }
 
     .modify-recipe {
         float: right;
+        margin-top: 5px;
+        margin-right: 5px;
     }
 
     .menu {
         display: none;
     }
-    
-    .mat-mdc-list-item {
-        height: 5rem;
+
+    .list-item {
+        height: 50px;
+    }
+
+    .list-item:hover {
+        background-color: darkgray;
     }
 }
 

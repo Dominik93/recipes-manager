@@ -20,6 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../../notification/notification.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'rm-recipes',
@@ -37,6 +38,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatInputModule,
     MatMenuModule,
     MatButtonModule,
+    MatCheckboxModule,
 
     NotificationComponent,
 
@@ -65,10 +67,6 @@ export class RecipesComponent {
     private snackBar: MatSnackBar,
     public dialog: MatDialog) { }
 
-  onSelectionChange(event: any) {
-    this.recipeSelected.emit(this.recipes);
-  }
-
   onAddRecipe(): void {
     const dialogRef = this.dialog.open(RecipeComponent, {
       ...this.dialogDimenstions()
@@ -81,6 +79,7 @@ export class RecipesComponent {
   }
 
   onModify(event: any, index: number, recipe: Recipe): void {
+    this.log.debug("onModify", index);
     event?.stopPropagation();
     const dialogRef = this.dialog.open(RecipeComponent, {
       data: CloneUtil.clone(recipe),
@@ -97,6 +96,12 @@ export class RecipesComponent {
     event?.stopPropagation();
     this.recipes = this.recipes.filter(recipe => recipe.name !== name)
     this.recipeDeleted.emit(this.recipes);
+  }
+
+  onItemClick(event: any, recipe: Recipe) {
+    event?.stopPropagation();
+    recipe.selected = !recipe.selected;
+    this.recipeModified.emit(this.recipes);
   }
 
   private addRecipe(result: Recipe) {

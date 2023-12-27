@@ -3,6 +3,8 @@
 
     .recipe-container {
         .recipe-header {
+            height: 80px;
+
             .recipe-name {
                 display: inline;
                 font-size: 20px;
@@ -16,15 +18,15 @@
         }
 
         .recipe-products {
+
             .product-data-name {
-                display: inline-block;
                 white-space: normal;
                 max-width: 45%;
             }
 
             .product-data-owned {
                 margin-left: 2px;
-                width: 70px;
+                width: 80px;
             }
 
             .product-selected {
@@ -37,14 +39,20 @@
 
             .toggle-owned {
                 float: right;
+                margin-top: 10px;
+                margin-right: 5px;
             }
 
             .menu {
                 display: none;
             }
 
-            .mat-mdc-list-item {
-                height: 5rem;
+            .list-item {
+                height: 65px;
+            }
+
+            .list-item:hover {
+                background-color: darkgray;
             }
 
         }
@@ -58,7 +66,7 @@
                 .product-data-name {
                     display: inline-block;
                     white-space: normal;
-                    max-width: 45%;
+                    max-width: 100px;
                 }
 
                 .menu {

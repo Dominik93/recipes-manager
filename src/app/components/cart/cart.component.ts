@@ -16,6 +16,7 @@ import { Product, Recipe } from './../../recipe'
 import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
 import { environment } from '../../../environments/environment';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @Component({
@@ -30,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCardModule,
     MatExpansionModule,
     MatDividerModule,
+    MatCheckboxModule,
     MatButtonModule,
     MatListModule,
     MatIconModule,
@@ -57,10 +59,6 @@ export class CartComponent {
     this.ownedProduct = environment.features.ownedProduct;
   }
 
-  onSelectionChange(event: any) {
-    this.productChanged.next(this.recipes);
-  }
-
   onChangePortions() {
     this.productChanged.next(this.recipes);
   }
@@ -68,6 +66,12 @@ export class CartComponent {
   onToggleOwned(event: any, product: Product) {
     event?.stopPropagation();
     product.owned.show = !product.owned.show;
+    this.productChanged.next(this.recipes);
+  }
+
+  onItemClick(event: any, product: Product) {
+    event?.stopPropagation();
+    product.selected = !product.selected;
     this.productChanged.next(this.recipes);
   }
 

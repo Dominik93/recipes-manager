@@ -8,23 +8,22 @@
     <mat-icon>more_vert</mat-icon>
   </button>
 
-  <mat-selection-list #recipeList (selectionChange)="onSelectionChange($event)">
-    <mat-list-option *ngFor="let recipe of recipes | search:searchValue | sortSelected:'DESC'; index as i"
-      [(selected)]="recipe.selected" togglePosition="before">
-      <span class="recipe-name">{{recipe.name}}</span>
+  <div *ngFor="let recipe of recipes | search:searchValue | sortSelected:'DESC'; index as i" class="list-item"
+    (click)="onItemClick($event, recipe)">
+    <mat-checkbox [ngModel]="recipe.selected" (click)="onItemClick($event, recipe)"></mat-checkbox>
+    <span class="recipe-name">{{recipe.name}}</span>
 
-      <button mat-icon-button [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{recipe: recipe, i : i}"
-        (click)="$event.stopPropagation()" class="menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
+    <button mat-icon-button [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{recipe: recipe, i : i}"
+      (click)="$event.stopPropagation()" class="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
 
-      <button mat-raised-button color="primary" class="modify-recipe"
-        (click)="onModify($event, i, recipe)">Modify</button>
-      <button mat-raised-button color="primary" class="delete-recipe"
-        (click)="onDelete($event, recipe?.name)">Delete</button>
+    <button mat-raised-button color="primary" class="modify-recipe"
+      (click)="onModify($event, i, recipe)">Modify</button>
+    <button mat-raised-button color="primary" class="delete-recipe"
+      (click)="onDelete($event, recipe?.name)">Delete</button>
 
-    </mat-list-option>
-  </mat-selection-list>
+  </div>
 </div>
 
 <mat-menu #recipeMenu="matMenu">
