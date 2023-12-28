@@ -38,13 +38,7 @@
             }
 
             .toggle-owned {
-                float: right;
                 margin-top: 10px;
-                margin-right: 5px;
-            }
-
-            .menu {
-                display: none;
             }
 
             .list-item {
@@ -68,18 +62,7 @@
                     white-space: normal;
                     max-width: 120px;
                 }
-
-                .menu {
-                    display: inherit;
-                    float: right;
-                }
-
-                .toggle-owned {
-                    display: none;
-                }
-
             }
-
         }
     }
 }

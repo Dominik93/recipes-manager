@@ -24,11 +24,11 @@
             {{(product | quantity:recipe.portions) - (product.owned.show ? product.owned.value : 0 )}}{{product.unit}}
           </span>
 
-          <button mat-raised-button color="primary" class="toggle-owned" (click)="onToggleOwned($event, product)">
+          <button mat-raised-button color="primary" class="toggle-owned" action-element www-element (click)="onToggleOwned($event, product)">
             Toggle owned</button>
 
-          <button *ngIf="ownedProduct" mat-icon-button [matMenuTriggerFor]="productMenu"
-            [matMenuTriggerData]="{product: product}" (click)="$event.stopPropagation()" class="menu">
+          <button *ngIf="ownedProduct" mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu"
+            [matMenuTriggerData]="{product: product}" (click)="$event.stopPropagation()">
             <mat-icon>more_vert</mat-icon>
           </button>
 

@@ -6,26 +6,6 @@
         white-space: normal;
     }
 
-    .add-recipe {
-        float: right;
-    }
-
-    .delete-recipe {
-        float: right;
-        margin-top: 5px;
-        margin-right: 5px;
-    }
-
-    .modify-recipe {
-        float: right;
-        margin-top: 5px;
-        margin-right: 5px;
-    }
-
-    .menu {
-        display: none;
-    }
-
     .list-item {
         height: 50px;
     }
@@ -33,26 +13,4 @@
     .list-item:hover {
         background-color: darkgray;
     }
-}
-
-@media (max-width: 680px) {
-    .content-container {
-        .menu {
-            display: inherit;
-            float: right;
-        }
-
-        .add-recipe {
-            display: none;
-        }
-
-        .delete-recipe {
-            display: none;
-        }
-
-        .modify-recipe {
-            display: none;
-        }
-    }
-
 }

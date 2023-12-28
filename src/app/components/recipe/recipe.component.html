@@ -7,8 +7,8 @@
                 <mat-label>Name</mat-label>
                 <input matInput type="text" [(ngModel)]="recipe.name">
             </mat-form-field>
-            <button mat-raised-button color="primary" class="add-product" (click)="onAddProduct()">Add product</button>
-            <button mat-icon-button [matMenuTriggerFor]="productMenu" class="menu">
+            <button mat-raised-button color="primary" action-element www-element (click)="onAddProduct()">Add product</button>
+            <button mat-icon-button [matMenuTriggerFor]="productMenu" action-element mobile-element>
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>
@@ -37,13 +37,13 @@
                     *ngIf="displayAdditionalInfo(product)" matTooltip="{{convertToTooltip(product)}}"></mat-icon>
 
                 <button mat-icon-button [matMenuTriggerFor]="quantityMenu" [matMenuTriggerData]="{i : i}"
-                    (click)="$event.stopPropagation()" class="menu">
+                    (click)="$event.stopPropagation()" action-element mobile-element>
                     <mat-icon>more_vert</mat-icon>
                 </button>
 
-                <button mat-raised-button color="primary" class="change-quantity"
+                <button mat-raised-button color="primary" action-element bordered-element www-element
                     (click)="onChangeQuantityPerProduct($event, i)">Change quantity</button>
-                <button mat-raised-button color="primary" class="delete"
+                <button mat-raised-button color="primary" action-element bordered-element www-element
                     (click)="onDelete($event, i)">Delete</button>
 
             </div>

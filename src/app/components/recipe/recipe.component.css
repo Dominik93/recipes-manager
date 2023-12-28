@@ -3,15 +3,6 @@
         .recipe-name {
             max-width: 80%;
         }
-
-        .add-product {
-            float: right;
-        }
-
-        .menu {
-            display: none;
-        }
-
     }
 
     .content {
@@ -28,52 +19,5 @@
         .product-unit {
             width: 80px;
         }
-
-        .change-quantity {
-            float: right;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-
-        .delete {
-            float: right;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-
-        .menu {
-            display: none;
-        }
     }
-}
-
-@media (max-width: 680px) {
-    .container {
-        .header {
-            .add-product {
-                display: none;
-            }
-
-            .menu {
-                display: inherit;
-                float: right;
-            }
-        }
-
-        .content {
-            .change-quantity {
-                display: none;
-            }
-
-            .delete {
-                display: none;
-            }
-
-            .menu {
-                display: inherit;
-                float: right;
-            }
-        }
-    }
-
 }

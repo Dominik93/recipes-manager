@@ -1,0 +1,27 @@
+button[mobile-element] {
+    display: none;
+}
+
+button[www-element] {
+    display: inherit;
+}
+
+button[action-element] {
+    float: right;
+}
+
+button[bordered-element] {
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+
+@media (max-width: 680px) {
+    button[mobile-element] {
+        display: inherit;
+    }
+
+    button[www-element] {
+        display: none;
+    }
+}
