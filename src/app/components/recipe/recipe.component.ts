@@ -87,10 +87,10 @@ export class RecipeComponent {
     this.recipe.multiplier.enabled = !this.recipe.multiplier.enabled;
   }
 
-  onChangeQuantityPerProduct(event: any, index: number) {
+  onCustomQuantityPerProduct(event: any, index: number) {
     event?.stopPropagation();
     const quantities = this.mapToQuantityParts(this.recipe.products[index].quantity.portions);
-    this.log.debug('RecipeComponent::onChangeQuantityPerProduct Mapped quantities', quantities);
+    this.log.debug('RecipeComponent::onCustomQuantityPerProduct Mapped quantities', quantities);
     const dialogRef = this.dialog.open(QuantityComponent,
       {
         data: quantities,
@@ -99,10 +99,10 @@ export class RecipeComponent {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('RecipeComponent::onChangeQuantityPerProduct Close dialog', result);
+      this.log.info('RecipeComponent::onCustomQuantityPerProduct Close dialog', result);
       if (!ObjectUtil.isEmpty(result)) {
         const portions = this.mapToPortions(result);
-        this.log.debug('RecipeComponent::onChangeQuantityPerProduct Mapped quantity by portion', portions);
+        this.log.debug('RecipeComponent::onCustomQuantityPerProduct Mapped quantity by portion', portions);
         this.recipe.products[index].quantity.portions = portions;
       }
     });

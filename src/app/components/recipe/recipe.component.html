@@ -49,7 +49,7 @@
                 </button>
 
                 <button mat-raised-button color="primary" action-element bordered-element www-element
-                    (click)="onChangeQuantityPerProduct($event, i)">Change quantity</button>
+                    (click)="onCustomQuantityPerProduct($event, i)">Custom quantity</button>
                 <button mat-raised-button color="primary" action-element bordered-element www-element
                     (click)="onDelete($event, i)">Delete</button>
 
@@ -71,6 +71,6 @@
 <mat-menu #quantityMenu="matMenu">
     <ng-template matMenuContent let-i="i" let-event="event">
         <button mat-menu-item color="primary" (click)="onDelete(event, i)">Delete</button>
-        <button mat-menu-item color="primary" (click)="onChangeQuantityPerProduct(event, i)">Change quantity</button>
+        <button mat-menu-item color="primary" (click)="onCustomQuantityPerProduct(event, i)">Custom quantity</button>
     </ng-template>
 </mat-menu>
