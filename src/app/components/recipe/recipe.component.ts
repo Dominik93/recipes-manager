@@ -62,6 +62,7 @@ export class RecipeComponent {
   recipe: Recipe = {
     name: "",
     portions: 1,
+    multiplier: { enabled: false, value: 1 },
     products: [],
     selected: false
   };
@@ -72,8 +73,18 @@ export class RecipeComponent {
   }
 
   onAddProduct() {
-    const product: Product = { name: "", quantity: { base: 1, portions: {} }, selected: false, unit: this.units[0], owned: { show: false, value: 0 } }
+    const product: Product = {
+      name: "",
+      quantity: { base: 1, portions: {} },
+      selected: false,
+      unit: this.units[0],
+      owned: { show: false, value: 0 }
+    }
     this.recipe.products = this.recipe.products.concat(product);
+  }
+
+  onCustomMultiplier() {
+    this.recipe.multiplier.enabled = !this.recipe.multiplier.enabled;
   }
 
   onChangeQuantityPerProduct(event: any, index: number) {

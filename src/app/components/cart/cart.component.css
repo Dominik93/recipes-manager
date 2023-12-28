@@ -15,6 +15,11 @@
                 float: right;
                 width: 80px;
             }
+
+            .recipe-multiplier {
+                display: inline;
+                font-size: 10px;
+            }
         }
 
         .recipe-products {

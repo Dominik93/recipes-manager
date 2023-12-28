@@ -7,7 +7,14 @@
                 <mat-label>Name</mat-label>
                 <input matInput type="text" [(ngModel)]="recipe.name">
             </mat-form-field>
-            <button mat-raised-button color="primary" action-element www-element (click)="onAddProduct()">Add product</button>
+            <mat-form-field appearance="fill" *ngIf="recipe.multiplier.enabled" class="multiplier-value">
+                <mat-label>Multiplier</mat-label>
+                <input matInput type="number" [(ngModel)]="recipe.multiplier.value">
+            </mat-form-field>
+            <button mat-raised-button color="primary" action-element bordered-element www-element
+                (click)="onAddProduct()">Add product</button>
+            <button mat-raised-button color="primary" action-element bordered-element www-element
+                (click)="onCustomMultiplier()">Toggle custom multiplier</button>
             <button mat-icon-button [matMenuTriggerFor]="productMenu" action-element mobile-element>
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -58,6 +65,7 @@
 
 <mat-menu #productMenu="matMenu">
     <button mat-menu-item (click)="onAddProduct()">Add product</button>
+    <button mat-menu-item (click)="onCustomMultiplier()">Custom multiplier</button>
 </mat-menu>
 
 <mat-menu #quantityMenu="matMenu">

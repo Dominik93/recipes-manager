@@ -13,6 +13,10 @@ export class InMemoryRecipesService implements RecipesService {
     {
       "name": "Kurczak z ryżem",
       "portions": 1,
+      "multiplier": {
+        "enabled": true,
+        "value": 1.3
+      },
       "products": [
         {
           "name": "Kurczak",
@@ -49,6 +53,10 @@ export class InMemoryRecipesService implements RecipesService {
     }, {
       "name": "Awokado",
       "portions": 1,
+      "multiplier": {
+        "enabled": false,
+        "value": 1
+      },
       "products": [
         {
           "name": "Awokado",
@@ -66,6 +74,10 @@ export class InMemoryRecipesService implements RecipesService {
     {
       "name": "Kurczak z makaronem",
       "portions": 1,
+      "multiplier": {
+        "enabled": false,
+        "value": 1
+      },
       "products": [
         {
           "name": "Kurczak",

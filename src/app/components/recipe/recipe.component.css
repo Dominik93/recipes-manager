@@ -1,8 +1,13 @@
 .container {
     .header {
         .recipe-name {
-            max-width: 80%;
+            width: 250px;
         }
+        
+        .multiplier-value {
+            width: 80px;
+        }
+
     }
 
     .content {

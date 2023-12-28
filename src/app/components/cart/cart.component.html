@@ -4,27 +4,33 @@
     <div class="recipe-container">
       <div class="recipe-header">
         <div class="recipe-name">{{recipe.name}}</div>
+        <div *ngIf="recipe.multiplier.enabled" class="recipe-multiplier">
+          Multiplier: {{recipe.multiplier.value}}
+        </div>
         <mat-form-field appearance="fill" class="recipe-portions">
           <mat-label>Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
         </mat-form-field>
+        
       </div>
       <div class="recipe-products">
-        <div *ngFor="let product of recipe.products | sortSelected:'ASC'" class="list-item" (click)="onItemClick($event, product)">
+        <div *ngFor="let product of recipe.products | sortSelected:'ASC'" class="list-item"
+          (click)="onItemClick($event, product)">
           <mat-checkbox [ngModel]="product.selected" (click)="onItemClick($event, product)"></mat-checkbox>
           <span class="product-data-name" [class.product-selected]="product.selected">{{product.name}}:</span>
 
           <mat-form-field *ngIf="ownedProduct && product.owned.show" appearance="fill" class="product-data-owned">
             <mat-label>Owned</mat-label>
-            <input matInput type="number" min="0" [(ngModel)]="product.owned.value"
-            (change)="onChangeOnwed()" (click)="$event.stopPropagation()">
+            <input matInput type="number" min="0" [(ngModel)]="product.owned.value" (change)="onChangeOnwed()"
+              (click)="$event.stopPropagation()">
           </mat-form-field>
 
           <span class="product-data-summary" [class.product-selected]="product.selected">
             {{(product | quantity:recipe.portions) - (product.owned.show ? product.owned.value : 0 )}}{{product.unit}}
           </span>
 
-          <button mat-raised-button color="primary" class="toggle-owned" action-element www-element (click)="onToggleOwned($event, product)">
+          <button mat-raised-button color="primary" class="toggle-owned" action-element www-element
+            (click)="onToggleOwned($event, product)">
             Toggle owned</button>
 
           <button *ngIf="ownedProduct" mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu"

@@ -3,7 +3,7 @@ button[mobile-element] {
 }
 
 button[www-element] {
-    display: inherit;
+    display: unset;
 }
 
 button[action-element] {
@@ -18,10 +18,11 @@ button[bordered-element] {
 
 @media (max-width: 680px) {
     button[mobile-element] {
-        display: inherit;
+        display: unset;
     }
 
     button[www-element] {
         display: none;
     }
+
 }
