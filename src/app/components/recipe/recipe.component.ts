@@ -83,7 +83,7 @@ export class RecipeComponent {
     const dialogRef = this.dialog.open(QuantityComponent,
       {
         data: quantities,
-        ...this.dialogDimenstions()
+        ...this.dialogDimensions()
       }
     );
 
@@ -125,7 +125,7 @@ export class RecipeComponent {
     return quantities;
   }
 
-  private dialogDimenstions() {
+  private dialogDimensions() {
     return {
       height: "calc(80% - 30px)",
       width: "100%",

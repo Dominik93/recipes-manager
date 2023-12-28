@@ -91,7 +91,7 @@ export class AppComponent {
   private save() {
     this.recipesService.getRecipes(this.token).subscribe((result) => {
       if (result.version != this.version) {
-        this.handleVersionMismatch(result);
+        this.handleVersionMismatch(result.version, this.version);
       } else {
         this.version = Date.now().valueOf();
         this.recipesService.save(this.token, this.version, this.recipes).subscribe(() => { });
@@ -99,8 +99,8 @@ export class AppComponent {
     })
   }
 
-  private handleVersionMismatch(result: any) {
-    this.log.info('AppComponent::handleVersionMismatch Version mismatch');
+  private handleVersionMismatch(storedVersion: number, version: number) {
+    this.log.info('AppComponent::handleVersionMismatch Version mismatch', storedVersion, version);
     this.refresh(() => this.showNotification("Version mismatch. Try again."));
   }
 

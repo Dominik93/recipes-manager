@@ -69,7 +69,7 @@ export class RecipesComponent {
 
   onAddRecipe(): void {
     const dialogRef = this.dialog.open(RecipeComponent, {
-      ...this.dialogDimenstions()
+      ...this.dialogDimensions()
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -78,12 +78,15 @@ export class RecipesComponent {
     });
   }
 
-  onModify(event: any, index: number, recipe: Recipe): void {
-    this.log.debug("RecipesComponent::onModify", index);
+  onModify(event: any, name: string): void {
     event?.stopPropagation();
+    this.log.debug("RecipesComponent::onModify", name);
+    const recipe = this.recipes.find(recipe => recipe.name === name)
+    const index = this.recipes.findIndex(recipe => recipe.name === name)
+    this.log.debug("RecipesComponent::onModify", recipe, index);
     const dialogRef = this.dialog.open(RecipeComponent, {
       data: CloneUtil.clone(recipe),
-      ...this.dialogDimenstions()
+      ...this.dialogDimensions()
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -132,7 +135,7 @@ export class RecipesComponent {
     });
   }
 
-  private dialogDimenstions() {
+  private dialogDimensions() {
     return {
       height: "calc(80% - 30px)",
       width: "100%",
@@ -140,4 +143,7 @@ export class RecipesComponent {
     }
   }
 
+  recipeTrackBy(index: number, recipe: Recipe) {
+    return recipe;
+  }
 } 

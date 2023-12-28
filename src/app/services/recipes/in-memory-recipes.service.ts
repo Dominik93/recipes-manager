@@ -102,21 +102,23 @@ export class InMemoryRecipesService implements RecipesService {
     }
   ];
 
+  version: number = 123;
+
   constructor(@Inject('LoggingService') private log: LoggingService) { }
 
   getRecipes(token: string): Observable<any> {
     this.log.info("InMemoryRecipesService::getRecipes", token);
-    const result = { version: 12498745, recipes: this.recipes };
+    const result = { version: this.version, recipes: [...this.recipes] };
     this.log.info("InMemoryRecipesService::getRecipes completed", result);
     return of(result);
   }
 
   save(token: string, version: number, recipes: Recipe[]): Observable<any> {
-    this.recipes = recipes;
+    this.recipes = [...recipes];
+    this.version = version;
     this.log.info("InMemoryRecipesService::save", token, version, recipes);
-    const result = { version: version, recipes: this.recipes };
-    this.log.info("InMemoryRecipesService::save completed", result);
-    return of(result);
+    this.log.info("InMemoryRecipesService::save completed");
+    return of({});
   }
 
 }
