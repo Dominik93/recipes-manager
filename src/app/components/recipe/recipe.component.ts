@@ -97,6 +97,11 @@ export class RecipeComponent {
     });
   }
 
+  onDelete(event: any, index: number) {
+    event?.stopPropagation();
+    this.recipe.products.splice(index, 1);
+  }
+
   displayAdditionalInfo(product: Product): boolean {
     return Object.keys(product.quantity.portions).length > 0;
   }
