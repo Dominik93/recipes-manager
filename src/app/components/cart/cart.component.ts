@@ -55,7 +55,7 @@ export class CartComponent {
   ownedProduct: boolean = false;
 
   constructor() {
-    this.ownedProduct = environment.features.ownedProduct;
+    this.ownedProduct = environment.config.ownedProducts.enabled;
   }
 
   onChangePortions() {

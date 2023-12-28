@@ -2,18 +2,19 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription, interval, tap } from 'rxjs';
 import { RecipesService } from './services/recipes/recipes.service'
 import { Recipe } from './recipe'
 import { AuthorizationComponent } from './components/authorization/authorization.component'
 import { CartComponent } from './components/cart/cart.component'
 import { RecipesComponent } from './components/recipes/recipes.component'
-import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
-import { tap } from 'rxjs';
 import { LoggingService } from './services/logging/logging';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
-
+import { TimePipe } from './pipes/time.pipe';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -24,20 +25,26 @@ import { NotificationComponent } from './notification/notification.component';
 
     MatIconModule,
     MatTabsModule,
-    MatCardModule,
+    MatToolbarModule,
 
     AuthorizationComponent,
     RecipesComponent,
-    CartComponent],
+    CartComponent,
+
+    TimePipe
+  ],
   providers: [],
   templateUrl: `app.component.html`,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   authorized: boolean = false;
-  token: string = "";
-  version: any;
   recipes: Recipe[] = [];
+  countdown: number = environment.config.refresh.countdown;
+  enableRefresh: boolean = environment.config.refresh.enabled;
+  private token: string = "";
+  private version: any;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     @Inject('LoggingService') private log: LoggingService,
@@ -53,6 +60,16 @@ export class AppComponent {
         this.version = result.version;
         this.recipes = result.recipes;
       });
+    if (this.enableRefresh) {
+      const timer = interval(1000).subscribe(() => {
+        this.countdown--;
+        if (this.countdown === 0) {
+          this.refresh()
+        }
+      });
+      this.subscriptions.push(timer);
+    }
+
   }
 
   onRecipeSelected(event: any) {
@@ -94,6 +111,7 @@ export class AppComponent {
         this.handleVersionMismatch(result.version, this.version);
       } else {
         this.version = Date.now().valueOf();
+        this.countdown = environment.config.refresh.countdown;
         this.recipesService.save(this.token, this.version, this.recipes).subscribe(() => { });
       }
     })
@@ -104,10 +122,11 @@ export class AppComponent {
     this.refresh(() => this.showNotification("Version mismatch. Try again."));
   }
 
-  private refresh(notification: Function) {
+  private refresh(notification: Function = () => { }) {
     this.recipesService.getRecipes(this.token)
       .pipe(tap(result => this.log.info('AppComponent::refresh', result)))
       .subscribe((result: any) => {
+        this.countdown = environment.config.refresh.countdown;
         this.version = result.version;
         this.recipes = result.recipes;
         notification();
@@ -119,6 +138,10 @@ export class AppComponent {
       duration: 5000,
       data: message
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
 }

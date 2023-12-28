@@ -1,14 +1,15 @@
+<mat-toolbar *ngIf="authorized">
+    <span class="spacer"></span>
+    <div *ngIf="enableRefresh">
+        {{countdown | time}}
+        <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh"
+        (click)="onRefresh()">Refresh</mat-icon>
+    </div>
+</mat-toolbar>
+
 <div class="page-container">
     <div class="content">
         <rm-authorization *ngIf="!authorized" (login)="onLogin($event)"></rm-authorization>
-        <mat-card *ngIf="authorized">
-            <mat-card-header>
-                <mat-card-title>
-                    <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh"
-                        (click)="onRefresh()">Refresh</mat-icon>
-                </mat-card-title>
-            </mat-card-header>
-        </mat-card>
         <mat-tab-group *ngIf="authorized">
             <mat-tab label="Recipes">
                 <rm-recipes [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"

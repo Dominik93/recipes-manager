@@ -4,7 +4,15 @@ import { InMemoryRecipesService } from "../app/services/recipes/in-memory-recipe
 
 export const environment = {
     logging: { debug: true, trace: false },
-    features: { ownedProduct: true },
+    config:{
+        ownedProducts: {
+            enabled: true
+        },
+        refresh: {
+            enabled: true,
+            countdown: 10
+        }
+    },
     loggingService: ConsoleLoggingService,
     authorizationService: MockAuthorizationService,
     recipesService: InMemoryRecipesService

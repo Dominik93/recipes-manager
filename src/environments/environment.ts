@@ -4,7 +4,15 @@ import { DefaultRecipesService } from "../app/services/recipes/default-recipes.s
 
 export const environment = {
     logging: { debug: false, trace: false },
-    features: { ownedProduct: true },
+    config: {
+        ownedProducts: {
+            enabled: true
+        },
+        refresh: {
+            enabled: true,
+            countdown: 15
+        }
+    },
     loggingService: DisabledLoggingService,
     authorizationService: DefaultAuthorizationService,
     recipesService: DefaultRecipesService

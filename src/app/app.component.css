@@ -1,9 +1,16 @@
+.spacer {
+  flex: 1 1 auto;
+}
 .page-container {
   position: relative;
   min-height: 100vh;
 
   .content {
     padding-bottom: 1rem;
+
+    .refresh {
+      float: right;
+    }
   }
 
   .footer {
