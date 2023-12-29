@@ -38,10 +38,14 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  
   authorized: boolean = false;
   recipes: Recipe[] = [];
   countdown: number = environment.config.refresh.countdown;
   enableRefresh: boolean = environment.config.refresh.enabled;
+  
+  private pageRefreshed = $localize`:page-refreshed@@page-refreshed:Page refreshed.`;
+  private versionMismatch = $localize`:version-mismatch@@version-mismatch:Version mismatch. Try again.`;
   private token: string = "";
   private version: any;
   private subscriptions: Subscription[] = [];
@@ -69,7 +73,6 @@ export class AppComponent {
       });
       this.subscriptions.push(timer);
     }
-
   }
 
   onRecipeSelected(event: any) {
@@ -102,7 +105,7 @@ export class AppComponent {
   }
 
   onRefresh() {
-    this.refresh(() => this.showNotification("Page refreshed."));
+    this.refresh(() => this.showNotification(this.pageRefreshed));
   }
 
   private save() {
@@ -119,7 +122,7 @@ export class AppComponent {
 
   private handleVersionMismatch(storedVersion: number, version: number) {
     this.log.info('AppComponent::handleVersionMismatch Version mismatch', storedVersion, version);
-    this.refresh(() => this.showNotification("Version mismatch. Try again."));
+    this.refresh(() => this.showNotification(this.versionMismatch));
   }
 
   private refresh(notification: Function = () => { }) {

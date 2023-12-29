@@ -110,12 +110,15 @@ export class RecipesComponent {
   }
 
   private addRecipe(result: Recipe) {
-    if (!ObjectUtil.isAnyEmpty([result, result?.name])) {
+    const name = result?.name;
+    if (!ObjectUtil.isAnyEmpty([result, name])) {
       this.recipes.push(result);
       this.recipeAdded.emit(this.recipes);
-      this.showNotification("Recipe '" + result.name + "' added.");
+      const recipeAddedMessage = $localize`:recipe-added@@recipe-added:Recipe '${name}' added.`;
+      this.showNotification(recipeAddedMessage);
     } else {
-      this.showNotification("Recipe not added!");
+      const recipeNotAddedMessage = $localize`:recipe-not-added@@recipe-not-added:Recipe not added.`;
+      this.showNotification(recipeNotAddedMessage);
     }
   }
 
@@ -124,9 +127,11 @@ export class RecipesComponent {
     if (!ObjectUtil.isAnyEmpty([result])) {
       this.recipes[index] = result;
       this.recipeModified.emit(this.recipes);
-      this.showNotification("Recipe '" + name + "' modified.");
+      const recipeModifiedMessage = $localize`:recipe-modified@@recipe-modified:Recipe '${name}' modified.`;
+      this.showNotification(recipeModifiedMessage);
     } else {
-      this.showNotification("Recipe '" + name + "' not modified!");
+      const recipeNotModifiedMessage = $localize`:recipe-not-modified@@recipe-not-modified:Recipe '${name}' not modified.`;
+      this.showNotification(recipeNotModifiedMessage);
     }
   }
 

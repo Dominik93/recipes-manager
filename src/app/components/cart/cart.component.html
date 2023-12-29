@@ -5,7 +5,7 @@
       <div class="recipe-header">
         <div class="recipe-name">{{recipe.name}}</div>
         <mat-form-field appearance="fill" class="recipe-portions">
-          <mat-label>Portions</mat-label>
+          <mat-label i18n="portions@@portions">Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
         </mat-form-field>
         
@@ -17,7 +17,7 @@
           <span class="product-data-name" [class.product-selected]="product.selected">{{product.name}}:</span>
 
           <mat-form-field *ngIf="ownedProduct && product.owned.show" appearance="fill" class="product-data-owned">
-            <mat-label>Owned</mat-label>
+            <mat-label i18n="owned@@owned">Owned</mat-label>
             <input matInput type="number" min="0" [(ngModel)]="product.owned.value" (change)="onChangeOnwed()"
               (click)="$event.stopPropagation()">
           </mat-form-field>
@@ -27,8 +27,7 @@
           </span>
 
           <button mat-raised-button color="primary" class="toggle-owned" action-element www-element
-            (click)="onToggleOwned($event, product)">
-            Toggle owned</button>
+            (click)="onToggleOwned($event, product)" i18n="toggle-owned@@toggle-owned">Toggle owned</button>
 
           <button *ngIf="ownedProduct" mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu"
             [matMenuTriggerData]="{product: product}" (click)="$event.stopPropagation()">
@@ -43,6 +42,6 @@
 
 <mat-menu #productMenu="matMenu">
   <ng-template matMenuContent let-product="product" let-event="event">
-    <button mat-menu-item color="primary" (click)="onToggleOwned(event, product)">Toggle owned</button>
+    <button mat-menu-item color="primary" (click)="onToggleOwned(event, product)" i18n="toggle-owned@@toggle-owned">Toggle owned</button>
   </ng-template>
 </mat-menu>

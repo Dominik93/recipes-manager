@@ -8,6 +8,14 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "pl": {
+            "translation": "src/locale/messages.pl.json"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -25,6 +33,7 @@
               "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
+            "localize": true,
             "scripts": []
           },
           "configurations": {
@@ -62,6 +71,9 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "pl": {
+              "localize": ["pl"]
             }
           },
           "defaultConfiguration": "production"
@@ -73,7 +85,7 @@
               "buildTarget": "recipes-manager:build:production"
             },
             "development": {
-              "buildTarget": "recipes-manager:build:development"
+              "buildTarget": "recipes-manager:build:development,pl"
             }
           },
           "defaultConfiguration": "development"
