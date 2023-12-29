@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e",
-    "build-git": "ng build --output-path docs --base-href /recipes-manager/browser/ --configuration=production && ng build --output-path docs/demo --base-href /recipes-manager/demo/browser/ --configuration=demo"
+    "build-git": "rm -r docs && ng build --delete-output-path false --output-path docs --base-href /recipes-manager/browser/ --configuration=production && ng build --delete-output-path false --output-path docs/demo --base-href /recipes-manager/demo/browser/ --configuration=demo && ng build --delete-output-path false --output-path docs --base-href /recipes-manager/browser/ --configuration=production --localize && ng build --delete-output-path false --output-path docs/demo --base-href /recipes-manager/demo/browser/ --configuration=demo --localize "
   },
   "private": true,
   "dependencies": {

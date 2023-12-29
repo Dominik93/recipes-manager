@@ -3,7 +3,7 @@
   "translations": {
     "recipes": "Przepisy",
     "cart": "Koszyk",
-    "fotter": " Recipes Manager 1.12.0{$LINE_BREAK}zrobiony przy użyciu Angular 17, Angular Material 17 i Atlas MongoDB ",
+    "fotter": " Recipes Manager 1.13.0{$LINE_BREAK}zrobiony przy użyciu Angular 17, Angular Material 17 i Atlas MongoDB ",
     "page-refreshed": "Strona odświeżono.",
     "version-mismatch": "Niezgodność wersji. Spróbuj ponownie.",
     "usermane": "Użytkownik",

@@ -38,12 +38,12 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  
+
   authorized: boolean = false;
   recipes: Recipe[] = [];
   countdown: number = environment.config.refresh.countdown;
   enableRefresh: boolean = environment.config.refresh.enabled;
-  
+
   private pageRefreshed = $localize`:page-refreshed@@page-refreshed:Page refreshed.`;
   private versionMismatch = $localize`:version-mismatch@@version-mismatch:Version mismatch. Try again.`;
   private token: string = "";
@@ -106,6 +106,11 @@ export class AppComponent {
 
   onRefresh() {
     this.refresh(() => this.showNotification(this.pageRefreshed));
+  }
+
+  onLangaugeClick(lang: string) {
+    this.log.debug("AppComponent::onLangaugeClick", lang)
+    window.location.href = environment.contextPath + "/" + lang;
   }
 
   private save() {

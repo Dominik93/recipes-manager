@@ -3,6 +3,7 @@ import { ConsoleLoggingService } from "../app/services/logging/console-logging.s
 import { InMemoryRecipesService } from "../app/services/recipes/in-memory-recipes.service";
 
 export const environment = {
+    contextPath: "/browser",
     logging: { debug: true, trace: false },
     config:{
         ownedProducts: {
