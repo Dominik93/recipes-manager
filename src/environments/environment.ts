@@ -3,7 +3,7 @@ import { DisabledLoggingService } from "../app/services/logging/disabled-logging
 import { DefaultRecipesService } from "../app/services/recipes/default-recipes.service";
 
 export const environment = {
-    contextPath: "/browser",
+    contextPath: "/recipes-manager/browser",
     logging: { debug: false, trace: false },
     config: {
         ownedProducts: {
