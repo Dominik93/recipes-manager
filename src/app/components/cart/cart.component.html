@@ -4,9 +4,6 @@
     <div class="recipe-container">
       <div class="recipe-header">
         <div class="recipe-name">{{recipe.name}}</div>
-        <div *ngIf="recipe.multiplier.enabled" class="recipe-multiplier">
-          Multiplier: {{recipe.multiplier.value}}
-        </div>
         <mat-form-field appearance="fill" class="recipe-portions">
           <mat-label>Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">

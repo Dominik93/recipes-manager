@@ -62,7 +62,7 @@ export class RecipeComponent {
   recipe: Recipe = {
     name: "",
     portions: 1,
-    multiplier: { enabled: false, value: 1 },
+    notes: { enabled: false, value: '' },
     products: [],
     selected: false
   };
@@ -83,8 +83,8 @@ export class RecipeComponent {
     this.recipe.products = this.recipe.products.concat(product);
   }
 
-  onCustomMultiplier() {
-    this.recipe.multiplier.enabled = !this.recipe.multiplier.enabled;
+  onToggleNotes() {
+    this.recipe.notes.enabled = !this.recipe.notes.enabled;
   }
 
   onCustomQuantityPerProduct(event: any, index: number) {

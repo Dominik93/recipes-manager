@@ -6,6 +6,22 @@ button[www-element] {
     display: unset;
 }
 
+span[mobile-element] {
+    display: none;
+}
+
+span[www-element] {
+    display: unset;
+}
+
+mat-icon[mobile-element] {
+    display: none;
+}
+
+mat-icon[www-element] {
+    display: unset;
+}
+
 button[action-element] {
     float: right;
 }
@@ -15,13 +31,28 @@ button[bordered-element] {
     margin-right: 5px;
 }
 
-
 @media (max-width: 680px) {
     button[mobile-element] {
         display: unset;
     }
 
     button[www-element] {
+        display: none;
+    }
+
+    span[mobile-element] {
+        display: unset;
+    }
+
+    span[www-element] {
+        display: none;
+    }
+
+    mat-icon[mobile-element] {
+        display: unset;
+    }
+
+    mat-icon[www-element] {
         display: none;
     }
 

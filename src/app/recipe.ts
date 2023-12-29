@@ -2,13 +2,13 @@ export type Recipe = {
   name: string,
   selected: boolean,
   portions: number,
-  multiplier: Multiplier;
+  notes: Notes;
   products: Product[]
 }
 
-export type Multiplier = {
+export type Notes = {
   enabled: boolean;
-  value: number;
+  value: string;
 }
 
 export type Product = {

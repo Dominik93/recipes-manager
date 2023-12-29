@@ -11,15 +11,15 @@ export class InMemoryRecipesService implements RecipesService {
 
   recipes: Recipe[] = [
     {
-      "name": "Kurczak z ryżem",
+      "name": "Chicken with rice",
       "portions": 1,
-      "multiplier": {
+      "notes": {
         "enabled": true,
-        "value": 1.3
+        "value": "Multiplier 1.3"
       },
       "products": [
         {
-          "name": "Kurczak",
+          "name": "Chicken",
           "quantity": {
             "base": 100,
             "portions": { 3: 2, 6: 3, 9: 4 }
@@ -29,7 +29,7 @@ export class InMemoryRecipesService implements RecipesService {
           "owned": { show: false, value: 0 }
         },
         {
-          "name": "Ryż",
+          "name": "Rice",
           "quantity": {
             "base": 100,
             "portions": {}
@@ -39,7 +39,7 @@ export class InMemoryRecipesService implements RecipesService {
           "owned": { show: false, value: 0 }
         },
         {
-          "name": "Jogurt",
+          "name": "Yogurt",
           "quantity": {
             "base": 1,
             "portions": {}
@@ -51,15 +51,15 @@ export class InMemoryRecipesService implements RecipesService {
       ],
       "selected": true
     }, {
-      "name": "Awokado",
+      "name": "Avocado",
       "portions": 1,
-      "multiplier": {
+      "notes": {
         "enabled": false,
-        "value": 1
+        "value": ""
       },
       "products": [
         {
-          "name": "Awokado",
+          "name": "Avocado",
           "quantity": {
             "base": 1,
             "portions": {}
@@ -72,15 +72,15 @@ export class InMemoryRecipesService implements RecipesService {
       "selected": false
     },
     {
-      "name": "Kurczak z makaronem",
+      "name": "Pasta with chicken",
       "portions": 1,
-      "multiplier": {
-        "enabled": false,
-        "value": 1
+      "notes": {
+        "enabled": true,
+        "value": "Own customizable note for this recipe"
       },
       "products": [
         {
-          "name": "Kurczak",
+          "name": "Chicken",
           "quantity": {
             "base": 200,
             "portions": {}
@@ -90,7 +90,7 @@ export class InMemoryRecipesService implements RecipesService {
           "owned": { show: false, value: 0 }
         },
         {
-          "name": "Mieszanka warzyw po chińsku",
+          "name": "Chinese-style vegetable mix",
           "quantity": {
             "base": 200,
             "portions": {}
@@ -100,7 +100,7 @@ export class InMemoryRecipesService implements RecipesService {
           "owned": { show: false, value: 0 }
         },
         {
-          "name": "Makaron",
+          "name": "Pasta",
           "quantity": {
             "base": 50,
             "portions": {}

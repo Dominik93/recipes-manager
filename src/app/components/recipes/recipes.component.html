@@ -12,6 +12,8 @@
     class="list-item" (click)="onItemClick($event, recipe)">
     <mat-checkbox [ngModel]="recipe.selected" (click)="onItemClick($event, recipe)"></mat-checkbox>
     <span class="recipe-name">{{recipe.name}}</span>
+    <span class="recipe-notes" *ngIf="recipe.notes.enabled" www-element>{{recipe.notes.value}}</span>
+    <mat-icon aria-hidden="false" aria-label="Notes" fontIcon="info" *ngIf="recipe.notes.enabled" mobile-element matTooltip="{{recipe.notes.value}}"></mat-icon>
 
     <button mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{recipe: recipe}"
       (click)="$event.stopPropagation()">

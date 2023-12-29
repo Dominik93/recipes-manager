@@ -5,6 +5,13 @@
         max-width: 45%;
         white-space: normal;
     }
+    
+    .recipe-notes {
+        margin-left: 15px;
+        font-size: 12px;
+        max-width: 50%;
+        white-space: normal;
+    }
 
     .list-item {
         height: 50px;
