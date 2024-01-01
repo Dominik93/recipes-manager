@@ -3,20 +3,21 @@
     <mat-card-content>
       <mat-form-field id="application-token-form-field" appearance="fill">
         <mat-label i18n="application-token@@application-token">Application token</mat-label>
-        <input matInput id="application-token-input" type="text" [(ngModel)]="applicationToken">
+        <input matInput id="application-token-input" type="text" [(ngModel)]="applicationToken" required>
       </mat-form-field>
       <br>
       <mat-form-field id="useramne-form-field" appearance="fill">
         <mat-label i18n="username@@usermane">Username</mat-label>
-        <input matInput id="useramne-input" type="text" [(ngModel)]="username">
+        <input matInput id="useramne-input" type="text" [(ngModel)]="username" required>
       </mat-form-field>
       <br>
       <mat-form-field id="password-form-field" appearance="fill">
         <mat-label i18n="password@@password">Password</mat-label>
-        <input matInput id="password-input" type="password" [(ngModel)]="password">
+        <input matInput id="password-input" type="password" [(ngModel)]="password" required>
       </mat-form-field>
       <br>
-      <button mat-raised-button id="login-button" color="primary" class="login-button" (click)="onLogin()" i18n="login@@login">Login</button>
+      <button mat-raised-button id="login-button" color="primary" class="login-button" (click)="onLogin()"
+        i18n="login@@login">Login</button>
     </mat-card-content>
   </mat-card>
 </div>
