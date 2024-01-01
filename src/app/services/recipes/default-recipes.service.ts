@@ -10,8 +10,6 @@ import { RecipesService } from './recipes.service';
 })
 export class DefaultRecipesService implements RecipesService {
 
-  private readonly NAME = "app-1";
-
   private readonly URL = 'https://eu-central-1.aws.data.mongodb-api.com';
 
   private readonly GET_PATH = '/app/data-zepaz/endpoint/data/v1/action/findOne';
@@ -20,16 +18,16 @@ export class DefaultRecipesService implements RecipesService {
 
   constructor(private mongodb: MongodbService) { }
 
-  getRecipes(token: string): Observable<any> {
-    return this.mongodb.findOneDocument(this.URL + this.GET_PATH, token, this.NAME)
+  getRecipes(authToken: string, applicationToken: string): Observable<any> {
+    return this.mongodb.findOneDocument(this.URL + this.GET_PATH, authToken, applicationToken)
       .pipe(map((response: any) => ({
         version: response.document.version,
         recipes: response.document.recipes
       })));
   }
 
-  save(token: string, version: number, recipes: Recipe[]): Observable<any> {
-    return this.mongodb.updateOneDocument(this.URL + this.UPDATE_PATH, token, this.NAME, version, recipes)
+  save(authToken: string, applicationToken: string, version: number, recipes: Recipe[]): Observable<any> {
+    return this.mongodb.updateOneDocument(this.URL + this.UPDATE_PATH, authToken, applicationToken, version, recipes)
   }
 
 

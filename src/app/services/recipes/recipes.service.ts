@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 
 export interface RecipesService {
 
-  getRecipes: (token: string) => Observable<any>;
+  getRecipes: (authToken: string, applciationToken: string) => Observable<any>;
 
-  save: (token: string, version: number, recipes: Recipe[]) => Observable<any>;
+  save: (authToken: string, applciationToken: string, version: number, recipes: Recipe[]) => Observable<any>;
 
 }

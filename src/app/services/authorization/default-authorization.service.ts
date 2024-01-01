@@ -12,11 +12,12 @@ export class DefaultAuthorizationService implements AuthorizationService {
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<Authorization> {
+  login(username: string, password: string, applicationToken: string): Observable<Authorization> {
     return this.http.post(this.URL + this.AUTH_PATH, { username: username, password: password })
       .pipe(map((response: any) => ({
+        applicationToken: applicationToken,
         isAuth: true,
-        token: response.access_token
+        authToken: response.access_token
       })))
   }
 

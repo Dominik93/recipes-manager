@@ -3,6 +3,6 @@ import { Authorization } from '../../authorization';
 
 export interface AuthorizationService {
 
-  login(username: string, password: string): Observable<Authorization>;
+  login(username: string, password: string, applicationToken: string): Observable<Authorization>;
 
 }

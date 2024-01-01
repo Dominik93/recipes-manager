@@ -37,6 +37,8 @@ export class AuthorizationComponent {
 
   authorized: boolean = false;
 
+  applicationToken: string = "";
+
   username: string = "";
 
   password: string = "";
@@ -44,7 +46,7 @@ export class AuthorizationComponent {
   constructor(@Inject('AuthorizationService') private authorizationService: AuthorizationService) { }
 
   onLogin(): void {
-    this.authorizationService.login(this.username, this.password).subscribe((result) => {
+    this.authorizationService.login(this.username, this.password, this.applicationToken).subscribe((result) => {
       this.login.emit(result);
       this.authorized = result.isAuth;
     });

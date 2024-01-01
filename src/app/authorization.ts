@@ -1,4 +1,5 @@
 export type Authorization = {
+  applicationToken: string,
   isAuth: boolean,
-  token: string
+  authToken: string
 }

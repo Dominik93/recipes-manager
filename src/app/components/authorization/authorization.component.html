@@ -1,6 +1,11 @@
 <div class="auth">
   <mat-card *ngIf="!authorized" class="auth-card">
     <mat-card-content>
+      <mat-form-field id="application-token-form-field" appearance="fill">
+        <mat-label i18n="application-token@@application-token">Application token</mat-label>
+        <input matInput id="application-token-input" type="text" [(ngModel)]="applicationToken">
+      </mat-form-field>
+      <br>
       <mat-form-field id="useramne-form-field" appearance="fill">
         <mat-label i18n="username@@usermane">Username</mat-label>
         <input matInput id="useramne-input" type="text" [(ngModel)]="username">

@@ -46,7 +46,8 @@ export class AppComponent {
 
   private pageRefreshed = $localize`:page-refreshed@@page-refreshed:Page refreshed.`;
   private versionMismatch = $localize`:version-mismatch@@version-mismatch:Version mismatch. Try again.`;
-  private token: string = "";
+  private authToken: string = "";
+  private applicationToken: string = "";
   private version: any;
   private subscriptions: Subscription[] = [];
 
@@ -57,8 +58,9 @@ export class AppComponent {
 
   onLogin(event: any): void {
     this.authorized = event.isAuth;
-    this.token = event.token
-    this.recipesService.getRecipes(this.token)
+    this.authToken = event.authToken
+    this.applicationToken = event.applicationToken;
+    this.recipesService.getRecipes(this.authToken, this.applicationToken)
       .pipe(tap(result => this.log.info('Recipes', result)))
       .subscribe((result: any) => {
         this.version = result.version;
@@ -114,13 +116,13 @@ export class AppComponent {
   }
 
   private save() {
-    this.recipesService.getRecipes(this.token).subscribe((result) => {
+    this.recipesService.getRecipes(this.authToken, this.applicationToken).subscribe((result) => {
       if (result.version != this.version) {
         this.handleVersionMismatch(result.version, this.version);
       } else {
         this.version = Date.now().valueOf();
         this.countdown = environment.config.refresh.countdown;
-        this.recipesService.save(this.token, this.version, this.recipes).subscribe(() => { });
+        this.recipesService.save(this.authToken, this.applicationToken, this.version, this.recipes).subscribe(() => { });
       }
     })
   }
@@ -131,7 +133,7 @@ export class AppComponent {
   }
 
   private refresh(notification: Function = () => { }) {
-    this.recipesService.getRecipes(this.token)
+    this.recipesService.getRecipes(this.authToken, this.applicationToken)
       .pipe(tap(result => this.log.info('AppComponent::refresh', result)))
       .subscribe((result: any) => {
         this.countdown = environment.config.refresh.countdown;

@@ -6,6 +6,7 @@
     "fotter": " Recipes Manager 1.13.1{$LINE_BREAK}powered by Angular 17, Angular Material 17 and Atlas MongoDB ",
     "page-refreshed": "Page refreshed.",
     "version-mismatch": "Version mismatch. Try again.",
+    "application-token": "Application token",
     "usermane": "Username",
     "password": "Password",
     "login": "Login",

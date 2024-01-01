@@ -6,10 +6,11 @@ import { AuthorizationService } from './authorization.service';
 @Injectable()
 export class MockAuthorizationService implements AuthorizationService {
 
-  login(username: string, password: string): Observable<Authorization> {
+  login(username: string, password: string, applicationToken: string): Observable<Authorization> {
     return of({
+      applicationToken: applicationToken,
       isAuth: true,
-      token: "token"
+      authToken: "auth-token"
     })
   }
 
