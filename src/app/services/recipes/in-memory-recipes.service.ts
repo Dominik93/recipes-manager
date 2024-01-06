@@ -3,6 +3,7 @@ import { Recipe } from '../../recipe'
 import { of, Observable, map } from 'rxjs';
 import { RecipesService } from './recipes.service';
 import { LoggingService } from '../logging/logging';
+import { MigrationMapper } from './migration-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -127,7 +128,7 @@ export class InMemoryRecipesService implements RecipesService {
 
   getRecipes(authToken: string, applicationToken: string): Observable<any> {
     this.log.info("InMemoryRecipesService::getRecipes", authToken, applicationToken);
-    const result = { version: this.version, recipes: [...this.recipes] };
+    const result = { version: this.version,recipes:  MigrationMapper.migrate([...this.recipes]) };
     this.log.info("InMemoryRecipesService::getRecipes completed", result);
     return of(result);
   }

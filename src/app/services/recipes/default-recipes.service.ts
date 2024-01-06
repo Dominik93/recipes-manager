@@ -4,6 +4,7 @@ import { Recipe } from '../../recipe'
 import { of, Observable, map } from 'rxjs';
 import { MongodbService } from '../db/mongodb.service';
 import { RecipesService } from './recipes.service';
+import { MigrationMapper } from './migration-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,12 @@ export class DefaultRecipesService implements RecipesService {
     return this.mongodb.findOneDocument(this.URL + this.GET_PATH, authToken, applicationToken)
       .pipe(map((response: any) => ({
         version: response.document.version,
-        recipes: response.document.recipes
+        recipes: MigrationMapper.migrate(response.document.recipes)
       })));
   }
 
   save(authToken: string, applicationToken: string, version: number, recipes: Recipe[]): Observable<any> {
     return this.mongodb.updateOneDocument(this.URL + this.UPDATE_PATH, authToken, applicationToken, version, recipes)
   }
-
-
 
 }
