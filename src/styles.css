@@ -6,6 +6,22 @@ button[www-element] {
     display: unset;
 }
 
+mat-icon[mobile-element] {
+    display: none;
+}
+
+mat-icon[www-element] {
+    display: unset;
+}
+
+mat-slide-toggle[mobile-element] {
+    display: none;
+}
+
+mat-slide-toggle[www-element] {
+    display: unset;
+}
+
 span[mobile-element] {
     display: none;
 }
@@ -31,12 +47,28 @@ button[bordered-element] {
     margin-right: 5px;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 890px) {
     button[mobile-element] {
         display: unset;
     }
 
     button[www-element] {
+        display: none;
+    }
+
+    mat-icon[mobile-element] {
+        display: unset;
+    }
+
+    mat-icon[www-element] {
+        display: none;
+    }
+    
+    mat-slide-toggle[mobile-element] {
+        display: unset;
+    }
+
+    mat-slide-toggle[www-element] {
         display: none;
     }
 

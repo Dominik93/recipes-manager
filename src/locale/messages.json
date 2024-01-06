@@ -18,6 +18,8 @@
     "portion": "Portion",
     "quantity": "Quantity",
     "delete": "Delete",
+    "scalable": "Scalable",
+    "unscalable": "Unscalable",
     "cancel": "Cancel",
     "save": "Save",
     "add-recipe-question": "Add recipe?",

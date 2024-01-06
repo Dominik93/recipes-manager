@@ -26,7 +26,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "g",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": true
         },
         {
           "name": "Rice",
@@ -36,7 +37,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "g",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": true
         },
         {
           "name": "Yogurt",
@@ -46,7 +48,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "sz",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": false
         }
       ],
       "selected": true
@@ -66,7 +69,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "sz",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": true
         }
       ],
       "selected": false
@@ -87,7 +91,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "g",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": true
         },
         {
           "name": "Chinese-style vegetable mix",
@@ -97,7 +102,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "g",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": true
         },
         {
           "name": "Pasta",
@@ -107,7 +113,8 @@ export class InMemoryRecipesService implements RecipesService {
           },
           "selected": false,
           "unit": "g",
-          "owned": { show: false, value: 0 }
+          "owned": { show: false, value: 0 },
+          "scalable": true
         }
       ],
       "selected": false
