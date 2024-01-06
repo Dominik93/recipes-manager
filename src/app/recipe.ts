@@ -16,7 +16,8 @@ export type Product = {
   selected: boolean,
   quantity: Quantity,
   unit: string,
-  owned: Owned
+  owned: Owned,
+  scalable:boolean
 }
 
 export type Owned = {

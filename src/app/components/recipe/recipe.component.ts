@@ -21,6 +21,7 @@ import { QuantityComponent, QuantityPart } from '../quantity/quantity.component'
 import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
 import { Config, DividerComponent } from '../../divider/divider.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'rm-recipe',
@@ -35,6 +36,7 @@ import { Config, DividerComponent } from '../../divider/divider.component';
     MatMenuModule,
     MatIconModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatInputModule,
     MatButtonModule,
     MatDialogActions,
@@ -48,6 +50,8 @@ import { Config, DividerComponent } from '../../divider/divider.component';
   styleUrl: './recipe.component.css'
 })
 export class RecipeComponent {
+
+  unscalable = $localize`:unscalable@@unscalable:Unscalable`;
 
   readonly dividerConfig: Config = {
     excludeIndex: 0,
@@ -67,7 +71,8 @@ export class RecipeComponent {
     selected: false
   };
 
-  constructor(@Inject('LoggingService') private log: LoggingService, public dialog: MatDialog,
+  constructor(@Inject('LoggingService') private log: LoggingService,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: Recipe) {
     this.recipe = data ?? this.recipe;
   }
@@ -78,13 +83,22 @@ export class RecipeComponent {
       quantity: { base: 1, portions: {} },
       selected: false,
       unit: this.units[0],
-      owned: { show: false, value: 0 }
+      owned: { show: false, value: 0 },
+      scalable: true
     }
     this.recipe.products = this.recipe.products.concat(product);
   }
 
   onToggleNotes() {
     this.recipe.notes.enabled = !this.recipe.notes.enabled;
+  }
+
+  onProductScalable(product: Product) {
+    product.scalable = true;
+  }
+
+  onProductUnscalable(product: Product) {
+    product.scalable = false;
   }
 
   onCustomQuantityPerProduct(event: any, index: number) {

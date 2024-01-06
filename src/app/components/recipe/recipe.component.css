@@ -13,6 +13,10 @@
     .content {
         height: 45px;
 
+        .item {
+            margin-right: 5px;
+        }
+
         .product-name {
             width: 300px;
         }

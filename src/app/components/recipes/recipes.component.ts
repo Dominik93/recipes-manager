@@ -146,7 +146,7 @@ export class RecipesComponent {
     return {
       height: "calc(80% - 30px)",
       width: "100%",
-      maxWidth: '830px'
+      maxWidth: '950px'
     }
   }
 
