@@ -61,7 +61,8 @@ export class AppComponent {
     this.authToken = event.authToken
     this.applicationToken = event.applicationToken;
     this.recipesService.getRecipes(this.authToken, this.applicationToken)
-      .pipe(tap(result => this.log.info('Recipes', result)))
+      .pipe(tap(result => this.log.info('AppComponent::onLogin Recipes', result)))
+      .pipe(tap(result => this.handleVersion(result)))
       .subscribe((result: any) => {
         this.version = result.version;
         this.recipes = result.recipes;
@@ -116,15 +117,17 @@ export class AppComponent {
   }
 
   private save() {
-    this.recipesService.getRecipes(this.authToken, this.applicationToken).subscribe((result) => {
-      if (result.version != this.version) {
-        this.handleVersionMismatch(result.version, this.version);
-      } else {
-        this.version = Date.now().valueOf();
-        this.countdown = environment.config.refresh.countdown;
-        this.recipesService.save(this.authToken, this.applicationToken, this.version, this.recipes).subscribe(() => { });
-      }
-    })
+    this.recipesService.getRecipes(this.authToken, this.applicationToken)
+      .pipe(tap(result => this.handleVersion(result)))
+      .subscribe((result) => {
+        if (result.version != this.version) {
+          this.handleVersionMismatch(result.version, this.version);
+        } else {
+          this.version = Date.now().valueOf();
+          this.countdown = environment.config.refresh.countdown;
+          this.recipesService.save(this.authToken, this.applicationToken, this.version, this.recipes).subscribe(() => { });
+        }
+      })
   }
 
   private handleVersionMismatch(storedVersion: number, version: number) {
@@ -135,6 +138,7 @@ export class AppComponent {
   private refresh(notification: Function = () => { }) {
     this.recipesService.getRecipes(this.authToken, this.applicationToken)
       .pipe(tap(result => this.log.info('AppComponent::refresh', result)))
+      .pipe(tap(result => this.handleVersion(result)))
       .subscribe((result: any) => {
         this.countdown = environment.config.refresh.countdown;
         this.version = result.version;
@@ -148,6 +152,12 @@ export class AppComponent {
       duration: 5000,
       data: message
     });
+  }
+
+  private handleVersion(result: any) {
+    if (!result.version) {
+      window.location.reload();
+    }
   }
 
   ngOnDestroy() {

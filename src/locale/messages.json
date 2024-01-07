@@ -1,6 +1,7 @@
 {
   "locale": "en-US",
   "translations": {
+    "error-message": "Something went wrong. Sorry.",
     "recipes": "Recipes",
     "cart": "Cart",
     "fotter": " Recipes Manager 1.15.0{$LINE_BREAK}powered by Angular 17, Angular Material 17 and Atlas MongoDB ",

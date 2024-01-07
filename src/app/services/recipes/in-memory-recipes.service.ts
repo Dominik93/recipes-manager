@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Recipe } from '../../recipe'
-import { of, Observable, map } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { RecipesService } from './recipes.service';
 import { LoggingService } from '../logging/logging';
 import { MigrationMapper } from './migration-mapper';
