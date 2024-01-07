@@ -1,6 +1,7 @@
 {
   "locale": "pl",
   "translations": {
+    "error-message": "Coś poszło nie tak. Przepraszamy.",
     "recipes": "Przepisy",
     "cart": "Koszyk",
     "fotter": " Recipes Manager 1.15.0{$LINE_BREAK}zrobiony przy użyciu Angular 17, Angular Material 17 i Atlas MongoDB ",
