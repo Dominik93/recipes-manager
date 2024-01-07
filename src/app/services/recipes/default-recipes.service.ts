@@ -29,7 +29,7 @@ export class DefaultRecipesService implements RecipesService {
   }
 
   mapRecipesResponse(response: any) {
-    const document = response.docuemnt;
+    const document = response.document;
     return {
       version: document?.version,
       recipes: MigrationMapper.migrate(document?.recipes ?? [])
