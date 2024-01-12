@@ -22,6 +22,7 @@ import { NotificationComponent } from '../../notification/notification.component
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'rm-recipes',
@@ -51,6 +52,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   styleUrls: ['./recipes.component.css'],
 })
 export class RecipesComponent {
+
+  private readonly confirmDelete = $localize`:confirm-delete@@confirm-delete:Delete?`;
 
   @Input() recipes: Recipe[] = [];
 
@@ -99,8 +102,16 @@ export class RecipesComponent {
 
   onDelete(event: any, name: string) {
     event?.stopPropagation();
-    this.recipes = this.recipes.filter(recipe => recipe.name !== name)
-    this.recipeDeleted.emit(this.recipes);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { question: this.confirmDelete }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.log.info('RecipesComponent::onDelete Close dialog', result);
+      if (result) {
+        this.recipes = this.recipes.filter(recipe => recipe.name !== name)
+        this.recipeDeleted.emit(this.recipes);
+      }
+    });
   }
 
   onItemClick(event: any, recipe: Recipe) {
