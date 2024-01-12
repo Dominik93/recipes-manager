@@ -53,7 +53,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class RecipesComponent {
 
-  private readonly confirmDelete = $localize`:confirm-delete@@confirm-delete:Delete?`;
+  private readonly confirmDelete = $localize`:confirm-delete@@confirm-delete:Do you want to delete?`;
 
   @Input() recipes: Recipe[] = [];
 
