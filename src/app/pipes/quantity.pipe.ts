@@ -8,7 +8,11 @@ import { Product } from './../recipe';
 export class QuantityPipe implements PipeTransform {
 
   transform(product: Product, portions: number): number {
-    return Math.round(this.calculate(product, portions));
+    let value = this.calculate(product, portions);
+    if (value % 1 > 0.7) {
+      value = Math.round(value);
+    }
+    return this.convert(value);
   }
 
   private calculate(product: Product, portions: number) {
@@ -19,6 +23,10 @@ export class QuantityPipe implements PipeTransform {
       return product.quantity.base * portions;
     }
     return product.quantity.portions[portions];
+  }
+
+  private convert(value: number) {
+    return Number(value.toFixed(2));
   }
 
 }
