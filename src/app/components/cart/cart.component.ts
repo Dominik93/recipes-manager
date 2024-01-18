@@ -14,7 +14,6 @@ import { environment } from '../../../environments/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Config, DividerComponent } from '../../divider/divider.component';
-import { LongPressDirective } from '../../long-press/long-press.directive';
 
 
 @Component({
@@ -33,8 +32,6 @@ import { LongPressDirective } from '../../long-press/long-press.directive';
     MatInputModule,
 
     DividerComponent,
-
-    LongPressDirective,
 
     QuantityPipe,
     SortSelectedPipe,
