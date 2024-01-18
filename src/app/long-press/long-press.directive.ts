@@ -30,7 +30,7 @@ export class LongPressDirective {
   }
 
   @HostListener('mouseup')
-  @HostListener('touchcancel')
+  @HostListener('touchend')
   onCancel(): void {
     this.log.debug("LongPressDirective::onCancel");
     clearTimeout(this.touchTimeout);
