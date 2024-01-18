@@ -8,11 +8,11 @@
           <mat-label i18n="portions@@portions">Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
         </mat-form-field>
-        
+
       </div>
       <div class="recipe-products">
-        <div *ngFor="let product of recipe.products | sortSelected:'ASC'" class="list-item"
-          (click)="onItemClick($event, product)">
+        <div *ngFor="let product of recipe.products | sortSelected:'ASC'" class="list-item" rmLongPress
+         (longpress)="onItemClick($event, product)">
           <mat-checkbox [ngModel]="product.selected" (click)="onItemClick($event, product)"></mat-checkbox>
           <span class="product-data-name" [class.product-selected]="product.selected">{{product.name}}:</span>
 
@@ -42,6 +42,7 @@
 
 <mat-menu #productMenu="matMenu">
   <ng-template matMenuContent let-product="product" let-event="event">
-    <button mat-menu-item color="primary" (click)="onToggleOwned(event, product)" i18n="toggle-owned@@toggle-owned">Toggle owned</button>
+    <button mat-menu-item color="primary" (click)="onToggleOwned(event, product)"
+      i18n="toggle-owned@@toggle-owned">Toggle owned</button>
   </ng-template>
 </mat-menu>
