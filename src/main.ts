@@ -16,6 +16,7 @@ import { ManagerComponent } from './app/manager/manager.component';
 
 const routes: Routes = [
     { path: ':token', component: ManagerComponent },
+    { path: 'recipes-manager/browser/:token', component: ManagerComponent },
     { path: '', component: ManagerComponent }
   ]
 
