@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Authorization } from './../../authorization'
 import { AuthorizationService } from '../../services/authorization/authorization.service'
 import { environment } from '../../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'rm-authorization',
@@ -43,16 +44,19 @@ export class AuthorizationComponent {
 
   password: string = "";
 
-  constructor(@Inject('AuthorizationService') private authorizationService: AuthorizationService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    @Inject('AuthorizationService') private authorizationService: AuthorizationService) {
+    this.applicationToken = this.activatedRoute.snapshot.params['token'] ?? "";
+  }
 
   onLogin(): void {
-    if(this.username === "") {
+    if (this.username === "") {
       return;
     }
-    if(this.password === "") {
+    if (this.password === "") {
       return;
     }
-    if(this.applicationToken === "") {
+    if (this.applicationToken === "") {
       return;
     }
     this.authorizationService.login(this.username, this.password, this.applicationToken).subscribe((result) => {

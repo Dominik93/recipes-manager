@@ -1,0 +1,28 @@
+<mat-toolbar *ngIf="authorized">
+    <span (click)="onLangaugeClick('en-US')">EN</span> / 
+    <span (click)="onLangaugeClick('pl')">PL</span>
+    <span class="spacer"></span>
+    <div *ngIf="enableRefresh">
+        {{countdown | time}}
+        <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh" (click)="onRefresh()">Refresh</mat-icon>
+    </div>
+</mat-toolbar>
+
+<div class="page-container">
+    <div class="content">
+        <rm-authorization *ngIf="!authorized" (login)="onLogin($event)"></rm-authorization>
+        <mat-tab-group *ngIf="authorized">
+            <mat-tab label="Recipes" i18n-label="recipes@@recipes">
+                <rm-recipes [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"
+                    (recipeModified)="onRecipeModified($event)" (recipeDeleted)="onRecipeDeleted($event)"
+                    (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
+            </mat-tab>
+            <mat-tab label="Cart" i18n-label="cart@@cart">
+                <rm-cart [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="footer" i18n="fotter@@fotter">
+        Recipes Manager 1.19.2<br>powered by Angular 17, Angular Material 17 and Atlas MongoDB
+    </div>
+</div>

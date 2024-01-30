@@ -11,10 +11,18 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { environment } from './environments/environment';
 import { HttpRequestInterceptor } from './app/http-interceptor/http-request-interceptor';
+import { Routes, provideRouter } from '@angular/router';
+import { ManagerComponent } from './app/manager/manager.component';
+
+const routes: Routes = [
+    { path: ':token', component: ManagerComponent },
+    { path: '', component: ManagerComponent }
+  ]
 
 bootstrapApplication(AppComponent,
     {
         providers: [
+            provideRouter(routes),
             importProvidersFrom(HttpClientModule),
             provideProtractorTestingSupport(),
             provideAnimations(),
