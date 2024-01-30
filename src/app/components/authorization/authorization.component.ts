@@ -46,7 +46,7 @@ export class AuthorizationComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
     @Inject('AuthorizationService') private authorizationService: AuthorizationService) {
-    this.applicationToken = this.activatedRoute.snapshot.params['token'] ?? "";
+    this.applicationToken = this.activatedRoute.snapshot.queryParams['token'] ?? "";
   }
 
   onLogin(): void {
