@@ -4,7 +4,6 @@ import { Observable, map } from 'rxjs';
 import { MongodbService } from '../db/mongodb.service';
 import { RecipesService } from './recipes.service';
 import { MigrationMapper } from './migration-mapper';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'

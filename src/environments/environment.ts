@@ -12,6 +12,10 @@ export const environment = {
         refresh: {
             enabled: true,
             countdown: 15
+        },
+        expiringStorageConfig: {
+            expired: 20,
+            refresh: 30
         }
     },
     loggingService: DisabledLoggingService,

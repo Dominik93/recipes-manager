@@ -1,5 +1,5 @@
 <div class="auth">
-  <mat-card *ngIf="!authorized" class="auth-card">
+  <mat-card class="auth-card">
     <mat-card-content>
       <mat-form-field id="application-token-form-field" appearance="fill">
         <mat-label i18n="application-token@@application-token">Application token</mat-label>
@@ -15,6 +15,8 @@
         <mat-label i18n="password@@password">Password</mat-label>
         <input matInput id="password-input" type="password" [(ngModel)]="password" required>
       </mat-form-field>
+      <br>
+      <mat-checkbox [(ngModel)]="rememberMe">Remember me</mat-checkbox>
       <br>
       <button mat-raised-button id="login-button" color="primary" class="login-button" (click)="onLogin()"
         i18n="login@@login">Login</button>

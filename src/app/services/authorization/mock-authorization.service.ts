@@ -9,9 +9,13 @@ export class MockAuthorizationService implements AuthorizationService {
   login(username: string, password: string, applicationToken: string): Observable<Authorization> {
     return of({
       applicationToken: applicationToken,
-      isAuth: true,
-      authToken: "auth-token"
+      authToken: "auth-token",
+      refreshToken: "refresh-token"
     })
+  }
+
+  refresh(refreshToken: string): Observable<string> {
+    return of(refreshToken);
   }
 
 }

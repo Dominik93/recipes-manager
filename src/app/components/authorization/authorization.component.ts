@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Authorization } from './../../authorization'
 import { AuthorizationService } from '../../services/authorization/authorization.service'
 import { environment } from '../../../environments/environment';
+import { AuthStorageService } from '../../services/auth-storage.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -21,7 +23,8 @@ import { ActivatedRoute } from '@angular/router';
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ],
   providers: [
     {
@@ -36,16 +39,17 @@ export class AuthorizationComponent {
 
   @Output() login = new EventEmitter<Authorization>();
 
-  authorized: boolean = false;
-
   applicationToken: string = "";
 
   username: string = "";
 
   password: string = "";
 
+  rememberMe: boolean = false;
+
   constructor(private activatedRoute: ActivatedRoute,
-    @Inject('AuthorizationService') private authorizationService: AuthorizationService) {
+    @Inject('AuthorizationService') private authorizationService: AuthorizationService,
+    private authStorageService: AuthStorageService) {
     this.applicationToken = this.activatedRoute.snapshot.queryParams['token'] ?? "";
   }
 
@@ -60,8 +64,10 @@ export class AuthorizationComponent {
       return;
     }
     this.authorizationService.login(this.username, this.password, this.applicationToken).subscribe((result) => {
+      if (this.rememberMe) {
+        this.authStorageService.save({ applicationToken: result.applicationToken, authToken: result.authToken, refreshToken: result.refreshToken })
+      }
       this.login.emit(result);
-      this.authorized = result.isAuth;
     });
   }
 

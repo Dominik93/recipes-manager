@@ -2,10 +2,7 @@
     <span (click)="onLangaugeClick('en-US')">EN</span> / 
     <span (click)="onLangaugeClick('pl')">PL</span>
     <span class="spacer"></span>
-    <div *ngIf="enableRefresh">
-        {{countdown | time}}
-        <mat-icon aria-hidden="false" aria-label="Refresh" fontIcon="refresh" (click)="onRefresh()">Refresh</mat-icon>
-    </div>
+    <rm-refresh [enabed]="enableRefresh" [counter]="counter" (onRefreshed)="onRefresh()"></rm-refresh>
 </mat-toolbar>
 
 <div class="page-container">
