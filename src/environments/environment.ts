@@ -14,8 +14,8 @@ export const environment = {
             countdown: 15
         },
         expiringStorageConfig: {
-            expired: 20,
-            refresh: 30
+            expired: 30,
+            refresh: 20
         }
     },
     loggingService: DisabledLoggingService,
