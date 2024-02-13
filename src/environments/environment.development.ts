@@ -11,7 +11,8 @@ export const environment = {
         },
         refresh: {
             enabled: true,
-            countdown: 10
+            countdown: 10,
+            notify: true
         },
         expiringStorageConfig: {
             expired: 3,

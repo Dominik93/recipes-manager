@@ -141,7 +141,8 @@ export class ManagerComponent implements OnInit {
   }
 
   onRefresh() {
-    this.prolongateToken(() => this.refreshRecipes(() => this.showNotification(this.pageRefreshed)));
+    this.prolongateToken(() => this.refreshRecipes(
+      () => environment.config.refresh.notify && this.showNotification(this.pageRefreshed)));
   }
 
   onLangaugeClick(lang: string) {
