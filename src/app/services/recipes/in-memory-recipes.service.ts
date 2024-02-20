@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Recipe } from '../../recipe'
-import { of, Observable } from 'rxjs';
+import { of, Observable, delay } from 'rxjs';
 import { RecipesService } from './recipes.service';
 import { LoggingService } from '../logging/logging';
 import { MigrationMapper } from './migration-mapper';
@@ -128,9 +128,9 @@ export class InMemoryRecipesService implements RecipesService {
 
   getRecipes(authToken: string, applicationToken: string): Observable<any> {
     this.log.info("InMemoryRecipesService::getRecipes", authToken, applicationToken);
-    const result = { version: this.version,recipes:  MigrationMapper.migrate([...this.recipes]) };
+    const result = { version: this.version, recipes: MigrationMapper.migrate([...this.recipes]) };
     this.log.info("InMemoryRecipesService::getRecipes completed", result);
-    return of(result);
+    return of(result).pipe(delay(2000));
   }
 
   save(authToken: string, applicationToken: string, version: number, recipes: Recipe[]): Observable<any> {
@@ -138,7 +138,7 @@ export class InMemoryRecipesService implements RecipesService {
     this.version = version;
     this.log.info("InMemoryRecipesService::save", authToken, applicationToken, version, recipes);
     this.log.info("InMemoryRecipesService::save completed");
-    return of({});
+    return of({}).pipe(delay(2000));
   }
 
 }

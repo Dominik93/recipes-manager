@@ -14,6 +14,9 @@ export const environment = {
             countdown: 15,
             notify: false
         },
+        spinner: {
+            waitTime: 500,
+        },
         expiringStorageConfig: {
             expired: 30,
             refresh: 20

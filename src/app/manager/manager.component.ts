@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap } from 'rxjs';
+import { Subscription, interval, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthorizationComponent } from '../components/authorization/authorization.component';
 import { CartComponent } from '../components/cart/cart.component';
@@ -20,7 +20,8 @@ import { AuthStorageService } from '../services/auth-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Authorization } from '../authorization';
 import { RefreshCounter, RefreshComponent } from '../refresh/refresh.component';
-
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SpinnerDialogComponent } from '../components/spinner-dialog/spinner-dialog.component';
 
 @Component({
   selector: 'app-manager',
@@ -49,19 +50,22 @@ import { RefreshCounter, RefreshComponent } from '../refresh/refresh.component';
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.css'
 })
-export class ManagerComponent implements OnInit {
+export class ManagerComponent implements OnInit, OnDestroy {
 
   authorized: boolean = false;
+  spinner: boolean = false;
   recipes: Recipe[] = [];
-  counter: RefreshCounter = {countdown: environment.config.refresh.countdown};
+  counter: RefreshCounter = { countdown: environment.config.refresh.countdown };
   enableRefresh: boolean = environment.config.refresh.enabled;
   rememberMe: boolean = false;
+  spinnerDialog: any;
 
   private pageRefreshed = $localize`:page-refreshed@@page-refreshed:Page refreshed.`;
   private versionMismatch = $localize`:version-mismatch@@version-mismatch:Version mismatch. Try again.`;
   private authToken: string = "";
   private applicationToken: string = "";
   private version: any;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     @Inject('LoggingService') private log: LoggingService,
@@ -69,7 +73,8 @@ export class ManagerComponent implements OnInit {
     @Inject('AuthorizationService') private authorizationService: AuthorizationService,
     private activatedRoute: ActivatedRoute,
     private authStorageService: AuthStorageService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog) {
     this.applicationToken = this.activatedRoute.snapshot.queryParams['token'] ?? "";
   }
 
@@ -112,30 +117,35 @@ export class ManagerComponent implements OnInit {
   }
 
   onRecipeSelected(event: any) {
+    this.openSpinner();
     this.recipes = [...event];
     this.log.info('ManagerComponent::onRecipeSelected Save recipes on recipe selected', this.recipes);
     this.prolongateToken(() => this.save());
   }
 
   onRecipeAdded(event: any) {
+    this.openSpinner();
     this.recipes = [...event];
     this.log.info('ManagerComponent::onRecipeAdded Save recipes on recipe added', this.recipes);
     this.prolongateToken(() => this.save());
   }
 
   onRecipeDeleted(event: any) {
+    this.openSpinner();
     this.recipes = [...event];
     this.log.info('ManagerComponent::onRecipeDeleted Save recipes on recipe deleted', this.recipes);
     this.prolongateToken(() => this.save());
   }
 
   onRecipeModified(event: any) {
+    this.openSpinner();
     this.recipes = [...event];
     this.log.info('ManagerComponent::onRecipeModified Save recipes on recipe modified', this.recipes);
     this.prolongateToken(() => this.save());
   }
 
   onProductChanged(event: any) {
+    this.openSpinner();
     this.log.info('ManagerComponent::onProductChanged Save recipes on product changed', this.recipes);
     this.prolongateToken(() => this.save());
   }
@@ -182,8 +192,10 @@ export class ManagerComponent implements OnInit {
           this.handleVersionMismatch(result.version, this.version);
         } else {
           this.version = Date.now().valueOf();
-          this.counter = {countdown: environment.config.refresh.countdown};
-          this.recipesService.save(this.authToken, this.applicationToken, this.version, this.recipes).subscribe(() => { });
+          this.counter = { countdown: environment.config.refresh.countdown };
+          this.recipesService.save(this.authToken, this.applicationToken, this.version, this.recipes).subscribe(() => {
+            this.closeSpinner();
+          });
         }
       })
   }
@@ -198,7 +210,7 @@ export class ManagerComponent implements OnInit {
       .pipe(tap(result => this.log.info('ManagerComponent::refreshRecipes', result)))
       .pipe(tap(result => this.handleVersion(result)))
       .subscribe((result: any) => {
-        this.counter = {countdown: environment.config.refresh.countdown};
+        this.counter = { countdown: environment.config.refresh.countdown };
         this.version = result.version;
         this.recipes = result.recipes;
         notification();
@@ -218,4 +230,21 @@ export class ManagerComponent implements OnInit {
     }
   }
 
+  private openSpinner() {
+    this.spinner = true;
+    setTimeout(() => {
+      if(this.spinner) {
+        this.spinnerDialog = this.dialog.open(SpinnerDialogComponent);
+      }
+    }, environment.config.spinner.waitTime);
+  }
+
+  private closeSpinner() {
+    this.spinner = false;
+    this.spinnerDialog?.close();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
 }
