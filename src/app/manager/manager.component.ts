@@ -202,6 +202,7 @@ export class ManagerComponent implements OnInit, OnDestroy {
 
   private handleVersionMismatch(storedVersion: number, version: number) {
     this.log.info('ManagerComponent::handleVersionMismatch Version mismatch', storedVersion, version);
+    this.closeSpinner();
     this.refreshRecipes(() => this.showNotification(this.versionMismatch));
   }
 
