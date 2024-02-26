@@ -119,6 +119,7 @@ export class RecipesComponent {
     recipe.selected = !recipe.selected;
     recipe.products.forEach(product => product.selected = false);
     recipe.products.forEach(product => product.owned.show = false);
+    recipe.products.forEach(product => product.owned.value = 0);
     this.recipeModified.emit(this.recipes);
   }
 
