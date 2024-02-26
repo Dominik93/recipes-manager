@@ -235,7 +235,7 @@ export class ManagerComponent implements OnInit, OnDestroy {
     this.spinner = true;
     setTimeout(() => {
       if(this.spinner) {
-        this.spinnerDialog = this.dialog.open(SpinnerDialogComponent);
+        this.spinnerDialog = this.dialog.open(SpinnerDialogComponent, { disableClose: true });
       }
     }, environment.config.spinner.waitTime);
   }
