@@ -117,6 +117,8 @@ export class RecipesComponent {
   onItemClick(event: any, recipe: Recipe) {
     event?.stopPropagation();
     recipe.selected = !recipe.selected;
+    recipe.products.forEach(product => product.selected = false);
+    recipe.products.forEach(product => product.owned.show = false);
     this.recipeModified.emit(this.recipes);
   }
 
