@@ -7,7 +7,7 @@
     "error-message": "Something went wrong. Sorry.",
     "recipes": "Recipes",
     "cart": "Cart",
-    "fotter": "Recipes Manager 1.22.0{$LINE_BREAK}powered by Angular 17, Angular Material 17 and Atlas MongoDB",
+    "fotter": "Recipes Manager 1.23.0{$LINE_BREAK}powered by Angular 17, Angular Material 17 and Atlas MongoDB",
     "page-refreshed": "Page refreshed.",
     "version-mismatch": "Version mismatch. Try again.",
     "application-token": "Application token",
