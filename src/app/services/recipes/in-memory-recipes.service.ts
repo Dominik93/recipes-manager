@@ -18,6 +18,10 @@ export class InMemoryRecipesService implements RecipesService {
         "enabled": true,
         "value": "Multiplier 1.3"
       },
+      "tags": {
+        "enabled": false,
+        "values": []
+      },
       "products": [
         {
           "name": "Chicken",
@@ -61,6 +65,10 @@ export class InMemoryRecipesService implements RecipesService {
         "enabled": false,
         "value": ""
       },
+      "tags": {
+        "enabled": true,
+        "values": ['VEGE']
+      },
       "products": [
         {
           "name": "Avocado",
@@ -82,6 +90,10 @@ export class InMemoryRecipesService implements RecipesService {
       "notes": {
         "enabled": true,
         "value": "Own customizable note for this recipe"
+      },
+      "tags": {
+        "enabled": false,
+        "values": []
       },
       "products": [
         {

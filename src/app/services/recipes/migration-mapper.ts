@@ -8,6 +8,9 @@ export class MigrationMapper {
   }
 
   private static migrateRecipe(recipe: Recipe) {
+    if (!recipe.tags) {
+      recipe.tags = { enabled: false, values: [] };
+    }
     recipe.products.forEach(p => this.migrateProduct(p));
   }
 

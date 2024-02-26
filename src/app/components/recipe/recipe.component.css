@@ -10,6 +10,10 @@
 
     }
 
+    .actions {
+        height: 45px;
+    }
+
     .content {
         height: 45px;
 

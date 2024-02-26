@@ -2,8 +2,9 @@ export type Recipe = {
   name: string,
   selected: boolean,
   portions: number,
-  notes: Notes;
-  products: Product[]
+  notes: Notes,
+  products: Product[],
+  tags: Tags,
 }
 
 export type Notes = {
@@ -11,13 +12,20 @@ export type Notes = {
   value: string;
 }
 
+export type Tags = {
+  enabled: boolean;
+  values: Tag[];
+}
+
+export type Tag = 'VEGE' | 'NONMOVABLE';
+
 export type Product = {
   name: string,
   selected: boolean,
   quantity: Quantity,
   unit: string,
   owned: Owned,
-  scalable:boolean
+  scalable: boolean
 }
 
 export type Owned = {

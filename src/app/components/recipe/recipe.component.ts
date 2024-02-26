@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { Product, Recipe } from '../../recipe';
+import { Product, Recipe, Tag } from '../../recipe';
 import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
 import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
@@ -53,6 +53,8 @@ export class RecipeComponent {
 
   unscalable = $localize`:unscalable@@unscalable:Unscalable`;
 
+  readonly tags: Tag[] = ['VEGE', 'NONMOVABLE'];
+
   readonly dividerConfig: Config = {
     excludeIndex: 0,
     newLine: { after: true, before: false }
@@ -68,6 +70,7 @@ export class RecipeComponent {
     portions: 1,
     notes: { enabled: false, value: '' },
     products: [],
+    tags: { enabled: false, values: [] },
     selected: false
   };
 
@@ -91,6 +94,11 @@ export class RecipeComponent {
 
   onToggleNotes() {
     this.recipe.notes.enabled = !this.recipe.notes.enabled;
+  }
+
+  onToggleTags() {
+    this.recipe.tags.enabled = !this.recipe.tags.enabled;
+    this.recipe.tags.values = [];
   }
 
   onProductScalable(product: Product) {

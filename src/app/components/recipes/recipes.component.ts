@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SearchPipe } from './../../pipes/search.pipe';
-import { Recipe } from './../../recipe'
+import { Recipe, Tag } from './../../recipe'
 import { RecipeComponent } from '../recipe/recipe.component';
 import { MatButtonModule } from '@angular/material/button';
 import { LoggingService } from '../../services/logging/logging';
@@ -22,7 +22,9 @@ import { NotificationComponent } from '../../notification/notification.component
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { TagPipe } from '../../pipes/tag.pipe';
 
 @Component({
   selector: 'rm-recipes',
@@ -35,7 +37,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
     MatExpansionModule,
     MatTooltipModule,
     MatListModule,
-    MatInputModule,
+    MatSelectModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
@@ -46,6 +48,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
     NotificationComponent,
 
     SearchPipe,
+    TagPipe,
     SortSelectedPipe],
   providers: [],
   templateUrl: `recipes.component.html`,
@@ -54,6 +57,10 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 export class RecipesComponent {
 
   private readonly confirmDelete = $localize`:confirm-delete@@confirm-delete:Do you want to delete?`;
+
+  tags: Tag[] = ['VEGE', 'NONMOVABLE'];
+
+  selectedTag: Tag | undefined;
 
   @Input() recipes: Recipe[] = [];
 
