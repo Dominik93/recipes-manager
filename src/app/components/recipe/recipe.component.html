@@ -13,7 +13,7 @@
             <mat-form-field appearance="fill" *ngIf="recipe.tags.enabled">
                 <mat-label i18n="tags@@tags">tags</mat-label>
                 <mat-select [(ngModel)]="recipe.tags.values" multiple>
-                    <mat-option *ngFor="let tag of tags; track tag" [value]="tag">{{tag}}</mat-option>
+                    <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <button mat-icon-button [matMenuTriggerFor]="recipeMenu" action-element mobile-element>
