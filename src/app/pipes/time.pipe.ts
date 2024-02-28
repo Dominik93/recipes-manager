@@ -7,6 +7,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TimePipe implements PipeTransform {
 
   transform(value: number): unknown {
+    if (value < 0) {
+      return "00:00";
+    }
     const minutes = Math.floor(value / 60);
     const seconds = value - (minutes * 60);
     return this.addLeadingZero(minutes) + ":" + this.addLeadingZero(seconds)

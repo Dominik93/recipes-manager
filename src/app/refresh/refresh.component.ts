@@ -27,7 +27,9 @@ export class RefreshComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const timer = interval(1000).subscribe(() => {
-      this.counter.countdown--;
+      if (this.counter.countdown > 0) {
+        this.counter.countdown--;
+      }
       if (this.counter.countdown === 0) {
         this.onRefreshed.emit(true);
       }

@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription, interval, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthorizationComponent } from '../components/authorization/authorization.component';
 import { CartComponent } from '../components/cart/cart.component';
@@ -20,7 +20,7 @@ import { AuthStorageService } from '../services/auth-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Authorization } from '../authorization';
 import { RefreshCounter, RefreshComponent } from '../refresh/refresh.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { SpinnerDialogComponent } from '../components/spinner-dialog/spinner-dialog.component';
 
 @Component({
