@@ -1,6 +1,31 @@
 .content-container {
     margin-top: 5px;
 
+    .summary-container {
+        .summary-header {
+            height: 80px;
+
+            .summary-name {
+                display: inline;
+                font-size: 20px;
+                white-space: normal;
+            }
+        }
+
+        .summary-products {
+
+            .summary-product-name {
+                white-space: normal;
+                max-width: 45%;
+            }
+
+            .summary-product-value {
+                margin-left: 2px;
+            }
+
+        }
+    }
+
     .recipe-container {
         .recipe-header {
             height: 80px;

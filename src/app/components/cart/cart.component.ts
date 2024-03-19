@@ -24,7 +24,7 @@ export type SummaryProduct = {
 }
 
 export class CartSummary {
-  products: SummaryProduct[]
+  products: SummaryProduct[] = []
 
   constructor() {
     this.products = [];
