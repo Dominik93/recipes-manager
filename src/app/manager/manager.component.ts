@@ -194,6 +194,7 @@ export class ManagerComponent implements OnInit, OnDestroy {
           this.version = Date.now().valueOf();
           this.counter = { countdown: environment.config.refresh.countdown };
           this.recipesService.save(this.authToken, this.applicationToken, this.version, this.recipes).subscribe(() => {
+            this.recipes = [...this.recipes];
             this.closeSpinner();
           });
         }

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
 import { Recipe } from '../../recipe'
-import { Config } from '../../divider/divider.component';
 import { QuantityService } from '../../services/quantity.service';
 
 export type SummaryProduct = {
@@ -48,15 +47,6 @@ export class CartSummary {
   styleUrls: ['./cart-summary.component.css'],
 })
 export class CartSummaryComponent {
-
-  readonly dividerConfig: Config = {
-    excludeIndex: 0,
-    newLine: { after: true, before: false }
-  }
-
-  @Output() productChanged = new EventEmitter<Recipe[]>();
-
-  ownedProduct: boolean = false;
 
   summary: CartSummary = new CartSummary();
 
