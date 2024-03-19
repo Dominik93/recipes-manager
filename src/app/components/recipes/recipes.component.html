@@ -16,7 +16,7 @@
   </button>
 
   <div *ngFor="let recipe of recipes | tagFilter:selectedTag | search:searchValue | sortSelected:'DESC'; trackBy: recipeTrackBy"
-    class="list-item" (click)="onItemClick($event, recipe)">
+    class="list-item" (dblclick)="onItemClick($event, recipe)">
     <mat-checkbox [ngModel]="recipe.selected" (click)="onItemClick($event, recipe)"></mat-checkbox>
     <span class="recipe-name">{{recipe.name}}</span>
     <span class="recipe-notes" *ngIf="recipe.notes.enabled" www-element>{{recipe.notes.value}}</span>
