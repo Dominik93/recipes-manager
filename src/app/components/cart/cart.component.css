@@ -22,6 +22,14 @@
             .summary-product-value {
                 margin-left: 2px;
             }
+            
+            .list-item {
+                height: 65px;
+            }
+
+            .list-item:hover {
+                background-color: darkgray;
+            }
 
         }
     }
