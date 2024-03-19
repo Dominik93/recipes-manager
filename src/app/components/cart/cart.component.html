@@ -1,4 +1,21 @@
 <div class="content-container">
+  <div>
+    <div class="recipe-container">
+      <div class="recipe-header">
+        <div class="recipe-name">Summary</div>
+      </div>
+      <div class="recipe-products">
+        <div *ngFor="let product of summary.products | sortSelected:'ASC'" class="list-item">
+          <span class="product-data-name unselectable"
+            [class.product-selected]="product.selected">{{product.name}}:</span>
+
+          <span class="product-data-summary unselectable">{{product.value}}{{product.unit}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div *ngFor="let recipe of recipes | selected:true; index as i; trackBy: recipeTrackBy">
     <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
     <div class="recipe-container">
@@ -10,7 +27,7 @@
         </mat-form-field>
 
       </div>
-      <div class="recipe-products">
+      <div class="recipe-products"> 
         <div *ngFor="let product of recipe.products | sortSelected:'ASC'" class="list-item"
           (dblclick)="onItemClick($event, product)">
           <mat-checkbox [ngModel]="product.selected" (click)="onItemClick($event, product)"></mat-checkbox>

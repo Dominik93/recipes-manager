@@ -1,17 +1,17 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Product } from './../recipe';
-import { QuantityService } from '../services/quantity.service';
+import { Injectable } from '@angular/core';
+import { Product } from '../recipe';
 
-@Pipe({
-  name: 'quantity',
-  standalone: true
+@Injectable({
+  providedIn: 'root'
 })
-export class QuantityPipe implements PipeTransform {
-
-  constructor(private quantityService: QuantityService) { }
+export class QuantityService {
 
   transform(product: Product, portions: number): number {
-    return this.quantityService.transform(product, portions);
+    let value = this.calculate(product, portions);
+    if (value % 1 > 0.7) {
+      value = Math.round(value);
+    }
+    return this.convert(value);
   }
 
   private calculate(product: Product, portions: number) {
