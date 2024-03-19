@@ -1,0 +1,32 @@
+.summary-container {
+    .summary-header {
+        height: 50px;
+
+        .summary-name {
+            display: inline;
+            font-size: 20px;
+            white-space: normal;
+        }
+    }
+
+    .summary-products {
+
+        .summary-product-name {
+            white-space: normal;
+            max-width: 45%;
+        }
+
+        .summary-product-value {
+            margin-left: 2px;
+        }
+
+        .list-item {
+            height: 40px;
+        }
+
+        .list-item:hover {
+            background-color: darkgray;
+        }
+
+    }
+}

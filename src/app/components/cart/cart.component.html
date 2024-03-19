@@ -1,18 +1,6 @@
 <div class="content-container">
-  <div>
-    <div class="summary-container">
-      <div class="summary-header">
-        <div class="summary-name">Summary</div>
-      </div>
-      <div class="summary-products">
-        <div *ngFor="let product of summary.products" class="list-item">
-          <span class="summary-product-name">{{product.name}}:</span>
-          <span class="summary-product-value">{{product.value}}{{product.unit}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <rm-cart-summary [recipes]="recipes"></rm-cart-summary>
+ 
   <div *ngFor="let recipe of recipes | selected:true; index as i; trackBy: recipeTrackBy">
     <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
     <div class="recipe-container">

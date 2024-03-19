@@ -1,0 +1,13 @@
+<div *ngIf="summary.products.length > 0">
+  <div class="summary-container">
+    <div class="summary-header">
+      <div class="summary-name" i18n="summary@@summary">Summary</div>
+    </div>
+    <div class="summary-products">
+      <div *ngFor="let product of summary.products" class="list-item">
+        <span class="summary-product-name">{{product.name}}:</span>
+        <span class="summary-product-value">{{product.value}}{{product.unit}}</span>
+      </div>
+    </div>
+  </div>
+</div>
