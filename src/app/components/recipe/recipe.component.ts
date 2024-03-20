@@ -83,6 +83,7 @@ export class RecipeComponent {
   onAddProduct() {
     const product: Product = {
       name: "",
+      tag: "",
       quantity: { base: 1, portions: {} },
       selected: false,
       unit: this.units[0],

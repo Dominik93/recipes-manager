@@ -29,6 +29,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 100,
             "portions": { 3: 2, 6: 3, 9: 4 }
           },
+          "tag": "Meat",
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 },
@@ -40,6 +41,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 100,
             "portions": {}
           },
+          "tag": "",
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 },
@@ -51,6 +53,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 1,
             "portions": {}
           },
+          "tag": "Fridge",
           "selected": false,
           "unit": "sz",
           "owned": { show: false, value: 0 },
@@ -76,6 +79,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 1,
             "portions": {}
           },
+          "tag": "",
           "selected": false,
           "unit": "sz",
           "owned": { show: false, value: 0 },
@@ -102,6 +106,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 200,
             "portions": {}
           },
+          "tag": "Meat",
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 },
@@ -113,6 +118,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 200,
             "portions": {}
           },
+          "tag": "Fridge",
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 },
@@ -124,6 +130,7 @@ export class InMemoryRecipesService implements RecipesService {
             "base": 50,
             "portions": {}
           },
+          "tag": "",
           "selected": false,
           "unit": "g",
           "owned": { show: false, value: 0 },
@@ -142,7 +149,7 @@ export class InMemoryRecipesService implements RecipesService {
     this.log.info("InMemoryRecipesService::getRecipes", authToken, applicationToken);
     const result = { version: this.version, recipes: MigrationMapper.migrate([...this.recipes]) };
     this.log.info("InMemoryRecipesService::getRecipes completed", result);
-    return of(result).pipe(delay(2000));
+    return of(result).pipe(delay(500));
   }
 
   save(authToken: string, applicationToken: string, version: number, recipes: Recipe[]): Observable<any> {
@@ -150,7 +157,7 @@ export class InMemoryRecipesService implements RecipesService {
     this.version = version;
     this.log.info("InMemoryRecipesService::save", authToken, applicationToken, version, recipes);
     this.log.info("InMemoryRecipesService::save completed");
-    return of({}).pipe(delay(2000));
+    return of({}).pipe(delay(500));
   }
 
 }

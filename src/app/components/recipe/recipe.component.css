@@ -24,6 +24,10 @@
         .product-name {
             width: 300px;
         }
+        
+        .product-tag {
+            width: 150px;
+        }
 
         .product-base-quantity {
             width: 100px;

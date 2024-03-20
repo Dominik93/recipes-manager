@@ -29,6 +29,8 @@
             {{(product | quantity:recipe.portions) - (product.owned.show ? product.owned.value : 0 )}}{{product.unit}}
           </span>
 
+          <mat-chip-option disabled *ngIf="product.tag">{{product.tag}}</mat-chip-option>
+
           <button mat-raised-button color="primary" class="toggle-owned" action-element www-element
             (click)="onToggleOwned($event, product)" i18n="toggle-owned@@toggle-owned">Toggle owned</button>
 

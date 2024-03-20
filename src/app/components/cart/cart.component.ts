@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Config, DividerComponent } from '../../divider/divider.component';
 import { CartSummaryComponent } from '../cart-summary/cart-summary.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'rm-cart',
@@ -30,6 +31,7 @@ import { CartSummaryComponent } from '../cart-summary/cart-summary.component';
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
+    MatChipsModule,
 
     CartSummaryComponent,
 

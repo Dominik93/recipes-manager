@@ -18,5 +18,8 @@ export class MigrationMapper {
     if (product.scalable === undefined) {
       product.scalable = true;
     }
+    if (product.tag === undefined) {
+      product.tag = "";
+    }
   }
 }

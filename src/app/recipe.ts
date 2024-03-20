@@ -21,6 +21,7 @@ export type Tag = 'VEGE' | 'NONMOVABLE';
 
 export type Product = {
   name: string,
+  tag: string,
   selected: boolean,
   quantity: Quantity,
   unit: string,
