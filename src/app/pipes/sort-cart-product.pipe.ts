@@ -18,7 +18,7 @@ export class SortCartProductPipe implements PipeTransform {
   transform(items: CartProduct[]): any[] {
     const selected = this.sortService.transformTaggable(items.filter(value => value.selected));
     const notSelected = this.sortService.transformTaggable(items.filter(value => !value.selected));
-    return selected.concat(notSelected);
+    return notSelected.concat(selected);
   }
 
 }
