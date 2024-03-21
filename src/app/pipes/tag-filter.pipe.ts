@@ -7,16 +7,16 @@ import { LoggingService } from '../services/logging/logging';
   name: 'tagFilter',
   standalone: true
 })
-export class TagPipe implements PipeTransform {
+export class TagFilterPipe implements PipeTransform {
 
-  constructor(@Inject('LoggingService') private log: LoggingService,) { }
+  constructor(@Inject('LoggingService') private log: LoggingService) { }
 
   transform(items: any[], filter: Tag | undefined): any {
-    this.log.trace("TagPipe::transform by", filter);
+    this.log.trace("TagFilterPipe::transform by", filter);
     if (!items || !filter) {
       return items;
     }
-    this.log.trace("TagPipe::transform ", items);
+    this.log.trace("TagFilterPipe::transform ", items);
     return items.filter(item => item.tags.values.includes(filter));
   }
 

@@ -13,7 +13,7 @@
 
       </div>
       <div class="recipe-products">
-        <div *ngFor="let product of recipe.products | sortSelected:'ASC'" class="list-item"
+        <div *ngFor="let product of recipe.products | sortCartProduct" class="list-item"
           (dblclick)="onItemClick($event, product)">
           <mat-checkbox [ngModel]="product.selected" (click)="onItemClick($event, product)"></mat-checkbox>
           <span class="product-data-name unselectable"

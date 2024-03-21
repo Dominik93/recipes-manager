@@ -24,7 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { TagPipe } from '../../pipes/tag.pipe';
+import { TagFilterPipe } from '../../pipes/tag-filter.pipe';
 
 @Component({
   selector: 'rm-recipes',
@@ -48,7 +48,7 @@ import { TagPipe } from '../../pipes/tag.pipe';
     NotificationComponent,
 
     SearchPipe,
-    TagPipe,
+    TagFilterPipe,
     SortSelectedPipe],
   providers: [],
   templateUrl: `recipes.component.html`,

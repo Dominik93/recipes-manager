@@ -16,6 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Config, DividerComponent } from '../../divider/divider.component';
 import { CartSummaryComponent } from '../cart-summary/cart-summary.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { SortCartProductPipe } from '../../pipes/sort-cart-product.pipe';
 
 @Component({
   selector: 'rm-cart',
@@ -38,6 +39,7 @@ import { MatChipsModule } from '@angular/material/chips';
     DividerComponent,
 
     QuantityPipe,
+    SortCartProductPipe,
     SortSelectedPipe,
     SelectedPipe],
   providers: [],
