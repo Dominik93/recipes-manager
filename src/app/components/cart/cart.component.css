@@ -1,19 +1,24 @@
 .content-container {
     margin-top: 5px;
-
+    
     .recipe-container {
+        margin-top: 20px;
+
         .recipe-header {
             height: 80px;
 
-            .recipe-name {
-                display: inline;
-                font-size: 20px;
-                white-space: normal;
+            .recipe-portions {
+                float: left;
+                width: 80px;
+                margin-right: 10px;
             }
 
-            .recipe-portions {
-                float: right;
-                width: 80px;
+            .recipe-name {
+                display: flex;
+                font-size: 20px;
+                white-space: normal;
+                align-items: center;
+                height: 56px;
             }
 
             .recipe-notes {

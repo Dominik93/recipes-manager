@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
 import { Recipe } from '../../recipe'
 import { QuantityService } from '../../services/quantity.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export type SummaryProduct = {
   name: string,
@@ -39,6 +40,8 @@ export class CartSummary {
   selector: 'rm-cart-summary',
   standalone: true,
   imports: [
+    MatCheckboxModule,
+
     CommonModule,
     FormsModule,
   ],
@@ -47,6 +50,8 @@ export class CartSummary {
   styleUrls: ['./cart-summary.component.css'],
 })
 export class CartSummaryComponent {
+
+  @Output() summaryProductSelected = new EventEmitter<SummaryProduct>();
 
   summary: CartSummary = new CartSummary();
 
@@ -58,6 +63,12 @@ export class CartSummaryComponent {
 
   constructor(private quantityService: QuantityService) {
   }
+  
+  onItemClick(event: any, product: SummaryProduct) {
+    event?.stopPropagation();
+    this.summaryProductSelected.next(product);
+  }
+
 
   private setSummary(recipes: Recipe[]) {
     this.summary = new CartSummary();

@@ -1,15 +1,15 @@
 <div class="content-container">
-  <rm-cart-summary [recipes]="recipes"></rm-cart-summary>
+  <rm-cart-summary [recipes]="recipes" (summaryProductSelected)="onSummaryProductSelected($event)"></rm-cart-summary>
  
   <div *ngFor="let recipe of recipes | selected:true; index as i; trackBy: recipeTrackBy">
     <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
     <div class="recipe-container">
       <div class="recipe-header">
-        <div class="recipe-name">{{recipe.name}}</div>
         <mat-form-field appearance="fill" class="recipe-portions">
           <mat-label i18n="portions@@portions">Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions()">
         </mat-form-field>
+        <div class="recipe-name">{{recipe.name}}</div>
 
       </div>
       <div class="recipe-products">

@@ -14,7 +14,7 @@ import { environment } from '../../../environments/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Config, DividerComponent } from '../../divider/divider.component';
-import { CartSummaryComponent } from '../cart-summary/cart-summary.component';
+import { CartSummaryComponent, SummaryProduct } from '../cart-summary/cart-summary.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { SortCartProductPipe } from '../../pipes/sort-cart-product.pipe';
 
@@ -81,6 +81,15 @@ export class CartComponent {
   }
 
   onChangeOnwed() {
+    this.productChanged.next(this.recipes);
+  }
+
+  onSummaryProductSelected(summaryProduct: SummaryProduct) {
+    this.recipes.forEach(recipe => {
+      recipe.products
+        .filter(product => product.name === summaryProduct.name && product.unit === summaryProduct.unit)
+        .forEach(product => product.selected = true);
+    })
     this.productChanged.next(this.recipes);
   }
 

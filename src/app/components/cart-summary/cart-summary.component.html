@@ -5,8 +5,9 @@
     </div>
     <div class="summary-products">
       <div *ngFor="let product of summary.products" class="list-item">
-        <span class="summary-product-name">{{product.name}}:</span>
-        <span class="summary-product-value">{{product.value}}{{product.unit}}</span>
+        <mat-checkbox (click)="onItemClick($event, product)"></mat-checkbox>
+        <span class="summary-product-name unselectable">{{product.name}}:</span>
+        <span class="summary-product-value unselectable">{{product.value}}{{product.unit}}</span>
       </div>
     </div>
   </div>
