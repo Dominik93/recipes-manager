@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from '../../recipe'
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { MongodbService } from '../db/mongodb.service';
 import { RecipesService } from './recipes.service';
 import { MigrationMapper } from './migration-mapper';
+import { AuthStorageService } from '../auth-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,15 @@ export class DefaultRecipesService implements RecipesService {
 
   private readonly UPDATE_PATH = '/app/data-zepaz/endpoint/data/v1/action/updateOne';
 
-  constructor(private mongodb: MongodbService) { }
+  constructor(private mongodb: MongodbService, private authStorageService: AuthStorageService) { }
 
   getRecipes(authToken: string, applicationToken: string): Observable<any> {
     return this.mongodb.findOneDocument(this.URL + this.GET_PATH, authToken, applicationToken)
+      .pipe(tap((response: any) => {
+        if (response.document === null) {
+          this.authStorageService.delete();
+        }
+      }))
       .pipe(map((response: any) => (this.mapRecipesResponse(response))));
   }
 
