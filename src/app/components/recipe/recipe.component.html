@@ -1,95 +1,111 @@
 <h2 mat-dialog-title i18n="add-recipe-question@@add-recipe-question">Add recipe?</h2>
 <mat-dialog-content>
     <div class="container">
+
         <div class="header">
             <mat-form-field appearance="fill" class="recipe-name">
                 <mat-label i18n="name@@name">Name</mat-label>
                 <input matInput type="text" [(ngModel)]="recipe.name">
             </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="recipe.notes.enabled">
-                <mat-label i18n="notes@@notes">Notes</mat-label>
-                <input matInput type="text" [(ngModel)]="recipe.notes.value">
-            </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="recipe.tags.enabled">
-                <mat-label i18n="tags@@tags">tags</mat-label>
-                <mat-select [(ngModel)]="recipe.tags.values" multiple>
-                    <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button mat-icon-button [matMenuTriggerFor]="recipeMenu" action-element mobile-element>
-                <mat-icon>more_vert</mat-icon>
-            </button>
         </div>
 
-        <div class="actions">
-            <button mat-raised-button color="primary" bordered-element www-element (click)="onToggleTags()"
-                i18n="toggle-tags@@toggle-tags">Toggle tags</button>
-            <button mat-raised-button color="primary" bordered-element www-element (click)="onToggleNotes()"
-                i18n="toggle-notes@@toggle-notes">Toggle notes</button>
-            <button mat-raised-button color="primary" action-element bordered-element www-element
-                (click)="onAddProduct()" i18n="add-product@@add-product">Add product</button>
-        </div>
+        <mat-tab-group>
+            <mat-tab label="Details" i18n-label="details@@details">
+                <div class="details">
+                    <mat-form-field appearance="fill" class="notes">
+                        <mat-label i18n="notes@@notes">Notes</mat-label>
+                        <input matInput type="text" [(ngModel)]="recipe.notes.value">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="tags">
+                        <mat-label i18n="tags@@tags">Tags</mat-label>
+                        <mat-select [(ngModel)]="recipe.tags.values" multiple>
+                            <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-        <div class="content">
-            <span i18n="products@@products">Products</span>
-            <div *ngFor="let product of recipe.products; index as i">
+                    <mat-form-field appearance="fill" class="description">
+                        <mat-label i18n="description@@description">Description</mat-label>
+                        <textarea matInput type="text" [(ngModel)]="recipe.details.description"></textarea>
+                    </mat-form-field>
 
-                <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
+                    <mat-form-field appearance="fill" class="image-url">
+                        <mat-label i18n="image-url@@image-url">Image url</mat-label>
+                        <input matInput type="text" [(ngModel)]="recipe.details.imageUrl">
+                    </mat-form-field>
 
-                <div>
-                    <div>
-                        <mat-form-field appearance="fill" class="product-name item">
-                            <mat-label i18n="name@@name">Name</mat-label>
-                            <input matInput type="text" [(ngModel)]="product.name">
-                        </mat-form-field>
+                    <mat-form-field appearance="fill" class="url">
+                        <mat-label i18n="url@@url">Url</mat-label>
+                        <input matInput type="text" [(ngModel)]="recipe.details.url">
+                    </mat-form-field>
+                </div>
+            </mat-tab>
 
-                        <mat-form-field appearance="fill" class="product-tag item">
-                            <mat-label i18n="tag@@tag">Tag</mat-label>
-                            <input matInput type="text" [(ngModel)]="product.tag">
-                        </mat-form-field>
-                    </div>
+            <mat-tab label="Products" i18n-label="products@@products">
+                <div class="content">
+                    <button mat-raised-button color="primary" bordered-element class="add-product-button"
+                        (click)="onAddProduct()" i18n="add-product@@add-product">Add product</button>
+                    <rm-divider [config]="dividerConfig"></rm-divider>
+                    <div *ngFor="let product of recipe.products; index as i">
 
-                    <div>
-                        <mat-form-field appearance="fill" class="product-base-quantity item">
-                            <mat-label i18n="quantity@@quantity">Quantity</mat-label>
-                            <input matInput type="number" [(ngModel)]="product.quantity.base">
-                        </mat-form-field>
+                        <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
 
-                        <mat-form-field class="product-unit item">
-                            <mat-label i18n="unit@@unit">Unit</mat-label>
-                            <mat-select [(value)]="product.unit">
-                                @for (unit of units; track unit) {
-                                <mat-option [value]="unit">{{unit}}</mat-option>
-                                }
-                            </mat-select>
-                        </mat-form-field>
+                        <div>
+                            <div>
+                                <mat-form-field appearance="fill" class="product-name item">
+                                    <mat-label i18n="name@@name">Name</mat-label>
+                                    <input matInput type="text" [(ngModel)]="product.name">
+                                </mat-form-field>
 
-                        <mat-slide-toggle [(ngModel)]="product.scalable" i18n="scalable@@scalable" class="item"
-                            www-element>Scalable</mat-slide-toggle>
+                                <mat-form-field appearance="fill" class="product-tag item">
+                                    <mat-label i18n="tag@@tag">Tag</mat-label>
+                                    <input matInput type="text" [(ngModel)]="product.tag">
+                                </mat-form-field>
+                            </div>
 
-                        <mat-icon aria-hidden="false" aria-label="Portions" fontIcon="info"
-                            *ngIf="displayAdditionalInfo(product)"
-                            matTooltip="{{convertToTooltip(product)}}"></mat-icon>
+                            <div>
+                                <mat-form-field appearance="fill" class="product-base-quantity item">
+                                    <mat-label i18n="quantity@@quantity">Quantity</mat-label>
+                                    <input matInput type="number" [(ngModel)]="product.quantity.base">
+                                </mat-form-field>
 
-                        <mat-icon aria-hidden="false" aria-label="Scalable" fontIcon="info" *ngIf="!product.scalable"
-                            matTooltip="{{unscalable}}" mobile-element></mat-icon>
+                                <mat-form-field class="product-unit item">
+                                    <mat-label i18n="unit@@unit">Unit</mat-label>
+                                    <mat-select [(value)]="product.unit">
+                                        @for (unit of units; track unit) {
+                                        <mat-option [value]="unit">{{unit}}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
 
-                        <button mat-icon-button [matMenuTriggerFor]="productMenu"
-                            [matMenuTriggerData]="{i : i, product: product}" (click)="$event.stopPropagation()"
-                            action-element mobile-element>
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
+                                <mat-slide-toggle [(ngModel)]="product.scalable" i18n="scalable@@scalable" class="item"
+                                    www-element>Scalable</mat-slide-toggle>
 
-                        <button mat-raised-button color="primary" action-element bordered-element www-element
-                            (click)="onCustomQuantityPerProduct($event, i)"
-                            i18n="custom-quantity@@custom-quantity">Custom
-                            quantity</button>
-                        <button mat-raised-button color="primary" action-element bordered-element www-element
-                            (click)="onDelete($event, i)" i18n="delete@@delete">Delete</button>
+                                <mat-icon aria-hidden="false" aria-label="Portions" fontIcon="info"
+                                    *ngIf="displayAdditionalInfo(product)"
+                                    matTooltip="{{convertToTooltip(product)}}"></mat-icon>
+
+                                <mat-icon aria-hidden="false" aria-label="Scalable" fontIcon="info"
+                                    *ngIf="!product.scalable" matTooltip="{{unscalable}}" mobile-element></mat-icon>
+
+                                <button mat-icon-button [matMenuTriggerFor]="productMenu"
+                                    [matMenuTriggerData]="{i : i, product: product}" (click)="$event.stopPropagation()"
+                                    action-element mobile-element>
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+
+                                <button mat-raised-button color="primary" action-element bordered-element www-element
+                                    (click)="onCustomQuantityPerProduct($event, i)"
+                                    i18n="custom-quantity@@custom-quantity">Custom
+                                    quantity</button>
+                                <button mat-raised-button color="primary" action-element bordered-element www-element
+                                    (click)="onDelete($event, i)" i18n="delete@@delete">Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </mat-tab>
+        </mat-tab-group>
+
     </div>
 </mat-dialog-content>
 

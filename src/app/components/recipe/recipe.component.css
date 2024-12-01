@@ -1,21 +1,39 @@
 .container {
     .header {
         .recipe-name {
-            width: 250px;
-        }
-        
-        .notes-value {
-            width: 80px;
+            width: 100%;
         }
 
     }
 
-    .actions {
-        height: 45px;
+    .details {
+        .notes {
+            width: 100%;
+        }
+
+        .tags {
+            width: 100%;
+        }
+
+        .description {
+            width: 100%;
+        }
+
+        .image-url {
+            width: 100%;
+        }
+
+        .url {
+            width: 100%;
+        }
     }
 
     .content {
         height: 45px;
+
+        .add-product-button {
+            margin-bottom: 8px;
+        }
 
         .item {
             margin-right: 5px;
@@ -24,9 +42,9 @@
         .product-name {
             width: 300px;
         }
-        
+
         .product-tag {
-            width: 150px;
+            width: 300px;
         }
 
         .product-base-quantity {

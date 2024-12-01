@@ -22,6 +22,7 @@ import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
 import { Config, DividerComponent } from '../../divider/divider.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'rm-recipe',
@@ -43,6 +44,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDialogClose,
     MatDialogTitle,
     MatDialogContent,
+    MatTabsModule,
 
     DividerComponent
   ],
@@ -83,7 +85,7 @@ export class RecipeComponent {
       owned: { show: false, value: 0 },
       scalable: true
     }
-    this.recipe.products = this.recipe.products.concat(product);
+    this.recipe.products = [product].concat(this.recipe.products);
   }
 
   onToggleNotes() {

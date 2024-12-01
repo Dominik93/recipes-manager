@@ -11,7 +11,6 @@ import { AuthorizationComponent } from '../components/authorization/authorizatio
 import { CartComponent } from '../components/cart/cart.component';
 import { RecipesComponent } from '../components/recipes/recipes.component';
 import { NotificationComponent } from '../notification/notification.component';
-import { TimePipe } from '../pipes/time.pipe';
 import { Recipe } from '../recipe';
 import { LoggingService } from '../services/logging/logging';
 import { RecipesService } from '../services/recipes/recipes.service';
@@ -38,8 +37,6 @@ import { SpinnerDialogComponent } from '../components/spinner-dialog/spinner-dia
     RecipesComponent,
     CartComponent,
     RefreshComponent,
-
-    TimePipe
   ],
   providers: [
     {

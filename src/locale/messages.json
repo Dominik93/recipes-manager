@@ -46,7 +46,10 @@
     "recipe-not-modified": "Recipe '{$PH}' not modified.",
     "recipe-modified": "Recipe '{$PH}' modified.",
     "recipe-details": "Details",
+    "details": "Details",
     "description": "Description",
+    "image-url": "Image URL",
+    "url": "URL",
     "page": "Page",
     "close": "Close"
   }

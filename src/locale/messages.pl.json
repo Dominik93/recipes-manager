@@ -47,6 +47,8 @@
     "recipe-modified": "Przepis '{$PH}' zmodyfikowany.",
     "recipe-details": "Szczegóły",
     "description": "Opis",
+    "image-url": "URL do obrazu",
+    "url": "URL",
     "page": "Strona",
     "close": "Zamknij"
   }
