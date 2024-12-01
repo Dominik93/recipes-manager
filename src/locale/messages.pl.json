@@ -50,6 +50,10 @@
     "image-url": "URL do obrazu",
     "url": "URL",
     "page": "Strona",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "meat": "Mięsne",
+    "vege": "Wege",
+    "nonmovable": "Tylko w domu",
+    "none": "Żadne"
   }
 }

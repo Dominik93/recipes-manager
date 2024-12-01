@@ -19,7 +19,7 @@
                     <mat-form-field appearance="fill" class="tags">
                         <mat-label i18n="tags@@tags">Tags</mat-label>
                         <mat-select [(ngModel)]="recipe.tags.values" multiple>
-                            <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
+                            <mat-option *ngFor="let tag of tags" [value]="tag">{{ tagsLocalize[tag] }}</mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -114,11 +114,6 @@
     <button mat-raised-button color="primary" [mat-dialog-close]="recipe" i18n="save@@save">Save</button>
 </mat-dialog-actions>
 
-<mat-menu #recipeMenu="matMenu">
-    <button mat-menu-item (click)="onAddProduct()" i18n="add-product@@add-product">Add product</button>
-    <button mat-menu-item (click)="onToggleNotes()" i18n="notes@@notes">Notes</button>
-    <button mat-menu-item (click)="onToggleTags()" i18n="tags@@tags">Tags</button>
-</mat-menu>
 
 <mat-menu #productMenu="matMenu">
     <ng-template matMenuContent let-product="product" let-i="i" let-event="event">

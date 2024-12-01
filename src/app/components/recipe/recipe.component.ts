@@ -23,6 +23,7 @@ import { ObjectUtil } from '../../utils/object-util';
 import { Config, DividerComponent } from '../../divider/divider.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TAG_LOCALIZE } from '../i18n/recipes-i18n';
 
 @Component({
   selector: 'rm-recipe',
@@ -55,7 +56,9 @@ export class RecipeComponent {
 
   unscalable = $localize`:unscalable@@unscalable:Unscalable`;
 
-  readonly tags: Tag[] = ['VEGE', 'NONMOVABLE'];
+  readonly tags: Tag[] = ['MEAT', 'VEGE', 'NONMOVABLE'];
+  
+  tagsLocalize = TAG_LOCALIZE;
 
   readonly dividerConfig: Config = {
     excludeIndex: 0,
@@ -86,15 +89,6 @@ export class RecipeComponent {
       scalable: true
     }
     this.recipe.products = [product].concat(this.recipe.products);
-  }
-
-  onToggleNotes() {
-    this.recipe.notes.enabled = !this.recipe.notes.enabled;
-  }
-
-  onToggleTags() {
-    this.recipe.tags.enabled = !this.recipe.tags.enabled;
-    this.recipe.tags.values = [];
   }
 
   onProductScalable(product: Product) {

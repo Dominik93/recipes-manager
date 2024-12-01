@@ -24,7 +24,7 @@ export type Tags = {
   values: Tag[];
 }
 
-export type Tag = 'VEGE' | 'NONMOVABLE';
+export type Tag = 'MEAT' | 'VEGE' | 'NONMOVABLE';
 
 export type Product = {
   name: string,

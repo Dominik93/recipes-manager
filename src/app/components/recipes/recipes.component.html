@@ -6,8 +6,8 @@
   <mat-form-field>
     <mat-label i18n="tag@@tag">Tag</mat-label>
     <mat-select [(value)]="selectedTag">
-        <mat-option [value]="null"></mat-option>
-        <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
+        <mat-option [value]="null"><span i18n="none@@none">None</span></mat-option>
+        <mat-option *ngFor="let tag of tags" [value]="tag">{{ tagsLocalize[tag] }}</mat-option>
     </mat-select>
   </mat-form-field> 
   <button mat-raised-button color="primary" action-element www-element (click)="onAddRecipe()" i18n="add-recipe@@add-recipe">Add recipe</button>

@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TagFilterPipe } from '../../pipes/tag-filter.pipe';
 import { RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
+import { TAG_LOCALIZE } from '../i18n/recipes-i18n';
 
 @Component({
   selector: 'rm-recipes',
@@ -57,11 +58,13 @@ export class RecipesComponent {
 
   private readonly confirmDelete = $localize`:confirm-delete@@confirm-delete:Do you want to delete?`;
 
-  tags: Tag[] = ['VEGE', 'NONMOVABLE'];
+  tags: Tag[] = ['MEAT', 'VEGE', 'NONMOVABLE'];
+  
+  tagsLocalize = TAG_LOCALIZE;
 
   selectedTag: Tag | undefined;
 
-  @Input() recipes: Recipe[] = [];
+  @Input() recipes: Recipe[] = []; 
 
   @Output() recipeSelected = new EventEmitter<Recipe[]>();
 
