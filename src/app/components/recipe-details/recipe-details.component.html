@@ -1,0 +1,30 @@
+<h2 mat-dialog-title i18n="recipe-details@@recipe-details">Details</h2>
+<mat-dialog-content>
+    <div class="container">
+        <div class="products-container">
+            <span i18n="products@@products">Products</span>:
+            <div class="products" *ngIf="recipe.products">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let product of recipe.products">{{product.name}}</mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+        <div class="description-container" *ngIf="recipe.details.description">    
+            <span i18n="description@@description">Description</span>:
+            <div class="description">
+                {{ recipe.details.description }}
+            </div>
+        </div>
+        <div class="url-conteainer" *ngIf="recipe.details.url">
+            <a [href]="recipe.details.url" i18n="page@@page">Page</a>
+        </div>
+        <div class="image-container" *ngIf="recipe.details.imageUrl">
+            <img class="image" [src]="recipe.details.imageUrl" />
+        </div>
+    </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions [align]="'end'">
+    <button mat-button mat-dialog-close i18n="close@@close">Close</button>
+</mat-dialog-actions>

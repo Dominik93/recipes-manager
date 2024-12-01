@@ -1,0 +1,12 @@
+.container {
+    .description-container {
+        .description {
+            color: white;
+        }
+    }
+    .image-container {
+        .image {
+            max-width: 100%
+        }
+    }
+}

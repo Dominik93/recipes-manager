@@ -13,6 +13,9 @@ export class InMemoryRecipesService implements RecipesService {
   recipes: Recipe[] = [
     {
       "name": "Chicken with rice",
+      "details": {
+        "description": "Prepare as you wish"
+      },
       "portions": 1,
       "notes": {
         "enabled": true,
@@ -63,6 +66,9 @@ export class InMemoryRecipesService implements RecipesService {
       "selected": true
     }, {
       "name": "Avocado",
+      "details": {
+        "imageUrl": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
       "portions": 1,
       "notes": {
         "enabled": false,
@@ -90,6 +96,9 @@ export class InMemoryRecipesService implements RecipesService {
     },
     {
       "name": "Pasta with chicken",
+      "details": {
+        "url": "www.sample.com"
+      },
       "portions": 1,
       "notes": {
         "enabled": true,

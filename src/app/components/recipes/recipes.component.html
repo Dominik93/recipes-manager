@@ -28,6 +28,8 @@
     </button>
 
     <button mat-raised-button color="primary" action-element bordered-element www-element
+      (click)="onDetails($event, recipe?.name)" i18n="details@@details">Details</button>
+    <button mat-raised-button color="primary" action-element bordered-element www-element
       (click)="onModify($event, recipe?.name)" i18n="modify@@modify">Modify</button>
     <button mat-raised-button color="primary" action-element bordered-element www-element
       (click)="onDelete($event, recipe?.name)" i18n="delete@@delete">Delete</button>
@@ -41,6 +43,7 @@
 
 <mat-menu #productMenu="matMenu">
   <ng-template matMenuContent let-recipe="recipe" let-i="i" let-event="event">
+    <button mat-menu-item color="primary" (click)="onDetails(event, recipe?.name)" i18n="details@@details">Details</button>
     <button mat-menu-item color="primary" (click)="onModify(event, recipe?.name)" i18n="modify@@modify">Modify</button>
     <button mat-menu-item color="primary" (click)="onDelete(event, recipe?.name)" i18n="delete@@delete">Delete</button>
   </ng-template>

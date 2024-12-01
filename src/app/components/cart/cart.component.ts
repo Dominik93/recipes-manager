@@ -40,7 +40,6 @@ import { SortCartProductPipe } from '../../pipes/sort-cart-product.pipe';
 
     QuantityPipe,
     SortCartProductPipe,
-    SortSelectedPipe,
     SelectedPipe],
   providers: [],
   templateUrl: `cart.component.html`,

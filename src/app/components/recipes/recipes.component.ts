@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TagFilterPipe } from '../../pipes/tag-filter.pipe';
+import { RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
 
 @Component({
   selector: 'rm-recipes',
@@ -44,8 +45,6 @@ import { TagFilterPipe } from '../../pipes/tag-filter.pipe';
     MatMenuModule,
     MatButtonModule,
     MatCheckboxModule,
-
-    NotificationComponent,
 
     SearchPipe,
     TagFilterPipe,
@@ -87,6 +86,22 @@ export class RecipesComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.log.info('RecipesComponent::onAddRecipe Close dialog', result);
       this.addRecipe(result);
+    });
+  }
+
+  onDetails(event: any, name: string): void {
+    event?.stopPropagation();
+    this.log.debug("RecipesComponent::onDetails", name);
+    const recipe = this.recipes.find(recipe => recipe.name === name)
+    const index = this.recipes.findIndex(recipe => recipe.name === name)
+    this.log.debug("RecipesComponent::onDetails", recipe, index);
+    const dialogRef = this.dialog.open(RecipeDetailsComponent, {
+      data: CloneUtil.clone(recipe),
+      ...this.fullScreenDialogDimensions()
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.log.info('RecipesComponent::onDetails Close dialog', result);
     });
   }
 
@@ -168,6 +183,13 @@ export class RecipesComponent {
       height: "calc(80% - 30px)",
       width: "100%",
       maxWidth: '950px'
+    }
+  }
+
+  private fullScreenDialogDimensions() {
+    return {
+      maxWidth: '100vw',
+      width: '100%'
     }
   }
 

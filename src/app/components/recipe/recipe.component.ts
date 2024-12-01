@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { Product, Recipe, Tag } from '../../recipe';
+import { EMPTY_RECIPE, Product, Recipe, Tag } from '../../recipe';
 import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
 import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
@@ -65,14 +65,7 @@ export class RecipeComponent {
     'sz'
   ];
 
-  recipe: Recipe = {
-    name: "",
-    portions: 1,
-    notes: { enabled: false, value: '' },
-    products: [],
-    tags: { enabled: false, values: [] },
-    selected: false
-  };
+  recipe: Recipe = EMPTY_RECIPE();
 
   constructor(@Inject('LoggingService') private log: LoggingService,
     public dialog: MatDialog,

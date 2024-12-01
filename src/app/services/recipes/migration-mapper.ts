@@ -11,6 +11,9 @@ export class MigrationMapper {
     if (!recipe.tags) {
       recipe.tags = { enabled: false, values: [] };
     }
+    if (!recipe.details) {
+      recipe.details = { description: "", imageUrl: "", url: "" };
+    }
     recipe.products.forEach(p => this.migrateProduct(p));
   }
 

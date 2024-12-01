@@ -44,6 +44,10 @@
     "recipe-not-added": "Nie dodano przepisu.",
     "recipe-added": "Przepis '{$PH}' dodany.",
     "recipe-not-modified": "Przepis '{$PH}' nie zmodyfikowany.",
-    "recipe-modified": "Przepis '{$PH}' zmodyfikowany."
+    "recipe-modified": "Przepis '{$PH}' zmodyfikowany.",
+    "recipe-details": "Szczegóły",
+    "description": "Opis",
+    "page": "Strona",
+    "close": "Zamknij"
   }
 }

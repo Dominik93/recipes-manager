@@ -1,10 +1,17 @@
 export type Recipe = {
   name: string,
+  details: Details,
   selected: boolean,
   portions: number,
   notes: Notes,
   products: Product[],
   tags: Tags,
+}
+
+export type Details = {
+  url?: string,
+  imageUrl?: string,
+  description?: string,
 }
 
 export type Notes = {
@@ -39,3 +46,16 @@ export type Quantity = {
   portions: { [key: number]: number };
 }
 
+
+export function EMPTY_RECIPE() {
+  return {
+    name: "",
+    details: {},
+    portions: 1,
+    notes: { enabled: false, value: '' },
+    products: [],
+    tags: { enabled: false, values: [] },
+    selected: false
+  };
+
+}

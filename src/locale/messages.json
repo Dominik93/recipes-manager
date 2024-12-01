@@ -44,6 +44,10 @@
     "recipe-not-added": "Recipe not added.",
     "recipe-added": "Recipe '{$PH}' added.",
     "recipe-not-modified": "Recipe '{$PH}' not modified.",
-    "recipe-modified": "Recipe '{$PH}' modified."
+    "recipe-modified": "Recipe '{$PH}' modified.",
+    "recipe-details": "Details",
+    "description": "Description",
+    "page": "Page",
+    "close": "Close"
   }
 }
