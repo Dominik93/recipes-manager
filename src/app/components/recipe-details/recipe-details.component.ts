@@ -19,8 +19,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EMPTY_RECIPE, Recipe } from '../../recipe';
 import { LoggingService } from '../../services/logging/logging';
-import { ManagerComponent } from "../../manager/manager.component";
 import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'rm-recipe-details', 
@@ -41,6 +41,7 @@ import { MatListModule } from '@angular/material/list';
     MatDialogClose,
     MatDialogTitle,
     MatDialogContent,
+    MatExpansionModule,
     MatListModule
 ],
   templateUrl: './recipe-details.component.html',
