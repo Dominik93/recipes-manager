@@ -1,6 +1,6 @@
 {
   "name": "recipes-manager",
-  "version": "1.29.1",
+  "version": "1.30",
   "description": "Recipes manger",
   "license": "MIT",
   "scripts": {
