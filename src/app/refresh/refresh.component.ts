@@ -35,7 +35,6 @@ export class RefreshComponent implements OnInit, OnDestroy {
       }
       if (this.counter.countdown === 0) {
         this.refresh();
-        this.counter = { countdown: environment.config.refresh.countdown };
       }
     });
   }
@@ -44,12 +43,13 @@ export class RefreshComponent implements OnInit, OnDestroy {
     this.refresh();
   }
 
-  private refresh(): void {
+  private refresh(): void {;
+    this.counter = { countdown: environment.config.refresh.countdown };
     this.refreshService.refresh();
   }
 
   ngOnDestroy(): void {
-    this.timerSubscription.unsubscribe
+    this.timerSubscription.unsubscribe();
   }
 
 }
