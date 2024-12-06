@@ -1,21 +1,23 @@
 <mat-toolbar *ngIf="authorized">
-    <span (click)="onLangaugeClick('en-US')">EN</span> / 
+    <span (click)="onLangaugeClick('en-US')">EN</span> /
     <span (click)="onLangaugeClick('pl')">PL</span>
     <span class="spacer"></span>
-    <rm-refresh [enabed]="enableRefresh" [counter]="counter" (onRefreshed)="onRefresh()"></rm-refresh>
+    <rm-refresh></rm-refresh>
 </mat-toolbar>
 
 <div class="page-container">
     <div class="content">
-        <rm-authorization *ngIf="!authorized" (login)="onLogin($event)"></rm-authorization>
-        <mat-tab-group *ngIf="authorized">
+        <rm-authorization *ngIf="!authorized"></rm-authorization>
+        <mat-tab-group *ngIf="authorized" (selectedTabChange)="onTabChange($event)">
             <mat-tab label="Recipes" i18n-label="recipes@@recipes">
-                <rm-recipes [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)"
-                    (recipeModified)="onRecipeModified($event)" (recipeDeleted)="onRecipeDeleted($event)"
-                    (recipeAdded)="onRecipeAdded($event)"></rm-recipes>
+                <ng-template matTabContent>
+                    <rm-recipes [active]="activeTabs['RECIPES']"></rm-recipes>
+                </ng-template>
             </mat-tab>
             <mat-tab label="Cart" i18n-label="cart@@cart">
-                <rm-cart [recipes]="recipes" (productChanged)="onProductChanged($event)"></rm-cart>
+                <ng-template matTabContent>
+                    <rm-cart [active]="activeTabs['CART']"></rm-cart>
+                </ng-template>
             </mat-tab>
         </mat-tab-group>
     </div>

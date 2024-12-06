@@ -20,12 +20,12 @@ export class SortService {
       return i1.tag > i2.tag ? -1 : 1;
     })
 
-    this.log.trace('SortSelectedPipe::transformTaggable sorted items', items);
+    this.log.trace('SortService::transformTaggable sorted items', items);
     return sortedItems;
   }
 
   transformSelectable(items: Selectable[], order: ORDER = 'ASC'): any[] {
-    this.log.trace('SortSelectedPipe::transformSelectable by', order);
+    this.log.trace('SortService::transformSelectable by', order);
 
     if (!items) {
       return items;
@@ -37,7 +37,7 @@ export class SortService {
       return this.asc(i1.selected, i2.selected);
     });
 
-    this.log.trace('SortSelectedPipe::transformSelectable sorted items', items);
+    this.log.trace('SortService::transformSelectable sorted items', items);
     return sortedItems;
   }
 

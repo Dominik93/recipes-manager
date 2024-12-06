@@ -1,17 +1,18 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Output, EventEmitter } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { Authorization } from './../../authorization'
 import { AuthorizationService } from '../../services/authorization/authorization.service'
 import { environment } from '../../../environments/environment';
 import { AuthStorageService } from '../../services/auth-storage.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
+import { LoggingService } from '../../services/logging/logging';
+import { RecipesService } from '../../services/recipes/recipes.service';
+import { ProlongateTokenService } from '../../services/authorization/prolongate-token.service';
 
 @Component({
   selector: 'rm-authorization',
@@ -29,15 +30,13 @@ import { ActivatedRoute } from '@angular/router';
   providers: [
     {
       provide: 'AuthorizationService',
-      useClass: environment.authorizationService
+      useExisting: environment.authorizationService
     }
   ],
   templateUrl: `authorization.component.html`,
   styleUrls: ['./authorization.component.css'],
 })
 export class AuthorizationComponent {
-
-  @Output() login = new EventEmitter<Authorization>();
 
   applicationToken: string = "";
 
@@ -48,12 +47,18 @@ export class AuthorizationComponent {
   rememberMe: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute,
+    @Inject('LoggingService') private log: LoggingService,
+    @Inject('RecipesService') private recipesService: RecipesService,
     @Inject('AuthorizationService') private authorizationService: AuthorizationService,
+    private prolongateTokenService: ProlongateTokenService,
     private authStorageService: AuthStorageService) {
     this.applicationToken = this.activatedRoute.snapshot.queryParams['token'] ?? "";
+    this.recipesService.init(authorizationService);
+    this.prolongateTokenService.init(authorizationService);
   }
 
   onLogin(): void {
+    this.log.debug("AuthorizationComponent::onLogin", this.username, this.applicationToken, this.rememberMe);
     if (this.username === "") {
       return;
     }
@@ -64,10 +69,20 @@ export class AuthorizationComponent {
       return;
     }
     this.authorizationService.login(this.username, this.password, this.applicationToken).subscribe((result) => {
+      this.log.debug("AuthorizationComponent::onLogin", result);
       if (this.rememberMe) {
-        this.authStorageService.save({ applicationToken: result.applicationToken, authToken: result.authToken, refreshToken: result.refreshToken })
+        this.authStorageService.save({
+          applicationToken: result.applicationToken,
+          authToken: result.authToken,
+          refreshToken: result.refreshToken
+        })
       }
-      this.login.emit(result);
+      this.authorizationService.setAuthorizationData({
+        authorized: true,
+        applicationToken: result.applicationToken,
+        authToken: result.authToken,
+        rememberMe: this.rememberMe
+      })
     });
   }
 

@@ -11,11 +11,11 @@ export class AuthStorageService {
 
   constructor(private storageService: ExpiringStorageService) { }
 
-  save(value: Authorization) {
+  save(value: Authorization): void {
     this.storageService.save(this.KEY, value);
   }
 
-  delete() {
+  delete(): void {
     this.storageService.delete(this.KEY)
   }
 
@@ -23,11 +23,11 @@ export class AuthStorageService {
     return this.storageService.get(this.KEY)
   }
 
-  isExpired() {
+  isExpired(): boolean {
     return this.storageService.isExpired(this.KEY)
   }
 
-  needRefresh() {
+  needRefresh(): boolean {
     return this.storageService.needRefresh(this.KEY)
   }
 

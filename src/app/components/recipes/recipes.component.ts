@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,23 +9,38 @@ import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SearchPipe } from './../../pipes/search.pipe';
-import { Recipe, Tag } from './../../recipe'
-import { RecipeComponent } from '../recipe/recipe.component';
+import { ALL_TAGS, EMPTY_DETAILS, EMPTY_PRODUCTS, EMPTY_RECIPE, ID, NEW_VERSION, Notes, Recipe, RecipeProducts, Tag, Tags } from './../../recipe'
+import { RecipeComponent, RecipeDialogData, RecipeDialogResult } from '../recipe/recipe.component';
 import { MatButtonModule } from '@angular/material/button';
 import { LoggingService } from '../../services/logging/logging';
 import { SortSelectedPipe } from '../../pipes/sort-selected.pipe';
 import { CloneUtil } from '../../utils/clone-util';
 import { ObjectUtil } from '../../utils/object-util';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from '../../notification/notification.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TagFilterPipe } from '../../pipes/tag-filter.pipe';
-import { RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
-import { TAG_LOCALIZE } from '../i18n/recipes-i18n';
+import { DetailsDialogData, RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
+import { confirmDelete, recipeAddedMessage, recipeModifiedMessage, recipeNotAddedMessage, recipeNotModifiedMessage, TAG_LOCALIZE, versionMismatch } from '../i18n/recipes-i18n';
+import { RecipesService } from '../../services/recipes/recipes.service';
+import { NotificationService } from '../../services/notification.service';
+import { ListUtil } from '../../utils/list-util';
+import { Versionservice } from '../../services/version.service';
+import { map } from 'rxjs';
+import { SpinnerService } from '../../services/spinner.service';
+import { RefreshService } from '../../services/refresh.service';
+import { ProlongateTokenService } from '../../services/authorization/prolongate-token.service';
+
+type RecipeItem = {
+  id: string;
+  name: string;
+  selected: boolean;
+  notes: Notes;
+  tags: Tags;
+  version: number;
+}
 
 @Component({
   selector: 'rm-recipes',
@@ -54,131 +68,224 @@ import { TAG_LOCALIZE } from '../i18n/recipes-i18n';
   templateUrl: `recipes.component.html`,
   styleUrls: ['./recipes.component.css'],
 })
-export class RecipesComponent {
+export class RecipesComponent implements OnInit {
 
-  private readonly confirmDelete = $localize`:confirm-delete@@confirm-delete:Do you want to delete?`;
+  tags: Tag[] = ALL_TAGS;
 
-  tags: Tag[] = ['MEAT', 'VEGE', 'NONMOVABLE'];
-  
   tagsLocalize = TAG_LOCALIZE;
 
   selectedTag: Tag | undefined;
 
-  @Input() recipes: Recipe[] = []; 
-
-  @Output() recipeSelected = new EventEmitter<Recipe[]>();
-
-  @Output() recipeAdded = new EventEmitter<Recipe[]>();
-
-  @Output() recipeDeleted = new EventEmitter<Recipe[]>();
-
-  @Output() recipeModified = new EventEmitter<Recipe[]>();
+  recipes: RecipeItem[] = [];
 
   searchValue: string = '';
 
+  private _active: boolean = false;
+
+  @Input() set active(value: boolean) {
+    this._active = value;
+    this.loadRecipies();
+  }
+
   constructor(
     @Inject('LoggingService') private log: LoggingService,
-    private snackBar: MatSnackBar,
+    @Inject('RecipesService') private recipesService: RecipesService,
+    private prolongateTokenService: ProlongateTokenService,
+    private refreshService: RefreshService,
+    private versionService: Versionservice,
+    private spinnerService: SpinnerService,
+    private notificationService: NotificationService,
     public dialog: MatDialog) { }
 
+  ngOnInit(): void {
+    this.refreshService.getRefresh().subscribe(value => {
+      this.prolongateTokenService.prolongateToken(() => this.loadRecipies())
+    })
+  }
+
+  private loadRecipies(): void {
+    if (!this._active) {
+      return;
+    }
+    this.recipesService.getRecipes()
+      .subscribe(value => {
+        this.recipes = []
+        Object.keys(value.container).forEach(key => {
+          this.recipes.push({
+            id: key,
+            name: value.container[key].name,
+            selected: value.container[key].selected,
+            notes: value.container[key].notes,
+            tags: value.container[key].tags,
+            version: value.versions[key]
+          })
+        })
+        this.log.debug("RecipesComponent::loadRecipies loaded recipies", this.recipes);
+      });
+  }
+
+  onDetails(event: any, id: string): void {
+    event?.stopPropagation();
+    this.log.debug("RecipesComponent::onDetails", id);
+    this.recipesService.getRecipeInfo(id).subscribe(info => {
+      const dialogData: DetailsDialogData = { details: info.result.recipeDetails, products: info.result.recipeProdcuts };
+      this.log.debug("RecipesComponent::onDetails open dialog", dialogData);
+      const dialogRef = this.dialog.open(RecipeDetailsComponent, {
+        data: dialogData,
+        ...this.fullScreenDialogDimensions()
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.log.info('RecipesComponent::onDetails close dialog', result);
+      });
+    })
+  }
+
   onAddRecipe(): void {
+    const dialogData: RecipeDialogData = {
+      id: ID(),
+      recipe: EMPTY_RECIPE(),
+      products: EMPTY_PRODUCTS(),
+      details: EMPTY_DETAILS(),
+    }
+    this.log.debug("RecipesComponent::onAddRecipe open dialog", dialogData);
     const dialogRef = this.dialog.open(RecipeComponent, {
+      data: dialogData,
       ...this.dialogDimensions()
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('RecipesComponent::onAddRecipe Close dialog', result);
+      this.log.info('RecipesComponent::onAddRecipe close dialog', result);
       this.addRecipe(result);
     });
   }
 
-  onDetails(event: any, name: string): void {
+  onModify(event: any, id: string): void {
     event?.stopPropagation();
-    this.log.debug("RecipesComponent::onDetails", name);
-    const recipe = this.recipes.find(recipe => recipe.name === name)
-    const index = this.recipes.findIndex(recipe => recipe.name === name)
-    this.log.debug("RecipesComponent::onDetails", recipe, index);
-    const dialogRef = this.dialog.open(RecipeDetailsComponent, {
-      data: CloneUtil.clone(recipe),
-      ...this.fullScreenDialogDimensions()
-    });
+    this.log.debug("RecipesComponent::onModify", id);
+    const recipe = ListUtil.find(this.recipes, (p) => p.id === id)
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.log.info('RecipesComponent::onDetails Close dialog', result);
-    });
+    this.recipesService.getRecipeDetails(id).subscribe(details => {
+      this.recipesService.getRecipeProducts(id).subscribe(products => {
+        const dialogData: RecipeDialogData = {
+          id: id,
+          recipe: recipe,
+          details: details.result,
+          products: products.result,
+        }
+
+        this.log.debug("RecipesComponent::onModify open dialog", dialogData);
+        const dialogRef = this.dialog.open(RecipeComponent, {
+          data: CloneUtil.clone(dialogData),
+          ...this.dialogDimensions()
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.log.info('RecipesComponent::onModify close dialog', result);
+          this.modifyRecipe(id, result);
+        });
+      })
+    })
   }
 
-  onModify(event: any, name: string): void {
-    event?.stopPropagation();
-    this.log.debug("RecipesComponent::onModify", name);
-    const recipe = this.recipes.find(recipe => recipe.name === name)
-    const index = this.recipes.findIndex(recipe => recipe.name === name)
-    this.log.debug("RecipesComponent::onModify", recipe, index);
-    const dialogRef = this.dialog.open(RecipeComponent, {
-      data: CloneUtil.clone(recipe),
-      ...this.dialogDimensions()
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.log.info('RecipesComponent::onModify Close dialog', result);
-      this.modifyRecipe(index, result);
-    });
-  }
-
-  onDelete(event: any, name: string) {
+  onDelete(event: any, id: string): void {
     event?.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { question: this.confirmDelete }
+      data: { question: confirmDelete }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('RecipesComponent::onDelete Close dialog', result);
+      this.log.info('RecipesComponent::onDelete close dialog', result);
       if (result) {
-        this.recipes = this.recipes.filter(recipe => recipe.name !== name)
-        this.recipeDeleted.emit(this.recipes);
+        this.spinnerService.openSpinner();
+        this.recipesService.deleteRecipe(id).subscribe(value => {
+          this.spinnerService.closeSpinner();
+          this.recipes = this.recipes.filter(recipe => recipe.id !== id);
+        })
       }
     });
   }
 
-  onItemClick(event: any, recipe: Recipe) {
+  onItemClick(event: any, recipe: RecipeItem): void {
     event?.stopPropagation();
-    recipe.selected = !recipe.selected;
-    recipe.products.forEach(product => product.selected = false);
-    recipe.products.forEach(product => product.owned.show = false);
-    recipe.products.forEach(product => product.owned.value = 0);
-    this.recipeModified.emit(this.recipes);
+    this.spinnerService.openSpinner();
+    this.recipesService.getRecipeProducts(recipe.id)
+      .pipe(map(value => value.result as RecipeProducts))
+      .subscribe(recipeProducts => {
+        this.recipesService.getRecipeVersion(recipe.id).subscribe(value => {
+          if (this.versionService.mismatchVersion(recipe.version, value)) {
+            this.handleVersionMismatch(recipe.version, value);
+          } else {
+            const newValue = !recipe.selected;
+            const version = NEW_VERSION();
+            recipeProducts.products.forEach(product => product.selected = false);
+            recipeProducts.products.forEach(product => product.owned.show = false);
+            recipeProducts.products.forEach(product => product.owned.value = 0);
+            recipeProducts.selected = newValue;
+            this.recipesService.setSelectionRecipe(version, recipe.id, newValue, recipeProducts)
+              .subscribe(() => {
+                recipe.selected = newValue;
+                recipe.version = version;
+                this.spinnerService.closeSpinner();
+              });
+          }
+        })
+
+      })
   }
 
-  private addRecipe(result: Recipe) {
-    const name = result?.name;
-    if (!ObjectUtil.isAnyEmpty([result, name])) {
-      this.recipes.push(result);
-      this.recipeAdded.emit(this.recipes);
-      const recipeAddedMessage = $localize`:recipe-added@@recipe-added:Recipe '${name}' added.`;
-      this.showNotification(recipeAddedMessage);
+  private addRecipe(result: RecipeDialogResult): void {
+    if (ObjectUtil.isAnyEmpty([result])) {
+      this.notificationService.showNotification(recipeNotAddedMessage);
     } else {
-      const recipeNotAddedMessage = $localize`:recipe-not-added@@recipe-not-added:Recipe not added.`;
-      this.showNotification(recipeNotAddedMessage);
+      const version: number = NEW_VERSION();
+      this.spinnerService.openSpinner();
+      this.recipesService.save(version, result.id, result.recipe, result.details, result.products)
+        .subscribe(() => {
+          this.recipes.push(this.toRecipeItem(result, version));
+          this.spinnerService.closeSpinner();
+          this.notificationService.showNotification(recipeAddedMessage(result.recipe.name));
+        });
     }
   }
 
-  private modifyRecipe(index: number, result: Recipe) {
-    const name = this.recipes[index].name;
-    if (!ObjectUtil.isAnyEmpty([result])) {
-      this.recipes[index] = result;
-      this.recipeModified.emit(this.recipes);
-      const recipeModifiedMessage = $localize`:recipe-modified@@recipe-modified:Recipe '${name}' modified.`;
-      this.showNotification(recipeModifiedMessage);
+  private modifyRecipe(id: string, result: RecipeDialogResult): void {
+    const recipe = ListUtil.find(this.recipes, (r) => r.id === id);
+    if (ObjectUtil.isAnyEmpty([result])) {
+      this.notificationService.showNotification(recipeNotModifiedMessage(recipe.name));
     } else {
-      const recipeNotModifiedMessage = $localize`:recipe-not-modified@@recipe-not-modified:Recipe '${name}' not modified.`;
-      this.showNotification(recipeNotModifiedMessage);
+      this.spinnerService.openSpinner();
+      this.recipesService.getRecipeVersion(id).subscribe(value => {
+        if (this.versionService.mismatchVersion(recipe.version, value)) {
+          this.handleVersionMismatch(recipe.version, value);
+        } else {
+          const version = NEW_VERSION();
+          this.recipesService.save(version, result.id, result.recipe, result.details, result.products)
+            .subscribe(() => {
+              ListUtil.replace(this.recipes, (r) => r.id == id, this.toRecipeItem(result, version));
+              this.spinnerService.closeSpinner();
+              this.notificationService.showNotification(recipeModifiedMessage(recipe.name));
+            }
+            );
+        }
+      });
     }
   }
 
-  private showNotification(message: string): void {
-    this.snackBar.openFromComponent(NotificationComponent, {
-      duration: 5000,
-      data: message
-    });
+  private toRecipeItem(result: RecipeDialogResult, version: number): RecipeItem {
+    return {
+      id: result.id,
+      name: result.recipe.name,
+      notes: result.recipe.notes,
+      selected: result.recipe.selected,
+      tags: result.recipe.tags,
+      version: version,
+    };
+  }
+
+  private handleVersionMismatch(storedVersion: number, version: number): void {
+    this.log.info('RecipesComponent::handleVersionMismatch version mismatch', storedVersion, version);
+    this.spinnerService.closeSpinner();
+    this.notificationService.showNotification(versionMismatch);
+    this.loadRecipies();
   }
 
   private dialogDimensions() {
@@ -186,17 +293,18 @@ export class RecipesComponent {
       height: "calc(80% - 30px)",
       width: "100%",
       maxWidth: '950px'
-    }
+    };
   }
 
   private fullScreenDialogDimensions() {
     return {
       maxWidth: '100vw',
       width: '100%'
-    }
+    };
   }
 
   recipeTrackBy(index: number, recipe: Recipe) {
     return recipe;
   }
+
 } 

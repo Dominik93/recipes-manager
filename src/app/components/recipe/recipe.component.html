@@ -5,7 +5,8 @@
         <div class="header">
             <mat-form-field appearance="fill" class="recipe-name">
                 <mat-label i18n="name@@name">Name</mat-label>
-                <input matInput type="text" [(ngModel)]="recipe.name">
+                <input matInput type="text" [(ngModel)]="recipe.name"
+                 (ngModelChange)="onNameChange($event)">
             </mat-form-field>
         </div>
 
@@ -25,17 +26,17 @@
 
                     <mat-form-field appearance="fill" class="description">
                         <mat-label i18n="description@@description">Description</mat-label>
-                        <textarea matInput type="text" [(ngModel)]="recipe.details.description"></textarea>
+                        <textarea matInput type="text" [(ngModel)]="details.description"></textarea>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" class="image-url">
                         <mat-label i18n="image-url@@image-url">Image url</mat-label>
-                        <input matInput type="text" [(ngModel)]="recipe.details.imageUrl">
+                        <input matInput type="text" [(ngModel)]="details.imageUrl">
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" class="url">
                         <mat-label i18n="url@@url">Url</mat-label>
-                        <input matInput type="text" [(ngModel)]="recipe.details.url">
+                        <input matInput type="text" [(ngModel)]="details.url">
                     </mat-form-field>
                 </div>
             </mat-tab>
@@ -45,7 +46,7 @@
                     <button mat-raised-button color="primary" bordered-element class="add-product-button"
                         (click)="onAddProduct()" i18n="add-product@@add-product">Add product</button>
                     <rm-divider [config]="dividerConfig"></rm-divider>
-                    <div *ngFor="let product of recipe.products; index as i">
+                    <div *ngFor="let product of products.products; index as i">
 
                         <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
 
@@ -94,11 +95,11 @@
                                 </button>
 
                                 <button mat-raised-button color="primary" action-element bordered-element www-element
-                                    (click)="onCustomQuantityPerProduct($event, i)"
+                                    (click)="onCustomQuantityPerProduct($event, product.id)"
                                     i18n="custom-quantity@@custom-quantity">Custom
                                     quantity</button>
                                 <button mat-raised-button color="primary" action-element bordered-element www-element
-                                    (click)="onDelete($event, i)" i18n="delete@@delete">Delete</button>
+                                    (click)="onDelete($event, product.id)" i18n="delete@@delete">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -111,9 +112,8 @@
 
 <mat-dialog-actions [align]="'end'">
     <button mat-button mat-dialog-close i18n="cancel@@cancel">Cancel</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="recipe" i18n="save@@save">Save</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="{id: id, recipe: recipe, details: details, products: products}" i18n="save@@save">Save</button>
 </mat-dialog-actions>
-
 
 <mat-menu #productMenu="matMenu">
     <ng-template matMenuContent let-product="product" let-i="i" let-event="event">

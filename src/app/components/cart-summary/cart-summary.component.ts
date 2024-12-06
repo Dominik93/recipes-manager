@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
-import { Recipe } from '../../recipe'
+import { Recipe, RecipeProducts } from '../../recipe'
 import { QuantityService } from '../../services/quantity.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -56,7 +56,7 @@ export class CartSummaryComponent {
   summary: CartSummary = new CartSummary();
 
   @Input()
-  set recipes(recipes: Recipe[]) {
+  set recipes(recipes: RecipeProducts[]) {
     this.summary = new CartSummary();
     this.setSummary(recipes);
   }
@@ -70,7 +70,7 @@ export class CartSummaryComponent {
   }
 
 
-  private setSummary(recipes: Recipe[]) {
+  private setSummary(recipes: RecipeProducts[]) {
     this.summary = new CartSummary();
     recipes
       .filter(recipe => recipe.selected)
