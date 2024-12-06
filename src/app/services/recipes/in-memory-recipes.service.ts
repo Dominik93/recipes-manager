@@ -23,16 +23,52 @@ export class InMemoryRecipesService implements RecipesService {
           "enabled": false,
           "values": []
         },
+      },
+      "2": {
+        "name": "Avocado",
+        "selected": false,
+        "notes": {
+          "enabled": false,
+          "value": ""
+        },
+        "tags": {
+          "enabled": true,
+          "values": ['VEGE']
+        },
+      },
+      "3": {
+        "name": "Pasta with chicken",
+        "selected": false,
+        "notes": {
+          "enabled": true,
+          "value": "Own customizable note for this recipe"
+        },
+        "tags": {
+          "enabled": false,
+          "values": []
+        },
       }
     },
     "recipeVersions": {
-      "1": 1
+      "1": 1,
+      "2": 1,
+      "3": 1
     },
     "recipeDetails": {
       "1": {
         "description": "Jakiś tekst",
         "imageUrl": "",
         "url": ""
+      },
+      "2": {
+        "description": "",
+        "imageUrl": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "url": ""
+      },
+      "3": {
+        "description": "",
+        "imageUrl": "",
+        "url": "www.sample.com"
       }
     },
     "recipeProdcuts": {
@@ -81,8 +117,73 @@ export class InMemoryRecipesService implements RecipesService {
             "scalable": false
           }
         ]
+      },
+      "2": {
+        "name": "Avocado",
+        "portions": 1,
+        "selected": false,
+        "products": [
+          {
+            "id": "4",
+            "name": "Avocado",
+            "quantity": {
+              "base": 1,
+              "portions": {}
+            },
+            "tag": "",
+            "selected": false,
+            "unit": "sz",
+            "owned": { show: false, value: 0 },
+            "scalable": true
+          }
+        ],
+      },
+      "3": {
+        "name": "Pasta with chicken",
+        "portions": 1,
+        "selected": false,
+        "products": [
+          {
+            "id": "5",
+            "name": "Chicken",
+            "quantity": {
+              "base": 200,
+              "portions": {}
+            },
+            "tag": "Meat",
+            "selected": false,
+            "unit": "g",
+            "owned": { show: false, value: 0 },
+            "scalable": true
+          },
+          {
+            "id": "6",
+            "name": "Chinese-style vegetable mix",
+            "quantity": {
+              "base": 200,
+              "portions": {}
+            },
+            "tag": "Fridge",
+            "selected": false,
+            "unit": "g",
+            "owned": { show: false, value: 0 },
+            "scalable": true
+          },
+          {
+            "id": "7",
+            "name": "Pasta",
+            "quantity": {
+              "base": 50,
+              "portions": {}
+            },
+            "tag": "",
+            "selected": false,
+            "unit": "g",
+            "owned": { show: false, value: 0 },
+            "scalable": true
+          }
+        ],
       }
-
     }
   }
 
