@@ -17,13 +17,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { EMPTY_RECIPE, Recipe } from '../../recipe';
-import { LoggingService } from '../../services/logging/logging';
+import { Product, RecipeDetails, RecipeProducts } from '../../recipe';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+export type DetailsDialogData = {
+  details: RecipeDetails;
+  products: RecipeProducts;
+}
+
 @Component({
-  selector: 'rm-recipe-details', 
+  selector: 'rm-recipe-details',
   standalone: true,
   imports: [
     CommonModule,
@@ -43,18 +47,20 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDialogContent,
     MatExpansionModule,
     MatListModule
-],
+  ],
   templateUrl: './recipe-details.component.html',
   styleUrl: './recipe-details.component.css'
 })
 export class RecipeDetailsComponent {
 
-  recipe: Recipe = EMPTY_RECIPE();
+  details: RecipeDetails;
   
-  constructor(@Inject('LoggingService') private log: LoggingService,
-    public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: Recipe) {
-    this.recipe = data ?? this.recipe;
+  products: Product[] = [];
+
+  constructor(public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: DetailsDialogData) {
+    this.details = data.details;
+    this.products = data.products.products;
   }
 
 }

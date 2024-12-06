@@ -1,11 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Recipe } from '../../recipe';
+import { delay, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MongodbService {
+
+  private readonly URL = 'https://eu-central-1.aws.data.mongodb-api.com';
+
+  private readonly GET_PATH = '/app/data-zepaz/endpoint/data/v1/action/findOne';
+
+  private readonly UPDATE_PATH = '/app/data-zepaz/endpoint/data/v1/action/updateOne';
+
+  private readonly DELTE_PATH = '/app/data-zepaz/endpoint/data/v1/action/deleteOne';
 
   private readonly COLLECTION = 'recipes';
 
@@ -15,45 +23,52 @@ export class MongodbService {
 
   constructor(private http: HttpClient) { }
 
-  findOneDocument(url: string, token: string, applicationToken: string) {
+  deleteOneDocument(token: string, applicationToken: string, documents: string[]): Observable<Object> {
     const headers = this.authHeader(token)
       .set('Content-Type', 'application/json')
       .set('Access-Control-Request-Headers', '*');
-    return this.http.post(url,
-      {
-        ...this.connection(),
-        "filter": { "token": applicationToken },
-        "projection": { "recipes": 1, "version": 1 }
-      },
-      { headers: headers });
-  }
-
-  insertOneDocument(url: string, token: string, applicationToken: string, version: number, documents: Recipe[]) {
-    const headers = this.authHeader(token)
-      .set('Content-Type', 'application/ejson')
-      .set('Accept', 'application/json');
-    return this.http.post(url,
-      {
-        ...this.connection(),
-        "document": { "token": applicationToken, "version": version, "recipes": documents }
-      },
-      { headers: headers });
-  }
-
-  updateOneDocument(url: string, token: string, applicationToken: string, version: number, documents: Recipe[]) {
-    const headers = this.authHeader(token)
-      .set('Content-Type', 'application/ejson')
-      .set('Accept', 'application/json');
-    return this.http.post(url,
+    const unset: any = {};
+    documents.forEach(doc => unset[doc] = 1);
+    return this.http.post(this.URL + this.UPDATE_PATH,
       {
         ...this.connection(),
         "filter": { "token": applicationToken },
 
         "update": {
-          "$set": {
-            "version": version,
-            "recipes": documents
-          }
+          "$unset": unset
+        }
+      },
+      { headers: headers });
+  }
+
+  findOneDocument(token: string, applicationToken: string, documents: string[]): Observable<Object> {
+    const headers = this.authHeader(token)
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Request-Headers', '*');
+    const projection: any = {};
+    documents.forEach(doc => projection[doc] = 1);
+    return this.http.post(this.URL + this.GET_PATH,
+      {
+        ...this.connection(),
+        "filter": { "token": applicationToken },
+        "projection": projection
+      },
+      { headers: headers });
+  }
+
+  updateOneDocument(token: string, applicationToken: string, entries: { key: string, value: any }[]): Observable<Object> {
+    const headers = this.authHeader(token)
+      .set('Content-Type', 'application/ejson')
+      .set('Accept', 'application/json');
+    const set: any = {};
+    entries.forEach(entry => set[entry.key] = entry.value)
+    return this.http.post(this.URL + this.UPDATE_PATH,
+      {
+        ...this.connection(),
+        "filter": { "token": applicationToken },
+
+        "update": {
+          "$set": set
         }
       },
       { headers: headers });

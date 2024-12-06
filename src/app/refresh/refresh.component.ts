@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Subscription, interval } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { TimePipe } from '../pipes/time.pipe';
+import { environment } from '../../environments/environment';
+import { RefreshService } from '../services/refresh.service';
 
-export type RefreshCounter = {
+type RefreshCounter = {
   countdown: number
 }
 
@@ -16,33 +18,38 @@ export type RefreshCounter = {
   styleUrl: './refresh.component.css'
 })
 export class RefreshComponent implements OnInit, OnDestroy {
+  readonly SECOND: number = 1000;
 
-  @Input() enabed: boolean = false;
+  enabed: boolean = environment.config.refresh.enabled;
 
-  @Input() counter: RefreshCounter = { countdown: 0 };
+  counter: RefreshCounter = { countdown: environment.config.refresh.countdown };
 
-  @Output() onRefreshed = new EventEmitter<boolean>();
+  private timerSubscription: Subscription = Subscription.EMPTY;
 
-  private subscriptions: Subscription[] = [];
+  constructor(private refreshService: RefreshService) { }
 
   ngOnInit(): void {
-    const timer = interval(1000).subscribe(() => {
+    this.timerSubscription = interval(this.SECOND).subscribe(() => {
       if (this.counter.countdown > 0) {
         this.counter.countdown--;
       }
       if (this.counter.countdown === 0) {
-        this.onRefreshed.emit(true);
+        this.refresh();
       }
     });
-    this.subscriptions.push(timer);
   }
 
-  onRefresh() {
-    this.onRefreshed.emit(true);
+  onRefresh(): void {
+    this.refresh();
+  }
+
+  private refresh(): void {;
+    this.counter = { countdown: environment.config.refresh.countdown };
+    this.refreshService.refresh();
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.timerSubscription.unsubscribe();
   }
 
 }

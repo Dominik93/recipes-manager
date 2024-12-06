@@ -2,13 +2,12 @@ import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
 import { of } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { message, close } from "../components/i18n/recipes-i18n";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ResponseHandler {
-
-    private message = $localize`:error-message@@error-message:Something went wrong`;
 
     constructor(private snackBar: MatSnackBar) { }
 
@@ -30,7 +29,7 @@ export class ResponseHandler {
     }
 
     private openSnackBar() {
-        this.snackBar.open(this.message, "Close", {
+        this.snackBar.open(message, close, {
             duration: 2000,
         });
     }

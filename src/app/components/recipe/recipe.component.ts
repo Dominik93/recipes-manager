@@ -16,14 +16,29 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { EMPTY_RECIPE, Product, Recipe, Tag } from '../../recipe';
+import { ALL_TAGS, EMPTY_PRODUCT, Product, Recipe, RecipeDetails, RecipeProducts, Tag, UNITS } from '../../recipe';
 import { QuantityComponent, QuantityPart } from '../quantity/quantity.component';
 import { LoggingService } from '../../services/logging/logging';
 import { ObjectUtil } from '../../utils/object-util';
 import { Config, DividerComponent } from '../../divider/divider.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TAG_LOCALIZE } from '../i18n/recipes-i18n';
+import { TAG_LOCALIZE, UNSCALABLE } from '../i18n/recipes-i18n';
+import { ListUtil } from '../../utils/list-util';
+
+export type RecipeDialogData = {
+  id: string
+  recipe: Recipe;
+  details: RecipeDetails;
+  products: RecipeProducts;
+}
+
+export type RecipeDialogResult = {
+  id: string
+  recipe: Recipe;
+  details: RecipeDetails;
+  products: RecipeProducts;
+}
 
 @Component({
   selector: 'rm-recipe',
@@ -54,55 +69,57 @@ import { TAG_LOCALIZE } from '../i18n/recipes-i18n';
 })
 export class RecipeComponent {
 
-  unscalable = $localize`:unscalable@@unscalable:Unscalable`;
+  unscalable = UNSCALABLE;
 
-  readonly tags: Tag[] = ['MEAT', 'VEGE', 'NONMOVABLE'];
-  
   tagsLocalize = TAG_LOCALIZE;
+
+  id: string;
+
+  recipe: Recipe;
+
+  details: RecipeDetails;
+
+  products: RecipeProducts;
+
+  readonly tags: Tag[] = ALL_TAGS;
 
   readonly dividerConfig: Config = {
     excludeIndex: 0,
     newLine: { after: true, before: false }
   }
 
-  readonly units = [
-    'g',
-    'sz'
-  ];
-
-  recipe: Recipe = EMPTY_RECIPE();
+  readonly units = UNITS;
 
   constructor(@Inject('LoggingService') private log: LoggingService,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: Recipe) {
-    this.recipe = data ?? this.recipe;
+    @Inject(MAT_DIALOG_DATA) public data: RecipeDialogData) {
+    this.id = data.id;
+    this.recipe = data.recipe;
+    this.products = data.products;
+    this.details = data.details;
   }
 
-  onAddProduct() {
-    const product: Product = {
-      name: "",
-      tag: "",
-      quantity: { base: 1, portions: {} },
-      selected: false,
-      unit: this.units[0],
-      owned: { show: false, value: 0 },
-      scalable: true
-    }
-    this.recipe.products = [product].concat(this.recipe.products);
+  onNameChange(name: any): void {
+    this.products.name = name;
   }
 
-  onProductScalable(product: Product) {
+  onAddProduct(): void {
+    this.products.products = [EMPTY_PRODUCT()].concat(this.products.products);
+  }
+
+  onProductScalable(product: Product): void {
     product.scalable = true;
   }
 
-  onProductUnscalable(product: Product) {
+  onProductUnscalable(product: Product): void {
     product.scalable = false;
   }
 
-  onCustomQuantityPerProduct(event: any, index: number) {
+  onCustomQuantityPerProduct(event: any, id: string): void {
     event?.stopPropagation();
-    const quantities = this.mapToQuantityParts(this.recipe.products[index].quantity.portions);
-    this.log.debug('RecipeComponent::onCustomQuantityPerProduct Mapped quantities', quantities);
+    const product = ListUtil.find(this.products.products, (p) => p.id === id);
+    const quantities = this.mapToQuantityParts(product.quantity.portions);
+    this.log.debug('RecipeComponent::onCustomQuantityPerProduct mapped quantities', quantities);
     const dialogRef = this.dialog.open(QuantityComponent,
       {
         data: quantities,
@@ -111,18 +128,18 @@ export class RecipeComponent {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.log.info('RecipeComponent::onCustomQuantityPerProduct Close dialog', result);
+      this.log.info('RecipeComponent::onCustomQuantityPerProduct close dialog', result);
       if (!ObjectUtil.isEmpty(result)) {
         const portions = this.mapToPortions(result);
-        this.log.debug('RecipeComponent::onCustomQuantityPerProduct Mapped quantity by portion', portions);
-        this.recipe.products[index].quantity.portions = portions;
+        this.log.debug('RecipeComponent::onCustomQuantityPerProduct mapped quantity by portion', portions);
+        product.quantity.portions = portions;
       }
     });
   }
 
-  onDelete(event: any, index: number) {
+  onDelete(event: any, id: string): void {
     event?.stopPropagation();
-    this.recipe.products.splice(index, 1);
+    this.products.products = ListUtil.deleteIf(this.products.products, (p) => p.id === id);
   }
 
   displayAdditionalInfo(product: Product): boolean {
@@ -137,7 +154,7 @@ export class RecipeComponent {
     return result;
   }
 
-  private mapToPortions(quantities: QuantityPart[]) {
+  private mapToPortions(quantities: QuantityPart[]): { [key: number]: number } {
     let portions: { [key: number]: number } = {}
     for (var quantity of quantities) {
       portions[quantity.portion] = quantity.quantity;
@@ -145,7 +162,7 @@ export class RecipeComponent {
     return portions;
   }
 
-  private mapToQuantityParts(portions: { [key: number]: number }) {
+  private mapToQuantityParts(portions: { [key: number]: number }): QuantityPart[] {
     const quantities: QuantityPart[] = []
     for (let key in portions) {
       quantities.push({ portion: Number(key), quantity: portions[key] });

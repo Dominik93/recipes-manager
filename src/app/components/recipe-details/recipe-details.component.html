@@ -5,10 +5,10 @@
             <mat-expansion-panel-header>
                 <mat-panel-title i18n="products@@products">Products</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="products" *ngIf="recipe.products">
+            <div class="products" *ngIf="products">
                 <mat-list role="list">
                     <mat-list-item role="listitem"
-                        *ngFor="let product of recipe.products">{{product.name}}: {{product.quantity.base}}{{product.unit}} </mat-list-item>
+                        *ngFor="let product of products">{{product.name}}: {{product.quantity.base}}{{product.unit}} </mat-list-item>
                 </mat-list>
             </div>
         </mat-expansion-panel>
@@ -16,16 +16,16 @@
             <mat-expansion-panel-header>
                 <mat-panel-title i18n="description@@description">Description</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="description-container" *ngIf="recipe.details.description">
+            <div class="description-container" *ngIf="details.description">
                 <div class="description">
-                    {{ recipe.details.description }}
+                    {{ details.description }}
                 </div>
             </div>
-            <div class="url-container" *ngIf="recipe.details.url">
-                <a [href]="recipe.details.url" i18n="page@@page">Page</a>
+            <div class="url-container" *ngIf="details.url">
+                <a [href]="details.url" i18n="page@@page">Page</a>
             </div>
-            <div class="image-container" *ngIf="recipe.details.imageUrl">
-                <img class="image" [src]="recipe.details.imageUrl" />
+            <div class="image-container" *ngIf="details.imageUrl">
+                <img class="image" [src]="details.imageUrl" />
             </div>
         </mat-expansion-panel>
     </div>

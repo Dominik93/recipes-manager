@@ -19,27 +19,27 @@ export class ExpiringStorageService {
 
   save(key: string, value: any) {
     const obj: StoredObject = { creationTime: Date.now(), object: value }
-    this.log.trace("StorageService::save", key, obj);
+    this.log.trace("ExpiringStorageService::save", key, obj);
     localStorage.setItem(key, JSON.stringify(obj));
   }
 
   isExpired(key: string) {
     const obj: StoredObject = this.getObject(key);
     const expired = Date.now() - obj.creationTime > this.expiredTime;
-    this.log.trace("StorageService::isExpired", key, obj, expired);
+    this.log.trace("ExpiringStorageService::isExpired", key, obj, expired);
     return expired;
   }
 
   needRefresh(key: string) {
     const obj: StoredObject = this.getObject(key);
     const refresh = Date.now() - obj.creationTime > this.refreshTime;
-    this.log.trace("StorageService::needRefresh", key, obj, refresh);
+    this.log.trace("ExpiringStorageService::needRefresh", key, obj, refresh);
     return refresh;
   }
 
   get(key: string) {
     const obj = this.getObject(key).object;
-    this.log.trace("StorageService::get", key, obj);
+    this.log.trace("ExpiringStorageService::get", key, obj);
     return obj;
   }
 
