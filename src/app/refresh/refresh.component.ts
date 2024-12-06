@@ -29,14 +29,16 @@ export class RefreshComponent implements OnInit, OnDestroy {
   constructor(private refreshService: RefreshService) { }
 
   ngOnInit(): void {
-    this.timerSubscription = interval(this.SECOND).subscribe(() => {
-      if (this.counter.countdown > 0) {
-        this.counter.countdown--;
-      }
-      if (this.counter.countdown === 0) {
-        this.refresh();
-      }
-    });
+    if(this.enabed) {
+      this.timerSubscription = interval(this.SECOND).subscribe(() => {
+        if (this.counter.countdown > 0) {
+          this.counter.countdown--;
+        }
+        if (this.counter.countdown === 0) {
+          this.refresh();
+        }
+      });
+    }
   }
 
   onRefresh(): void {

@@ -76,6 +76,7 @@ export class InMemoryRecipesService implements RecipesService {
         "name": "Chicken with rice",
         "portions": 1,
         "selected": true,
+        "expanded": true,
         "products": [
           {
             "id": "1",
@@ -122,6 +123,7 @@ export class InMemoryRecipesService implements RecipesService {
         "name": "Avocado",
         "portions": 1,
         "selected": false,
+        "expanded": true,
         "products": [
           {
             "id": "4",
@@ -142,6 +144,7 @@ export class InMemoryRecipesService implements RecipesService {
         "name": "Pasta with chicken",
         "portions": 1,
         "selected": false,
+        "expanded": true,
         "products": [
           {
             "id": "5",

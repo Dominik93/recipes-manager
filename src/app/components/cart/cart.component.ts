@@ -33,6 +33,7 @@ type RecipeItem = {
   portions: number;
   version: number;
   products: Product[];
+  expanded: boolean;
 }
 
 @Component({
@@ -45,7 +46,6 @@ type RecipeItem = {
     MatIconModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatIconModule,
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
@@ -111,6 +111,7 @@ export class CartComponent {
             selected: value.container[key].selected,
             portions: value.container[key].portions,
             products: value.container[key].products,
+            expanded: value.container[key].expanded,
             version: value.versions[key],
           });
         })
@@ -119,102 +120,70 @@ export class CartComponent {
   }
 
   onChangePortions(id: string): void {
-    this.spinnerService.openSpinner();
-    const recipe: RecipeItem = ListUtil.find(this.recipes, (r) => r.id === id);
-    this.recipesService.getRecipeVersion(id).subscribe(value => {
-      if (this.versionService.mismatchVersion(recipe.version, value)) {
-        this.handleVersionMismatch()
-      } else {
-        const version: number = NEW_VERSION();
-        const recipeProducts: RecipeProducts = {
-          name: recipe.name,
-          portions: recipe.portions,
-          products: recipe.products,
-          selected: recipe.selected,
-        }
-        this.recipesService.saveRecipeProducts(version, id, recipeProducts).subscribe(() => {
-          recipe.version = version;
-          this.spinnerService.closeSpinner();
-        })
-      }
-    })
+    this.save(id, () => { });
+  }
+
+  onCollapse(id: string): void {
+    this.save(id, (recipe) => {
+      recipe.expanded = !recipe.expanded;
+    });
+  }
+
+  onExpand(id: string): void {
+    this.save(id, (recipe) => {
+      recipe.expanded = !recipe.expanded;
+    });
   }
 
   onToggleOwned(event: any, id: string, product: Product): void {
     event?.stopPropagation();
-    this.spinnerService.openSpinner();
-    const recipe: RecipeItem = ListUtil.find(this.recipes, (r) => r.id === id);
-    this.recipesService.getRecipeVersion(id).subscribe(value => {
-      if (this.versionService.mismatchVersion(recipe.version, value)) {
-        this.handleVersionMismatch()
-      } else {
-        product.owned.show = !product.owned.show;
-        const version: number = NEW_VERSION();
-        const recipeProducts: RecipeProducts = {
-          name: recipe.name,
-          portions: recipe.portions,
-          products: recipe.products,
-          selected: recipe.selected
-        }
-        this.recipesService.saveRecipeProducts(version, id, recipeProducts).subscribe(() => {
-          recipe.version = version;
-          this.spinnerService.closeSpinner();
-        })
-      }
-    })
+    this.save(id, () => {
+      product.owned.show = !product.owned.show;
+    });
   }
 
   onItemClick(event: any, id: string, product: Product): void {
     event?.stopPropagation();
-    const recipe: RecipeItem = ListUtil.find(this.recipes, (r) => r.id === id);
-    this.recipesService.getRecipeVersion(id).subscribe(value => {
-      if (this.versionService.mismatchVersion(recipe.version, value)) {
-        this.handleVersionMismatch()
-      } else {
-        const version: number = NEW_VERSION();
-        product.selected = !product.selected;
-        const recipeProducts: RecipeProducts = {
-          name: recipe.name,
-          portions: recipe.portions,
-          products: recipe.products,
-          selected: recipe.selected,
-        }
-        this.recipesService.saveRecipeProducts(version, id, recipeProducts).subscribe(() => {
-          recipe.version = version;
-          this.spinnerService.closeSpinner();
-        })
-      }
-    })
+    this.save(id, () => {
+      product.selected = !product.selected;
+    });
   }
 
   onChangeOnwed(id: string): void {
+    this.save(id, () => {});
+  }
+  
+  onSummaryProductSelected(summaryProduct: SummaryProduct): void {
+    this.recipes.forEach(recipe => {
+      recipe.products
+        .filter(product => product.name === summaryProduct.name && product.unit === summaryProduct.unit)
+        .forEach(product => {
+          this.save(recipe.id, () => product.selected = true);
+        });
+    })
+  }
+
+  private save(id: string, updater: (recipe: RecipeItem) => void): void {
     this.spinnerService.openSpinner();
     const recipe: RecipeItem = ListUtil.find(this.recipes, (r) => r.id === id);
     this.recipesService.getRecipeVersion(id).subscribe(value => {
       if (this.versionService.mismatchVersion(recipe.version, value)) {
         this.handleVersionMismatch()
       } else {
+        updater(recipe);
         const version: number = NEW_VERSION();
         const recipeProducts: RecipeProducts = {
           name: recipe.name,
           portions: recipe.portions,
           products: recipe.products,
           selected: recipe.selected,
+          expanded: recipe.expanded,
         }
         this.recipesService.saveRecipeProducts(version, id, recipeProducts).subscribe(() => {
           recipe.version = version;
           this.spinnerService.closeSpinner();
         })
       }
-    })
-  }
-
-  onSummaryProductSelected(summaryProduct: SummaryProduct): void {
-    //todo 
-    this.recipes.forEach(recipe => {
-      recipe.products
-        .filter(product => product.name === summaryProduct.name && product.unit === summaryProduct.unit)
-        .forEach(product => product.selected = true);
     })
   }
 

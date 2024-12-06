@@ -48,6 +48,7 @@ export type RecipeProducts = {
   name: string;
   selected: boolean;
   portions: number;
+  expanded: boolean;
   products: Product[];
 }
 
@@ -117,6 +118,7 @@ export function EMPTY_PRODUCTS(): RecipeProducts {
   return {
     name: "",
     selected: false,
+    expanded: true,
     portions: 1,
     products: [],
   };

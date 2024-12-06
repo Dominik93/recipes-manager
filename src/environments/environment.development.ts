@@ -10,7 +10,7 @@ export const environment = {
             enabled: true
         },
         refresh: {
-            enabled: true,
+            enabled: false,
             countdown: 10,
             notify: true
         },

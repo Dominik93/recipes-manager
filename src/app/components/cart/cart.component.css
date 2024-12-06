@@ -1,6 +1,6 @@
 .content-container {
     margin-top: 5px;
-    
+
     .recipe-container {
         margin-top: 20px;
 
@@ -15,6 +15,7 @@
 
             .recipe-name {
                 display: flex;
+                float: left;
                 font-size: 20px;
                 white-space: normal;
                 align-items: center;
@@ -24,6 +25,13 @@
             .recipe-notes {
                 display: inline;
                 font-size: 10px;
+            }
+
+            .expand-collapse-icon {
+                display: flex;
+                float: right;
+                align-items: center;
+                height: 56px;
             }
         }
 

@@ -9,10 +9,13 @@
           <mat-label i18n="portions@@portions">Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions(recipe.id)">
         </mat-form-field>
-        <div class="recipe-name">{{recipe.name}}</div>
-
+        <div class="recipe-name">{{recipe.name}}</div>  
+        <div  class="expand-collapse-icon">
+          <mat-icon *ngIf="recipe.expanded" aria-hidden="false" aria-label="Collapse" fontIcon="expand_less" (click)="onCollapse(recipe.id)">Collapse</mat-icon>
+          <mat-icon *ngIf="!recipe.expanded" aria-hidden="false" aria-label="Collapse" fontIcon="expand_more" (click)="onExpand(recipe.id)">Collapse</mat-icon>
+        </div>
       </div>
-      <div class="recipe-products">
+      <div class="recipe-products" *ngIf="recipe.expanded">
         <div *ngFor="let product of recipe.products | sortCartProduct" class="list-item"
           (dblclick)="onItemClick($event, recipe.id, product)">
           <mat-checkbox [ngModel]="product.selected" (click)="onItemClick($event, recipe.id, product)"></mat-checkbox>
