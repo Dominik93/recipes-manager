@@ -101,8 +101,8 @@ export function EMPTY_PRODUCT(): Product {
 export function EMPTY_RECIPE(): Recipe {
   return {
     name: "",
-    notes: { enabled: false, value: '' },
-    tags: { enabled: false, values: [] },
+    notes: { enabled: true, value: '' },
+    tags: { enabled: true, values: [] },
     selected: false
   };
 }
