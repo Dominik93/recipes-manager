@@ -7,7 +7,7 @@
     "error-message": "Coś poszło nie tak. Przepraszamy.",
     "recipes": "Przepisy",
     "cart": "Koszyk",
-    "fotter": "Recipes Manager 2.1.1{$LINE_BREAK}zrobiony przy użyciu Angular 17, Angular Material 17 i Atlas MongoDB",
+    "fotter": "Recipes Manager 2.1.2{$LINE_BREAK}zrobiony przy użyciu Angular 17, Angular Material 17 i Atlas MongoDB",
     "page-refreshed": "Strona odświeżono.",
     "version-mismatch": "Niezgodność wersji. Spróbuj ponownie.",
     "application-token": "Token aplikacji",
