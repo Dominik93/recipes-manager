@@ -27,12 +27,10 @@ export type Recipe = {
 }
 
 export type Notes = {
-  enabled: boolean;
   value: string;
 }
 
 export type Tags = {
-  enabled: boolean;
   values: Tag[];
 }
 
@@ -101,8 +99,8 @@ export function EMPTY_PRODUCT(): Product {
 export function EMPTY_RECIPE(): Recipe {
   return {
     name: "",
-    notes: { enabled: true, value: '' },
-    tags: { enabled: true, values: [] },
+    notes: { value: '' },
+    tags: { values: [] },
     selected: false
   };
 }

@@ -19,8 +19,8 @@
     class="list-item" (dblclick)="onItemClick($event, recipe)">
     <mat-checkbox [ngModel]="recipe.selected" (click)="onItemClick($event, recipe)"></mat-checkbox>
     <span class="recipe-name unselectable">{{recipe.name}}</span>
-    <span class="recipe-notes unselectable" *ngIf="recipe.notes.enabled" www-element>{{recipe.notes.value}}</span>
-    <mat-icon aria-hidden="false" aria-label="Notes" fontIcon="info" *ngIf="recipe.notes.enabled" mobile-element matTooltip="{{recipe.notes.value}}"></mat-icon>
+    <span class="recipe-notes unselectable" *ngIf="!!recipe.notes.value" www-element>{{recipe.notes.value}}</span>
+    <mat-icon aria-hidden="false" aria-label="Notes" fontIcon="info" *ngIf="!!recipe.notes.value" mobile-element matTooltip="{{recipe.notes.value}}"></mat-icon>
 
     <button mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{recipe: recipe}"
       (click)="$event.stopPropagation()">
