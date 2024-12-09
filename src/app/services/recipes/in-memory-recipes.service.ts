@@ -16,11 +16,9 @@ export class InMemoryRecipesService implements RecipesService {
         "name": "Chicken with rice",
         "selected": true,
         "notes": {
-          "enabled": true,
           "value": "Multiplier 1.3"
         },
         "tags": {
-          "enabled": false,
           "values": []
         },
       },
@@ -28,11 +26,9 @@ export class InMemoryRecipesService implements RecipesService {
         "name": "Avocado",
         "selected": false,
         "notes": {
-          "enabled": false,
           "value": ""
         },
         "tags": {
-          "enabled": true,
           "values": ['VEGE']
         },
       },
@@ -40,11 +36,9 @@ export class InMemoryRecipesService implements RecipesService {
         "name": "Pasta with chicken",
         "selected": false,
         "notes": {
-          "enabled": true,
           "value": "Own customizable note for this recipe"
         },
         "tags": {
-          "enabled": false,
           "values": []
         },
       }
