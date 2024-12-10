@@ -11,8 +11,6 @@ import { AuthStorageService } from '../../services/auth-storage.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { LoggingService } from '../../services/logging/logging';
-import { RecipesService } from '../../services/recipes/recipes.service';
-import { ProlongateTokenService } from '../../services/authorization/prolongate-token.service';
 
 @Component({
   selector: 'rm-authorization',
@@ -48,13 +46,9 @@ export class AuthorizationComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
     @Inject('LoggingService') private log: LoggingService,
-    @Inject('RecipesService') private recipesService: RecipesService,
     @Inject('AuthorizationService') private authorizationService: AuthorizationService,
-    private prolongateTokenService: ProlongateTokenService,
     private authStorageService: AuthStorageService) {
     this.applicationToken = this.activatedRoute.snapshot.queryParams['token'] ?? "";
-    this.recipesService.init(authorizationService);
-    this.prolongateTokenService.init(authorizationService);
   }
 
   onLogin(): void {
