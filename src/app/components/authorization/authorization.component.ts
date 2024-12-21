@@ -11,6 +11,7 @@ import { AuthStorageService } from '../../services/auth-storage.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { LoggingService } from '../../services/logging/logging';
+import * as sha512 from 'js-sha512';
 
 @Component({
   selector: 'rm-authorization',
@@ -62,7 +63,7 @@ export class AuthorizationComponent {
     if (this.applicationToken === "") {
       return;
     }
-    this.authorizationService.login(this.username, this.password, this.applicationToken).subscribe((result) => {
+    this.authorizationService.login(this.username, sha512.sha512(this.password), this.applicationToken).subscribe((result) => {
       this.log.debug("AuthorizationComponent::onLogin", result);
       if (this.rememberMe) {
         this.authStorageService.save({
