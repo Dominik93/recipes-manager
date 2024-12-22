@@ -27,7 +27,8 @@
                 font-size: 10px;
             }
 
-            .expand-collapse-icon {
+            .expand-collapse-icon { 
+                margin-right: 12px;
                 display: flex;
                 float: right;
                 align-items: center;
