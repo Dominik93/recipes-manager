@@ -89,7 +89,7 @@
                                     *ngIf="!product.scalable" matTooltip="{{unscalable}}" mobile-element></mat-icon>
 
                                 <button mat-icon-button [matMenuTriggerFor]="productMenu"
-                                    [matMenuTriggerData]="{i : i, product: product}" (click)="$event.stopPropagation()"
+                                    [matMenuTriggerData]="{product: product}" (click)="$event.stopPropagation()"
                                     action-element mobile-element>
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
@@ -116,9 +116,9 @@
 </mat-dialog-actions>
 
 <mat-menu #productMenu="matMenu">
-    <ng-template matMenuContent let-product="product" let-i="i" let-event="event">
-        <button mat-menu-item color="primary" (click)="onDelete(event, i)" i18n="delete@@delete">Delete</button>
-        <button mat-menu-item color="primary" (click)="onCustomQuantityPerProduct(event, i)"
+    <ng-template matMenuContent let-product="product" let-event="event">
+        <button mat-menu-item color="primary" (click)="onDelete(event, product.id)" i18n="delete@@delete">Delete</button>
+        <button mat-menu-item color="primary" (click)="onCustomQuantityPerProduct(event, product.id)"
             i18n="custom-quantity@@custom-quantity">Custom quantity</button>
         <button mat-menu-item color="primary" (click)="product.scalable = true" *ngIf="!product.scalable"
             i18n="scalable@@scalable">Scalable</button>
