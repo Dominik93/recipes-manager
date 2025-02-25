@@ -2,19 +2,30 @@
     margin-top: 5px;
 
     .recipe-name {
-        max-width: 45%;
         white-space: normal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
-    .recipe-notes {
-        margin-left: 15px;
-        font-size: 12px;
-        max-width: 50%;
-        white-space: normal;
+    .recipe-notes-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 15px;  
+
+        .recipe-notes {
+            font-size: 12px;
+            white-space: normal;
+        }
+    }
+
+    .recipe-actions {
+        margin-left: auto;
     }
 
     .list-item {
-        height: 50px;
+        display: flex;
         
         .unselectable {
             -webkit-touch-callout: none;

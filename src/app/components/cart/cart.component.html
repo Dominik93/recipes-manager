@@ -5,7 +5,7 @@
     <rm-divider [currentIndex]="i" [config]="dividerConfig"></rm-divider>
     <div class="recipe-container">
       <div class="recipe-header">
-        <mat-form-field appearance="fill" class="recipe-portions">
+        <mat-form-field appearance="fill" class="recipe-portions" [subscriptSizing]="'dynamic'">
           <mat-label i18n="portions@@portions">Portions</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="recipe.portions" (change)="onChangePortions(recipe.id)">
         </mat-form-field>

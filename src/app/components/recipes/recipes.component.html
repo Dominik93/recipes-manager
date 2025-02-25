@@ -6,34 +6,40 @@
   <mat-form-field>
     <mat-label i18n="tag@@tag">Tag</mat-label>
     <mat-select [(value)]="selectedTag">
-        <mat-option [value]="null"><span i18n="none@@none">None</span></mat-option>
-        <mat-option *ngFor="let tag of tags" [value]="tag">{{ tagsLocalize[tag] }}</mat-option>
+      <mat-option [value]="null"><span i18n="none@@none">None</span></mat-option>
+      <mat-option *ngFor="let tag of tags" [value]="tag">{{ tagsLocalize[tag] }}</mat-option>
     </mat-select>
-  </mat-form-field> 
-  <button mat-raised-button color="primary" action-element www-element (click)="onAddRecipe()" i18n="add-recipe@@add-recipe">Add recipe</button>
+  </mat-form-field>
+  <button mat-raised-button color="primary" action-element www-element (click)="onAddRecipe()"
+    i18n="add-recipe@@add-recipe">Add recipe</button>
   <button mat-icon-button [matMenuTriggerFor]="recipeMenu" action-element mobile-element>
     <mat-icon>more_vert</mat-icon>
   </button>
 
-  <div *ngFor="let recipe of recipes | tagFilter:selectedTag | search:searchValue | sortSelected:'DESC'; trackBy: recipeTrackBy"
+  <div
+    *ngFor="let recipe of recipes | tagFilter:selectedTag | search:searchValue | sortSelected:'DESC'; trackBy: recipeTrackBy"
     class="list-item" (dblclick)="onItemClick($event, recipe)">
-    <mat-checkbox [ngModel]="recipe.selected" (click)="onItemClick($event, recipe)"></mat-checkbox>
+    <mat-checkbox class="select-recipe" [ngModel]="recipe.selected" (click)="onItemClick($event, recipe)"></mat-checkbox>
     <span class="recipe-name unselectable">{{recipe.name}}</span>
-    <span class="recipe-notes unselectable" *ngIf="!!recipe.notes.value" www-element>{{recipe.notes.value}}</span>
-    <mat-icon aria-hidden="false" aria-label="Notes" fontIcon="info" *ngIf="!!recipe.notes.value" mobile-element matTooltip="{{recipe.notes.value}}"></mat-icon>
+    <div class="recipe-notes-container unselectable" *ngIf="!!recipe.notes.value">
+      <span class="recipe-notes" www-element>{{recipe.notes.value}}</span>
+      <mat-icon aria-hidden="false" aria-label="Notes" fontIcon="info" *ngIf="!!recipe.notes.value" mobile-element
+      matTooltip="{{recipe.notes.value}}"></mat-icon>
+    </div>
 
-    <button mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu" [matMenuTriggerData]="{recipe: recipe}"
-      (click)="$event.stopPropagation()">
-      <mat-icon>more_vert</mat-icon>
-    </button>
+    <div class="recipe-actions">
+      <button mat-icon-button action-element mobile-element [matMenuTriggerFor]="productMenu"
+        [matMenuTriggerData]="{recipe: recipe}" (click)="$event.stopPropagation()">
+        <mat-icon>more_vert</mat-icon>
+      </button>
 
-    <button mat-raised-button color="primary" action-element bordered-element www-element
-      (click)="onDetails($event, recipe?.id)" i18n="details@@details">Details</button>
-    <button mat-raised-button color="primary" action-element bordered-element www-element
-      (click)="onModify($event, recipe?.id)" i18n="modify@@modify">Modify</button>
-    <button mat-raised-button color="primary" action-element bordered-element www-element
-      (click)="onDelete($event, recipe?.id)" i18n="delete@@delete">Delete</button>
-
+      <button mat-raised-button color="primary" action-element bordered-element www-element
+        (click)="onDetails($event, recipe?.id)" i18n="details@@details">Details</button>
+      <button mat-raised-button color="primary" action-element bordered-element www-element
+        (click)="onModify($event, recipe?.id)" i18n="modify@@modify">Modify</button>
+      <button mat-raised-button color="primary" action-element bordered-element www-element
+        (click)="onDelete($event, recipe?.id)" i18n="delete@@delete">Delete</button>
+    </div>
   </div>
 </div>
 
@@ -43,7 +49,8 @@
 
 <mat-menu #productMenu="matMenu">
   <ng-template matMenuContent let-recipe="recipe" let-i="i" let-event="event">
-    <button mat-menu-item color="primary" (click)="onDetails(event, recipe?.id)" i18n="details@@details">Details</button>
+    <button mat-menu-item color="primary" (click)="onDetails(event, recipe?.id)"
+      i18n="details@@details">Details</button>
     <button mat-menu-item color="primary" (click)="onModify(event, recipe?.id)" i18n="modify@@modify">Modify</button>
     <button mat-menu-item color="primary" (click)="onDelete(event, recipe?.id)" i18n="delete@@delete">Delete</button>
   </ng-template>
