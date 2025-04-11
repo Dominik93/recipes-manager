@@ -1,6 +1,6 @@
 # recipes-manager
 
-## Busines
+## Business
 
 Create your own recipes and share them with your roommates. Go shopping together and check products off your list!
 
