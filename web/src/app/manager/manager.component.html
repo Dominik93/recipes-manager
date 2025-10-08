@@ -1,0 +1,27 @@
+<mat-toolbar *ngIf="authorized">
+    <span (click)="onLangaugeClick('en-US')">EN</span> /
+    <span (click)="onLangaugeClick('pl')">PL</span>
+    <span class="spacer"></span>
+    <rm-refresh></rm-refresh>
+</mat-toolbar>
+
+<div class="page-container">
+    <div class="content">
+        <rm-authorization *ngIf="!authorized"></rm-authorization>
+        <mat-tab-group *ngIf="authorized" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="Recipes" i18n-label="recipes@@recipes">
+                <ng-template matTabContent>
+                    <rm-recipes [active]="activeTabs['RECIPES']"></rm-recipes>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Cart" i18n-label="cart@@cart">
+                <ng-template matTabContent>
+                    <rm-cart [active]="activeTabs['CART']"></rm-cart>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="footer" i18n="footer@@footer">
+        Recipes Manager 2.2.4<br>powered by Angular 17, Angular Material 17 and Atlas MongoDB
+    </div>
+</div>

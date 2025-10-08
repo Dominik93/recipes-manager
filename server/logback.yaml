@@ -1,0 +1,4 @@
+logging:
+  format: "{time} [{pid}] {level} {name} - {message}"
+  level:
+    root: "INFO"

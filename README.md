@@ -31,7 +31,9 @@ When a recipe is selected on the cart tab, a shopping list will appear
 
 ### Backend
 
-MongoDB provided by [AtlasDB](https://www.mongodb.com/atlas/database) with REST API integration.
+MongoDB provided by [AtlasDB](https://www.mongodb.com/atlas/database) with REST API integration. Deprecated as AtlasDB drop support for REST API.
+
+Python server written in Flast. Simple replacement of MongoDB, operates on files.
 
 # Demo
 
