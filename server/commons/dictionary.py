@@ -45,6 +45,8 @@ class Dictionary:
                 if i == size - 1:
                     result[property_name] = value
                 result = result[property_name]
+            elif result is not None:
+                result[property_name] = value
             i += 1
 
     def delete(self, path):
